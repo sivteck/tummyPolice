@@ -1,0 +1,21 @@
+{
+  "name": "tummypolice",
+  "version": "1.0.0",
+  "description": "On demand food delivery application",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sivteck/tummyPolice.git"
+  },
+  "keywords": [
+    "online",
+    "food",
+    "ordering",
+    "delivery",
+    "tracking"
+  ],
+  "author": "Sivaram Balakrishnan",
+  "bugs": {
+    "url": "https://github.com/sivteck/tummyPolice/issues"
+  },
+  "homepage": "https://github.com/sivteck/tummyPolice#readme"
+}
