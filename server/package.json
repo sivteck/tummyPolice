@@ -1,0 +1,17 @@
+{
+  "name": "tummypolice-server",
+  "version": "1.0.0",
+  "description": "backend for the food deliver app",
+  "main": "main.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sivteck/tummyPolice"
+  },
+  "author": "Sivaram Balakrishnan",
+  "license": "MIT",
+  "dependencies": [
+    "express",
+    "pg"
+  ]
+}

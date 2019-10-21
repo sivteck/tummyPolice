@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  title: Tummy Police
+  description: Food Delivery App
+  version: 1.0.0
+servers:
+  - url: /
+paths:
+  /menu:
+    post:
+      tags:
+        - menu
+      summary: get the menu for a specific restaurant
+      operationId: menuPOST
+      parameters:
+        - name: menu
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            $ref: '#/components/schemas/Menu'
+      responses:
+        '200':
+          description: returns a list of menu items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    vegetarian:
+                      type: boolean
+                    category:
+                      description: >-
+                        category of the menu item eg. bowl, sandwich, breakfast
+                        etc,.
+                      type: string
+                    ingredients:
+                      description: ingredients
+                      type: string
+        '405':
+          description: invalid input
+components:
+  schemas:
+    Menu:
+      type: object
+      properties:
+        restaurant-name:
+          type: string
