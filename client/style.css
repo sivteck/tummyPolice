@@ -1,0 +1,136 @@
+.flex-1, .flex-2, .flex-3 {
+    display: flex;
+    flex-direction: row;
+}
+body {
+    margin: 0px;
+}
+
+/* .child-flex{
+} */
+
+img.homepage {
+    position: absolute;
+    width: 48%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+}
+
+img.logo {
+    width: 50%;
+}
+
+.child-flex-1 {
+    flex: 1;
+    padding: 25px;
+}
+
+.child-flex-2 {
+    flex: 1;
+}
+
+.flex-3 {
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    height: 50px;
+    padding: 0 2rem;
+    display: inline-block;
+    /* font-size: 20px; */
+    font-weight: 600;
+    line-height: 40px;
+}
+
+button.signup {
+    background-color: #000;
+    color: #fff;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 300;
+    width: 600px;
+    line-height: 40px;
+    color: #686b78;
+}
+
+h1 {
+    color: #282c3f;
+}
+
+.location {
+    position:relative;
+    border: 1px solid #bebfc5;
+    height:50px;
+    /* margin-bottom: 20px; */
+}
+
+button.findfood {
+    position: absolute;
+    background-color: #fc8019;
+    color: #fff;
+    right: 0;
+}
+.location input{
+    border: none;
+    padding: 15px;
+    width:80%;
+}
+
+.location span {
+	position: absolute;
+	right: 120px;
+	padding: 18px;
+	color: #535665;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+p.list{
+    display: inline-block;
+    color:#161822;
+    font-weight: 300;
+}
+p.cities{
+        font-weight: 400;
+        font-size: 15px;
+        color: #a9abb2;
+        margin: 30px 0 10px;
+        text-transform: uppercase;
+}
+p.list:nth-child(even){
+    color: #6b6d72;
+}
+.item-2{
+    /* display: flex;
+    flex-direction: row; */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1em;
+    /* grid-auto-rows: 70px; */
+    background: #2b1e16;
+        /* padding: 0 20px; */
+    justify-content: space-around;
+    /* align-items: center; */
+}
+.iconimg{
+
+  display: flex;            /* new */
+  align-items: center;      /* new */
+  justify-content: center;
+/* width: 105px; */
+/* height:200px; */
+/* top:0; */
+}
+
+.iconimg img{
+
+width: 105px; 
+ height:200px; 
+ top:0;
+}
