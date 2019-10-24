@@ -1,0 +1,72 @@
+module.exports = [
+  {
+    id: 'a59745ef-feb0-4533-869b-747753d34012',
+    name: 'idli',
+    vegetarian: true,
+    category: 'breakfast',
+    ingredients: 'some ingredients separated, by, commas'
+  },
+  {
+    id: '25e98442-64b8-4ba8-b343-66aaee220665',
+    name: 'dosa',
+    vegetarian: true,
+    category: 'breakfast',
+    ingredients: 'some ingredients separated, by, commas'
+  },
+  {
+    id: 'e6e1ef60-76ca-47aa-9342-1f99ba8b79b7',
+    name: 'vada',
+    vegetarian: true,
+    category: 'snack',
+    ingredients: 'some ingredients separated, by, commas'
+  },
+  {
+    id: 'fad53f49-c9b3-4a89-b774-2770e164e89e',
+    name: 'onion dosa',
+    vegetarian: true,
+    category: 'breakfast',
+    ingredients: 'some ingredients separated, by, commas'
+  },
+  {
+    id: '5d12558a-8819-42db-84a3-67753f03645d',
+    name: 'rava dosa',
+    vegetarian: true,
+    category: 'breakfast',
+    ingredients: 'some ingredients separated, by, commas'
+  },
+  {
+    id: 'b2dde8b4-6077-41fb-8630-21d9db2993bd',
+    name: 'pongal',
+    vegetarian: true,
+    category: 'breakfast',
+    ingredients: 'some ingredients separated, by, commas'
+  },
+  {
+    id: 'e65f3592-8adb-4ce5-afb9-de42bd590b1b',
+    name: 'curd vada',
+    vegetarian: true,
+    category: 'snack',
+    ingredients: 'some ingredients separated, by, commas'
+  },
+  {
+    id: 'c71ff946-ef28-4eb5-bbdd-d871644bdadc',
+    name: 'masala dosa',
+    vegetarian: true,
+    category: 'breakfast',
+    ingredients: 'some ingredients separated, by, commas'
+  },
+  {
+    id: '37327aa9-acf0-4ead-be09-67a9a093c8eb',
+    name: 'bajji',
+    vegetarian: true,
+    category: 'snack',
+    ingredients: 'some ingredients separated, by, commas'
+  },
+  {
+    id: '9b981e19-b87d-4d9e-9ca9-6c3a5b1cb3e0',
+    name: 'tea',
+    vegetarian: true,
+    category: 'beverage',
+    ingredients: 'some ingredients separated, by, commas'
+  }
+]

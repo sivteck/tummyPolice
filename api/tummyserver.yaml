@@ -51,5 +51,5 @@ components:
     Menu:
       type: object
       properties:
-        restaurant-name:
+        restaurantName:
           type: string
