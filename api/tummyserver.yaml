@@ -4,22 +4,58 @@ info:
   description: Food Delivery App
   version: 1.0.0
 servers:
-  - url: /
+  - url: /api/v1
 paths:
+  /restaurants:
+    get:
+      tags:
+        - restaurants
+      summary: get restaurants available in a particular city eg. "Bangalore"
+      operationId: restaurantsPOST
+      parameters:
+        - name: city
+          in: query
+          required: true
+          content:
+            application/json:
+              schema:
+                type: string
+      responses:
+        '200':
+          description: returns a list of restaurants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    address:
+                      type: string
+                    city:
+                      type: string
+                    image:
+                      type: string
+        '405':
+          description: invalid input
   /menu:
-    post:
+    get:
       tags:
         - menu
       summary: get the menu for a specific restaurant
       operationId: menuPOST
       parameters:
-        - name: menu
-          in: path
+        - name: restaurantid
+          in: query
           required: true
-          style: simple
-          explode: false
-          schema:
-            $ref: '#/components/schemas/Menu'
+          content:
+            application/json:
+              schema:
+                type: string
       responses:
         '200':
           description: returns a list of menu items
@@ -41,15 +77,46 @@ paths:
                         category of the menu item eg. bowl, sandwich, breakfast
                         etc,.
                       type: string
+                    image:
+                      type: string
                     ingredients:
                       description: ingredients
                       type: string
         '405':
           description: invalid input
+  /cart:
+    get:
+      tags:
+      - cart
+      summary: retrieve the current cart state
+      operationId: cartGET
+      responses:
+        '200':
+          description: returns the current cart state
+          content:
+            application/json:
+              schema:
+                type: object
+    post:
+      tags:
+      - cart
+      summary: store cart state in the server
+      operationId: cartPOST
+      parameters:
+        - name: cart
+          in: path
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+      responses:
+        '200':
+          description: successfully updated cart
 components:
   schemas:
     Menu:
       type: object
       properties:
-        restaurantName:
+        restaurantId:
           type: string
