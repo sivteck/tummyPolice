@@ -1,25 +1,47 @@
-import React, { Component } from 'react'
-import { render } from 'react-dom'
+import React, {useState} from 'react'
 import './style.css'
-import { Item} from './Item'
-import { Cart } from './Cart'
-import { CartProvider } from './CartContext'
+import Item from './Item'
+import Cart from './Cart'
+import {CartProvider} from './CartContext'
+import {useParams} from 'react-router-dom'
+
 
 const Menu = (props) => {
-  console.log("hkhkj",props)
+  const menu = []
+  const [menuItems, setMenuItems] = useState(menu)
+
+
+  const {id} = useParams()
+
+  function fetchData() { 
+    try {
+      
+    } catch (error) {
+      
+    }
+    fetch(`http://tummypolice.iyangi.com/api/v1/menu?restaurantid=${id}`)
+      .then(res => res.json())
+      .then(data => setMenuItems(data))
+      .catch(err => console.log(err))
+  }
+
+fetchData()
+  
+
   return (
     <CartProvider>
-      <div class="menu">
-       <div class = "menuComponents1"> 
-       <div class="itemList">
+      <div className="menu">
+       <div className = "menuComponents1"> 
+       {/* <h1>ghfgfgjfjh</h1> */}
+       <div className="itemList">
       {
-        props.menuItems.map(item => (
-          <Item name={item.name} category= {item.category} ingredients= {item.ingredients} veg= {item.vegetarian}price={item.price} key={item.id} />
+        menuItems.map(item => (
+          <Item id= {item.id} name={item.name} category= {item.category} ingredients= {item.ingredients} veg= {item.vegetarian}price={item.price} key={item.id} quantity={1}/>
         ))
       }
     </div> 
      </div>
-       <div class = "menuComponents2"> <Cart /> </div>
+       <div className = "menuComponents2"> <Cart /> </div>
       </div>
     </CartProvider>
   )
