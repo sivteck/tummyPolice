@@ -17,8 +17,33 @@ async function updateCart (req, res) {
     res.status(201)
   }
   catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
-module.exports = { getCart, updateCart }
+async function checkout (req, res) {
+  try {
+    let cart = await getCartState()
+    let bill =  { cart: cart, bill: genBill(cart) }
+    res.status(200).json(cart)
+  }
+  catch (error) {
+    console.error(error)
+  }
+}
+
+function genBill (cart) {
+  let bill = {}
+  bill.total = calculateBillTotal(cart)
+  bill.deliveryfee = calculateDeliveryFee(cart)
+}
+
+function calculateBillTotal (cart) {
+  return cart.reduce((total, item) => total + item.price, 0)
+}
+
+function calculateDeliveryFee (cart) {
+  return 30
+}
+
+module.exports = { getCart, updateCart, checkout }
