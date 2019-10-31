@@ -1,5 +1,5 @@
 const Pool = require("pg").Pool
-const pgConfig = require("../../../configs/postgres.js")
+const pgConfig = require("../../configs/postgres.js")
 
 const pool = new Pool(pgConfig)
 
