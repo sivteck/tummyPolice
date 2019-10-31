@@ -11,7 +11,7 @@ async function getCart (req, res) {
 }
 
 async function updateCart (req, res) {
-  let cart = req.body.cart
+  let cart = req.body
   try {
     await insertCart(cart)
     res.status(201).json(cart)
@@ -41,7 +41,9 @@ function genBill (cart) {
 }
 
 function calculateBillTotal (cart) {
-  return cart.reduce((total, item) => total + item.price, 0)
+  let total = 0
+  for (let key in cart) total += cart[key].price
+  return total
 }
 
 function calculateDeliveryFee (cart) {

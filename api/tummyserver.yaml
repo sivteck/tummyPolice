@@ -176,7 +176,24 @@ paths:
                 $ref: '#/components/schemas/User'
       responses:
         '200':
-          description: successfully updated cart
+          description: successful registration
+  /login:
+    post:
+      tags:
+      - User Management
+      summary: login user
+      operationId: loginPOST
+      parameters:
+        - name: logindetails
+          in: path
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: successful login
       
 components:
   schemas:
@@ -196,3 +213,9 @@ components:
           type: string
         phone:
           type: string
+    Login:
+      type: object
+      properties:
+        phone:
+          type: string
+
