@@ -190,3 +190,6 @@ button.seeRestaurant
  .cartItem div {
      flex-basis: 25%;
  }
+ .flex1{
+     display: flex;
+ }

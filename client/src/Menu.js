@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './style.css'
 import Item from './Item'
 import Cart from './Cart'
@@ -13,26 +13,27 @@ const Menu = (props) => {
 
   const {id} = useParams()
 
-  function fetchData() { 
-    try {
-      
-    } catch (error) {
-      
-    }
-    fetch(`http://tummypolice.iyangi.com/api/v1/menu?restaurantid=${id}`)
+//   function fetchData() { 
+//     fetch(`http://tummypolice.iyangi.com/api/v1/menu?restaurantid=${id}`)
+//       .then(res => res.json())
+//       .then(data => setMenuItems(data))
+//       .catch(err => console.log(err))
+//   }
+
+// fetchData()
+  
+useEffect ( () => {
+  fetch(`http://tummypolice.iyangi.com/api/v1/menu?restaurantid=${id}`)
       .then(res => res.json())
       .then(data => setMenuItems(data))
-      .catch(err => console.log(err))
-  }
+      .catch(err => console.log(err)) 
+},[]);
 
-fetchData()
-  
 
   return (
     <CartProvider>
       <div className="menu">
        <div className = "menuComponents1"> 
-       {/* <h1>ghfgfgjfjh</h1> */}
        <div className="itemList">
       {
         menuItems.map(item => (

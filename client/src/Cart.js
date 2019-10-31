@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { CartContext } from "./CartContext";
 import { Link } from "react-router-dom";
 
@@ -12,14 +12,18 @@ const Cart = () => {
     try {
       let res = await fetch("http://tummypolice.iyangi.com/api/v1/cart");
       let data = await res.json();
-      console.log(data);
+
+      // console.log(data);
       setCart(data);
+      // return () => ac.abort;
     } catch (error) {
       console.log(error);
     }
   }
 
-  fetchData();
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div>
