@@ -42,6 +42,40 @@ paths:
                       type: string
         '405':
           description: invalid input
+  /restaurant/info:
+    get:
+      tags:
+        - restaurant info
+      summary: get restaurant info based on id
+      operationId: restaurantsGET
+      parameters:
+        - name: id
+          in: query
+          required: true
+          content:
+            application/json:
+              schema:
+                type: string
+      responses:
+        '200':
+          description: returns a list of restaurants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  address:
+                    type: string
+                  city:
+                    type: string
+                  image:
+                    type: string
+        '405':
+          description: invalid input
   /menu:
     get:
       tags:
@@ -113,6 +147,19 @@ paths:
       responses:
         '200':
           description: successfully updated cart
+  /checkout:
+    get:
+      tags:
+      - checkout
+      summary: retrieve the current cart state with bill and delivery fee details
+      operationId: checkoutGET
+      responses:
+        '200':
+          description: returns the current cart state with bill
+          content:
+            application/json:
+              schema:
+                type: object
 components:
   schemas:
     Menu:

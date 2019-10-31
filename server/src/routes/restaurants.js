@@ -1,10 +1,11 @@
-const express = require("express")
-const { restaurants } = require("../controllers/restaurantController.js")
+const { restaurants, restaurantInfo } = require("../controllers/restaurantController.js")
 const { getMenu } = require("../controllers/menuController.js")
 const { getCart, updateCart, checkout } = require("../controllers/cartController.js")
+const express = require("express")
 const router = express.Router()
 
 router.get('/restaurants', restaurants)
+router.get('/restaurant/info', restaurantInfo)
 router.get('/menu', getMenu)
 router.get('/cart', getCart)
 router.post('/cart', updateCart)
