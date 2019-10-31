@@ -25,7 +25,7 @@ async function checkout (req, res) {
   try {
     let cartState = await getCartState()
     let bill =  { cart: cartState, bill: genBill(cartState.cart) }
-    res.status(200).json(cartState)
+    res.status(200).json(bill)
   }
   catch (error) {
     console.error(error)
@@ -37,6 +37,7 @@ function genBill (cart) {
   bill.deliveryfee = calculateDeliveryFee(cart)
   bill.subtotal = calculateBillTotal(cart)
   bill.total = calculateBillTotal(cart) + bill.deliveryfee
+  return bill
 }
 
 function calculateBillTotal (cart) {
