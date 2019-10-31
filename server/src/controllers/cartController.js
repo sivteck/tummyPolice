@@ -14,7 +14,7 @@ async function updateCart (req, res) {
   let cart = req.body.cart
   try {
     await insertCart(cart)
-    res.status(201)
+    res.status(201).json(cart)
   }
   catch (error) {
     console.error(error)
@@ -34,8 +34,9 @@ async function checkout (req, res) {
 
 function genBill (cart) {
   let bill = {}
-  bill.total = calculateBillTotal(cart)
   bill.deliveryfee = calculateDeliveryFee(cart)
+  bill.subtotal = calculateBillTotal(cart)
+  bill.total = calculateBillTotal(cart) + bill.deliveryfee
 }
 
 function calculateBillTotal (cart) {
