@@ -24,7 +24,7 @@ async function updateCart (req, res) {
 async function checkout (req, res) {
   try {
     let cartState = await getCartState()
-    let bill =  { cart: cartState, bill: genBill(cartState.cart) }
+    let bill =  { ...cartState, bill: genBill(cartState.cart) }
     res.status(200).json(bill)
   }
   catch (error) {
