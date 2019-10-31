@@ -1,9 +1,10 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { CartContext } from "./CartContext"
 import Itemimg from "./images/item.webp"
 
 const Item = props => {
   const [cart, setCart] = useContext(CartContext)
+
   const addToCart = () => {
     const items = cart.map(item => {
       if (item.id === props.id) {
@@ -15,15 +16,21 @@ const Item = props => {
     })
     setCart(items)
     if (cart.filter(item => item.id === props.id).length === 0) {
+      console.log("hgkhj,")
       const item = {
         id: props.id,
         name: props.name,
         price: props.price,
         quantity: props.quantity
       }
-      setCart(currentState => [...currentState, item])
+      console.log("hgkhj,", item)
+      setCart([...cart, item])
     }
+
     console.log(cart)
+  }
+
+  useEffect(() => {
     fetch("http://tummypolice.iyangi.com/api/v1/cart", {
       method: "POST",
       headers: {
@@ -33,11 +40,8 @@ const Item = props => {
       body: JSON.stringify(cart)
     })
       .then(resp => resp.json())
-      .then(() => {
-       
-      })
-  }
-
+      .then(() => {})
+  }, [cart])
   return (
     <div className="item">
       <img src={Itemimg} />

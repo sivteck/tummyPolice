@@ -9,7 +9,7 @@ import Location from "./Location"
 
 function Homepage() {
   return (
-    <div>
+    <div classname = "flex1">
       <div className="bg">
         <img className="logo" src={Logo} alt="" />
         <h1>Order food online from the best restaurants </h1>
