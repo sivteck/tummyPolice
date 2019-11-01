@@ -3,10 +3,12 @@ import { CartContext } from "./CartContext";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const [cart, setCart] = useContext(CartContext);
-  const totalPrice = cart.reduce((acc, curr) => acc + curr.price, 0);
-  const totalItems = cart.reduce((acc, curr) => acc + curr.quantity, 0);
-  // console.log('total items:' + totalItems)
+  const [cartItems, setCartItems] = useContext(CartContext);
+  console.log("carttt", Object.keys(cartItems.cart))
+  
+  const totalPrice = Object.keys(cartItems.cart).reduce((sum,key) => sum + cartItems.cart[key].price, 0)
+  const totalItems =Object.keys(cartItems.cart).reduce((sum,key) => sum + cartItems.cart[key].quantity, 0)
+  console.log('total items:' + totalPrice)
 
   async function fetchData() {
     try {
@@ -14,7 +16,7 @@ const Cart = () => {
       let data = await res.json();
 
       // console.log(data);
-      setCart(data);
+      setCartItems(data);
       // return () => ac.abort;
     } catch (error) {
       console.log(error);
@@ -27,14 +29,14 @@ const Cart = () => {
 
   return (
     <div>
-      {cart.length === 0 ? (
+      {cartItems.length === 0 ? (
         <div>
           <h1>Cart Empty</h1>
         </div>
       ) : (
         <div>
           <h1>Cart</h1>
-          {cart.length === 1 ? (
+          {cartItems.length === 1 ? (
             <div>
               {" "}
               <p>{totalItems} ITEM</p>
@@ -46,11 +48,11 @@ const Cart = () => {
             </div>
           )}
 
-          {cart.map(item => (
+          { Object.keys(cartItems.cart).map(item => (
             <div className="cartItem">
-              <div> {item.name}</div>
-              <div> {item.quantity}</div>
-              <div> &#8377; {item.price}</div>
+              <div> {cartItems.cart[item].name}</div>
+              <div> {cartItems.cart[item].quantity}</div>
+              <div> &#8377; {cartItems.cart[item].price}</div>
             </div>
           ))}
           <br />

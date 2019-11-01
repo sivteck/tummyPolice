@@ -3,9 +3,7 @@ import { CartContext, CartProvider } from "./CartContext";
 import Cart from './Cart'
 
 const Checkout = () => {
-    const dataset = []
-  
-    const [checkout, setCheckout] = useState({cart:[]})
+    const [checkout, setCheckout] = useState({cart:{}, bill:{}})
 
     async function fetchData() { 
         try {
@@ -18,19 +16,28 @@ const Checkout = () => {
           } 
     useEffect(() => {fetchData()}, [])
     // let items = checkout.cart
-    console.log(checkout.cart)
+    console.log("checkout",checkout.bill)
 
     return (
         <CartProvider>
         <div>
-            {/* <h1>{items}</h1> */}
-          {checkout.cart.map(item => (
+            <h1>Items</h1>
+            { Object.keys(checkout.cart).map(item => (
             <div className="cartItem">
-              <div> {item.name}</div>
-              <div> {item.quantity}</div>
-              <div> &#8377; {item.price}</div>
+              <div> {checkout.cart[item].name}</div>
+              <div> {checkout.cart[item].quantity}</div>
+              <div> &#8377; {checkout.cart[item].price}</div>
             </div>
           ))}
+          <h1>Bill Details</h1>
+          {/* { Object.keys(checkout.bill).map(item => ( */}
+            <div className="billDetails">
+              <div className="cartItem"><div>Item Total</div><div>  &#8377;  {checkout.bill.subtotal}</div></div>
+              <div className="cartItem"><div>Delivery Fee</div><div>  &#8377; {checkout.bill.deliveryfee}</div></div>
+              <div className="cartItem"><div>To Pay:</div><div>   &#8377; {checkout.bill.total}</div></div>
+              
+            </div>
+          {/* ))} */}
             {/* <Cart /> */}
         </div>
         </CartProvider>
