@@ -1,8 +1,24 @@
-const express = require('express')
 const restaurantRoutes = require('./routes/restaurants.js')
+const userManagementRoutes = require('./routes/userManagement.js')
+
+const express = require('express')
+const Redis = require('ioredis')
+const session = require('express-session')
+const RedisStore = require('connect-redis')(session)
+
+const port = 8080
+const client = new Redis()
 
 const app = express()
-const port = 8080
+
+app.use(
+  session({
+    store: new RedisStore({ client }),
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+  })
+)
 
 app.use(express.json())
 app.use(function (req, res, next) {
@@ -13,5 +29,6 @@ app.use(function (req, res, next) {
 })
 
 app.use('/api/v1', restaurantRoutes)
+app.use('/api/v1', userManagementRoutes)
 
 app.listen(port, () => console.log("gonna kill your hunger starting from port", port))
