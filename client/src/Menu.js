@@ -13,15 +13,6 @@ const Menu = (props) => {
 
   const {id} = useParams()
 
-//   function fetchData() { 
-//     fetch(`http://tummypolice.iyangi.com/api/v1/menu?restaurantid=${id}`)
-//       .then(res => res.json())
-//       .then(data => setMenuItems(data))
-//       .catch(err => console.log(err))
-//   }
-
-// fetchData()
-  
 useEffect ( () => {
   fetch(`http://tummypolice.iyangi.com/api/v1/menu?restaurantid=${id}`)
       .then(res => res.json())
@@ -35,9 +26,9 @@ useEffect ( () => {
       <div className="menu">
        <div className = "menuComponents1"> 
        <div className="itemList">
-      {
+      { 
         menuItems.map(item => (
-          <Item id= {item.id} name={item.name} category= {item.category} ingredients= {item.ingredients} veg= {item.vegetarian}price={item.price} key={item.id} quantity={1}/>
+          <Item  restaurantId= {id} id= {item.id} name={item.name} category= {item.category} ingredients= {item.ingredients} veg= {item.vegetarian}price={item.price} key={item.id} quantity={1}/>
         ))
       }
     </div> 

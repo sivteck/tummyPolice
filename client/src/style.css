@@ -193,3 +193,10 @@ button.seeRestaurant
  .flex1{
      display: flex;
  }
+ .billDetails{
+    display: flex;
+    flex-direction: column;
+}
+ .billDetails div {
+     flex-basis: 25%;
+ }
