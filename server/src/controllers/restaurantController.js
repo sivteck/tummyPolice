@@ -1,9 +1,13 @@
-const { getRestaurantsByCity } = require("../db/relational/restaurants.js")
+const { getRestaurantsByCity, getRestaurantInfoById } = require("../db/relational/restaurants.js")
 
 async function restaurants (req, res) {
-  console.log(req.body.city)
   let restaurants = await getRestaurantsByCity('Bangalore')
   res.status(200).json(restaurants)
 }
 
-module.exports = { restaurants }
+async function restaurantInfo (req, res) {
+  let deets = await getRestaurantInfoById(req.query.id)
+  res.status(200).json(deets)
+}
+
+module.exports = { restaurants, restaurantInfo }

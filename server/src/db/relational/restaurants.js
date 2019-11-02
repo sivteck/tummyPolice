@@ -14,7 +14,7 @@ async function insertRestaurant (restaurantObj) {
 }
 
 async function getRestaurantsByCity (city) {
-  let text = 'SELECT * FROM restaurants where city = $1'
+  let text = 'SELECT * FROM restaurants WHERE city = $1'
   let values = [city]
   try {
     let result = await query(text, values)
@@ -25,4 +25,16 @@ async function getRestaurantsByCity (city) {
   }
 }
 
-module.exports = { insertRestaurant, getRestaurantsByCity }
+async function getRestaurantInfoById (id) {
+  let text = 'SELECT * FROM restaurants WHERE id = $1'
+  let values = [id]
+  try {
+    let result = await query(text, values)
+    return result.rows
+  }
+  catch (error) {
+    console.error(error)
+  }
+}
+
+module.exports = { insertRestaurant, getRestaurantsByCity, getRestaurantInfoById }
