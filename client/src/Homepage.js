@@ -11,7 +11,12 @@ function Homepage() {
   return (
     <div classname = "flex1">
       <div className="bg">
-        <img className="logo" src={Logo} alt="" />
+       
+        <div className= "flex2">
+          <div className= "logoDiv"> <img className="logo" src={Logo} alt="" /></div>
+    <Link to ="/login">    <div><button className="login">Login</button></div></Link>
+    <Link to ="/signup">  <div><button className="signup">Sign up</button></div></Link>
+        </div>
         <h1>Order food online from the best restaurants </h1>
         <h2> Enter your delivery location to get started </h2>
         <Location />
@@ -20,6 +25,7 @@ function Homepage() {
           <button className="seeRestaurant">Restaurants</button>
         </Link>
       </div>
+      
       <div className="order">
         <h1> How To Order? </h1>
         <h5> Follow the Steps </h5>
