@@ -1,9 +1,11 @@
 const { createUser, verifyPassword, verifyPhone, userExists } = require("../db/relational/userManagement.js")
+const { insertCart } = require("../db/objectStore/cart.js")
 
 const register = async (req, res) => {
   console.log('from /register', req.session)
   try {
     let id = await createUser(req.body.username, req.body.password, req.body.email, req.body.phone)
+    insertCart(id, { 'restaurantId': '', cart: {}})
     res.status(201).json({ id: id, username: req.body.username, email: req.body.email, phone: req.body.phone })
   }
   catch (error) {
