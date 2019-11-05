@@ -28,6 +28,8 @@ app.use(function (req, res, next) {
   next()
 })
 
+app.use(express.static('../../client/build'))
+
 app.use('/api/v1', restaurantRoutes)
 app.use('/api/v1', userManagementRoutes)
 
