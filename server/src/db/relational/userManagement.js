@@ -37,7 +37,7 @@ async function verifyPhone (phone) {
   let values = [phone]
   try {
     let result = await query(text, values)
-    return { result.rows[0] }
+    return { ...result.rows[0] }
   }
   catch (error) {
     console.error(error)
