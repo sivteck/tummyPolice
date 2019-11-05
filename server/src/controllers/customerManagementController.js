@@ -4,7 +4,7 @@ const register = async (req, res) => {
   console.log('from /register', req.session)
   try {
     let id = await createUser(req.body.username, req.body.password, req.body.email, req.body.phone)
-    res.status(201).json({ id: id })
+    res.status(201).json({ id: id, username: req.body.username, email: req.body.email, phone: req.body.phone })
   }
   catch (error) {
     console.error('Registration Error, ', error)
@@ -23,7 +23,8 @@ const login = async (req, res) => {
     else {
       req.session.phone = req.body.phone
       req.session.loggedin = true
-      res.status(200).json({ msg: 'login success', ...phoneVerification })
+      req.session.userid = phoneVerification.id
+      res.status(200).json({ msg: 'login success', session: req.session.id, ...phoneVerification })
     }
   }
   catch (error) {

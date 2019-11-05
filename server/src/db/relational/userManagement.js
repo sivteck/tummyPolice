@@ -14,7 +14,7 @@ async function createUser (userName, password, email, phone) {
     return result.rows[0].id
   }
   catch (error) {
-    console.error('Unable to create user, ', error)
+    console.error('Unable to create user, ', phone)
   }
 }
 
@@ -33,12 +33,11 @@ async function verifyPassword (userName, password) {
 }
 
 async function verifyPhone (phone) {
-  let text = 'SELECT username, phone FROM users WHERE phone = $1'
+  let text = 'SELECT id, username, phone, email FROM users WHERE phone = $1'
   let values = [phone]
   try {
     let result = await query(text, values)
-    let username = result.rows[0].username
-    return { username, phone }
+    return { result.rows[0] }
   }
   catch (error) {
     console.error(error)

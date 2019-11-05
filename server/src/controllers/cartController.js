@@ -1,8 +1,10 @@
 const { getCartState, insertCart } = require("../db/objectStore/cart.js")
 
 async function getCart (req, res) {
+  let sessionId = req.session.id
+  let userId = req.session.userid
   try {
-    let cart = await getCartState()
+    let cart = await getCartState(userid)
     res.status(200).json(cart)
   }
   catch (error) {
@@ -11,9 +13,11 @@ async function getCart (req, res) {
 }
 
 async function updateCart (req, res) {
+  let sessionId = req.session.id
+  let userid = req.session.userid
   let cart = req.body
   try {
-    await insertCart(cart)
+    await insertCart(userid, cart)
     res.status(201).json(cart)
   }
   catch (error) {
@@ -22,10 +26,21 @@ async function updateCart (req, res) {
 }
 
 async function checkout (req, res) {
+  let userid = req.session.userid
   try {
-    let cartState = await getCartState()
+    let cartState = await getCartState(userid)
     let bill =  { ...cartState, bill: genBill(cartState.cart) }
     res.status(200).json(bill)
+  }
+  catch (error) {
+    console.error(error)
+    res.status(200).json({ msg: 'checkout failed', error })
+  }
+}
+
+async function order (req, res) {
+  try {
+    let details = req.body
   }
   catch (error) {
     console.error(error)
