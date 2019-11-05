@@ -12,7 +12,7 @@ let restaurantTable = `CREATE TABLE IF NOT EXISTS restaurants (
 
 let createUserTable = `CREATE TABLE IF NOT EXISTS users (
                     id UUID PRIMARY KEY,
-                    username VARCHAR UNIQUE,
+                    username VARCHAR,
                     salt VARCHAR,
                     passwordhash VARCHAR,
                     email VARCHAR,

@@ -4,10 +4,11 @@ const register = async (req, res) => {
   console.log('from /register', req.session)
   try {
     let id = await createUser(req.body.userName, req.body.password, req.body.email, req.body.phone)
-    res.json({ id: id })
+    res.status(201).json({ id: id })
   }
   catch (error) {
     console.error('Registration Error, ', error)
+    res.status(200).json({ error: error })
   }
 }
 
@@ -21,11 +22,11 @@ const login = async (req, res) => {
     if (!phoneVerification.username) res.json({ msg: 'invalid phone number' })
     req.session.phone = req.body.phone
     req.session.loggedin = true
-    res.json({ msg: 'login success', ...phoneVerification })
+    res.status(200).json({ msg: 'login success', ...phoneVerification })
   }
   catch (error) {
     console.log('Unable to login user, ', error)
-    res.json({ msg: 'login failure, invalid phone number' })
+    res.status(401).json({ msg: 'login failure, invalid phone number' })
   }
 }
 
