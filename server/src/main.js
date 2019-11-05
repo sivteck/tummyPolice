@@ -16,7 +16,11 @@ app.use(
     store: new RedisStore({ client }),
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+      domain: 'iyangi.com',
+      httpOnly: false
+    }
   })
 )
 

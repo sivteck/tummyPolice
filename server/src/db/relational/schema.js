@@ -11,18 +11,28 @@ let restaurantTable = `CREATE TABLE IF NOT EXISTS restaurants (
                        )`
 
 let createUserTable = `CREATE TABLE IF NOT EXISTS users (
-                    id UUID PRIMARY KEY,
-                    username VARCHAR,
-                    salt VARCHAR,
-                    passwordhash VARCHAR,
-                    email VARCHAR,
-                    phone VARCHAR UNIQUE
-                    )`
+                       id UUID PRIMARY KEY,
+                       username VARCHAR,
+                       salt VARCHAR,
+                       passwordhash VARCHAR,
+                       email VARCHAR,
+                       phone VARCHAR UNIQUE
+                       )`
+
+let createDeliverPartnerTable = `CREATE TABLE IF NOT EXISTS deliverypartners (
+                       id UUID PRIMARY KEY,
+                       name VARCHAR,
+                       salt VARCHAR,
+                       passwordhash VARCHAR,
+                       email VARCHAR,
+                       phone VARCHAR UNIQUE
+                       )`
 
 async function initDb () {
   try {
     await pool.query(restaurantTable)
     await pool.query(createUserTable)
+    await pool.query(createDeliveryPartnerTable)
   }
   catch (error) {
     console.error(error)

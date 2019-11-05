@@ -3,7 +3,7 @@ const { createUser, verifyPassword, verifyPhone, userExists } = require("../db/r
 const register = async (req, res) => {
   console.log('from /register', req.session)
   try {
-    let id = await createUser(req.body.userName, req.body.password, req.body.email, req.body.phone)
+    let id = await createUser(req.body.username, req.body.password, req.body.email, req.body.phone)
     res.status(201).json({ id: id })
   }
   catch (error) {
@@ -19,10 +19,12 @@ const login = async (req, res) => {
     // console.log('passwordMatch: ', passwordMatch)
     let phoneVerification = await verifyPhone(req.body.phone)
     console.log(phoneVerification)
-    if (!phoneVerification.username) res.json({ msg: 'invalid phone number' })
-    req.session.phone = req.body.phone
-    req.session.loggedin = true
-    res.status(200).json({ msg: 'login success', ...phoneVerification })
+    if (!phoneVerification.username) res.status(200).json({ msg: 'invalid phone number' })
+    else {
+      req.session.phone = req.body.phone
+      req.session.loggedin = true
+      res.status(200).json({ msg: 'login success', ...phoneVerification })
+    }
   }
   catch (error) {
     console.log('Unable to login user, ', error)
