@@ -12,7 +12,7 @@ async function insertCart (userId, cartObj) {
 
 async function getCartState (userId) {
   try {
-    let cart = await redis.get('user:cart' + userId)
+    let cart = await redis.get('user:cart:' + userId)
     return JSON.parse(cart)
   }
   catch (error) {

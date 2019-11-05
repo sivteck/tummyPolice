@@ -4,7 +4,7 @@ async function getCart (req, res) {
   let sessionId = req.session.id
   let userId = req.session.userid
   try {
-    let cart = await getCartState(userid)
+    let cart = await getCartState(userId)
     res.status(200).json(cart)
   }
   catch (error) {
