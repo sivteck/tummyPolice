@@ -1,6 +1,7 @@
 html {
-	font-family: Arial, Helvetica,sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
+
 body {
     margin: 0;
 }
@@ -12,7 +13,9 @@ body {
     background-size: cover;
     height: 480px;
 }
+
 /* css design, implement route protection, implement css seperatly,lazy loading,  */
+
 .logo {
     display: block;
     margin-left: auto;
@@ -21,21 +24,23 @@ body {
     /* align-self: center; */
 }
 
- .rest{
-	width: 254px;
-	height: 160px;
+.rest {
+    width: 254px;
+    height: 160px;
     padding: 10px;
 }
-.restaurant{
+
+.restaurant {
     margin: 10px;
 }
-.restaurant div{
-        font-size: 20px;
-        font-weight: 500;
-        text-transform: capitalize;
+
+.restaurant div {
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: capitalize;
 }
-.bg h1,
-.bg h2 {
+
+.bg h1, .bg h2 {
     color: white;
     text-align: center;
     /* font-weight: 500; */
@@ -58,11 +63,12 @@ body {
     height: 50px;
     width: 500px;
 }
-button.findfood{
+
+button.findfood {
     position: absolute;
 }
+
 button.findfood, button.login, button.signup {
-  
     background-color: #db741e;
     color: #fff;
     /* right: 0; */
@@ -105,15 +111,15 @@ button.findfood, button.login, button.signup {
 }
 
 h3 {
-	font-weight: 400;
-	text-align: center;
-	padding: 0;
-	margin: 0;
+    font-weight: 400;
+    text-align: center;
+    padding: 0;
+    margin: 0;
 }
 
-.itemList{
-display: flex;
-flex-flow: row wrap;
+.itemList {
+    display: flex;
+    flex-flow: row wrap;
 }
 
 .item {
@@ -125,135 +131,143 @@ flex-flow: row wrap;
     width: 250px;
     height: 300px;
 }
-h5 {
-	color: rgb(121, 112, 112);
-	font-weight: 400;
-	padding: 0;
-	margin: 5px;
-}
 
-h4{
+h5 {
+    color: rgb(121, 112, 112);
+    font-weight: 400;
+    padding: 0;
     margin: 5px;
 }
 
-.menu{
-display: flex;
-flex-direction: row;
+h4 {
+    margin: 5px;
 }
 
-.menuComponents1{
-    flex-basis: 70%;
-} 
-
-.menuComponents2{
-    flex-basis: 30%;
-} 
-button.seeRestaurant
- {
-	background-color: #db741e;
-	color: #fff;
-	width: 100px;
-	height: 47px;
-	border: none;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 25px;
-    border-radius: 25px;
-    text-decoration: none;
-}
-.order h1 {
-	text-align: center;
-	font-size: 50px;
-	font-weight: 400;
-    text-transform: uppercase;
-    margin-bottom: 0;
-}
-.order h5 {
-	text-align: center;
-	margin-top: 0;
-	font-weight: 500px;
-	color: rgb(121, 112, 112);
-	font-size: 15px;
-}
-.item img{
-    width: 250px;
-    height: 200px;
-}
-.rest img{
-    width:254px; 
-    height:160px;
-}
-
-.cartItem{
+.menu {
     display: flex;
     flex-direction: row;
 }
- .cartItem div {
-     flex-basis: 25%;
- }
- .flex1{
-     display: flex;
- }
- .billDetails{
+
+.menuComponents1 {
+    flex-basis: 70%;
+}
+
+.menuComponents2 {
+    flex-basis: 30%;
+}
+
+button.seeRestaurant {
+    background-color: #db741e;
+    color: #fff;
+    width: 100px;
+    height: 47px;
+    border: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    border-radius: 25px;
+    text-decoration: none;
+}
+
+.order h1 {
+    text-align: center;
+    font-size: 50px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.order h5 {
+    text-align: center;
+    margin-top: 0;
+    font-weight: 500px;
+    color: rgb(121, 112, 112);
+    font-size: 15px;
+}
+
+.item img {
+    width: 250px;
+    height: 200px;
+}
+
+.rest img {
+    width: 254px;
+    height: 160px;
+}
+
+.cartItem {
+    display: flex;
+    flex-direction: row;
+}
+
+.cartItem div {
+    flex-basis: 25%;
+}
+
+.flex1 {
+    display: flex;
+}
+
+.billDetails {
     display: flex;
     flex-direction: column;
 }
- .billDetails div {
-     flex-basis: 25%;
- }
 
-.signUpForm{
+.billDetails div {
+    flex-basis: 25%;
+}
+
+.signUpForm {
     /* display: block; */
     /* box-sizing: border-box; */
-	margin-left: auto;
-	margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
     width: 50%;
-
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-    
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
 }
+
 .signUpForm input {
     width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  }
-  
-  label {
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+label {
     /* line-height: 2;
     text-align: left; */
     display: block;
-     /* margin-left: auto; */
-	/* margin-right: auto; */
-    margin-bottom: 13px; 
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    margin-bottom: 13px;
     margin-top: 20px;
     /* color: #000;  */
     font-size: 14px;
     font-weight: 200;
-  }
-
-  input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
 }
 
-.flex2{
-    display:flex;
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.flex2 {
+    display: flex;
     flex-direction: row;
-    margin-left:auto;
+    margin-left: auto;
 }
-.flex2 div{
+
+.flex2 div {
     margin: 10px;
 }
 
-.flex2 .logoDiv{
+.flex2 .logoDiv {
     margin-left: auto;
     margin-right: 10%;
     /* display: block; */

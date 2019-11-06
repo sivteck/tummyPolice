@@ -1,52 +1,52 @@
-import React, { useContext, useEffect } from "react";
-import { CartContext } from "./CartContext";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react"
+import { CartContext } from "./CartContext"
+import { Link } from "react-router-dom"
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useContext(CartContext);
-  console.log("carttt", Object.keys(cartItems.cart));
+  const [cartItems, setCartItems] = useContext(CartContext)
+  console.log("carttt", Object.keys(cartItems.cart))
 
   const totalPrice = Object.keys(cartItems.cart).reduce(
     (sum, key) => sum + cartItems.cart[key].price,
     0
-  );
+  )
   const totalItems = Object.keys(cartItems.cart).reduce(
     (sum, key) => sum + cartItems.cart[key].quantity,
     0
-  );
-  console.log("total items:" + totalPrice);
+  )
+  console.log("total items:" + totalPrice)
 
   async function fetchData() {
     try {
-      let res = await fetch("http://tummypolice.iyangi.com/api/v1/cart");
-      let data = await res.json();
+      let res = await fetch("http://tummypolice.iyangi.com/api/v1/cart")
+      let data = await res.json()
 
-      setCartItems(data);
+      setCartItems(data)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
-function renderCartItems(cart){
- return( Object.keys(cart).map(item => (
-    <div className="cartItem">
-      <div> {cart[item].name}</div>
-      <div> {cart[item].quantity}</div>
-      <div> &#8377; {cart[item].price}</div>
-    </div>
-  )))
-}
+  function renderCartItems(cart) {
+    return Object.keys(cart).map(item => (
+      <div className="cartItem">
+        <div> {cart[item].name}</div>
+        <div> {cart[item].quantity}</div>
+        <div> &#8377; {cart[item].price}</div>
+      </div>
+    ))
+  }
 
   return (
     <div>
-      {Object.keys(cartItems.cart).length=== 0 ? (
+      {Object.keys(cartItems.cart).length === 0 ? (
         <div>
           <h1>Cart Empty</h1>
-      </div>
+        </div>
       ) : (
         <div>
           <h1>Cart</h1>
@@ -72,7 +72,7 @@ function renderCartItems(cart){
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart

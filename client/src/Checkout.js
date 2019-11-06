@@ -16,6 +16,22 @@ const Checkout = () => {
   useEffect(() => {
     fetchData()
   }, [])
+  function placeOrder() {
+    let location = navigator.geolocation.watchPosition(function(position) {
+      return position.coords.latitude, position.coords.longitude
+      console.log(location)
+    })
+    fetch("http://tummypolice.iyangi.com/api/v1/order", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ checkout, location })
+    })
+      .then(resp => resp.json())
+      .then(() => {})
+  }
 
   return (
     <CartProvider>
@@ -43,6 +59,7 @@ const Checkout = () => {
             <div> &#8377; {checkout.bill.total}</div>
           </div>
         </div>
+        <button onClick={placeOrder}>Order</button>
       </div>
     </CartProvider>
   )

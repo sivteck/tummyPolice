@@ -4,16 +4,13 @@ import Itemimg from "./images/item.webp"
 
 const Item = props => {
   const [cartItems, setCartItems] = useContext(CartContext)
-  console.log("cartItems", cartItems)
 
   const addToCart = () => {
     let key = props.id
     if (key in cartItems.cart) {
-      console.log(key)
       let { quantity, price } = cartItems.cart[key]
       quantity += 1
       price = props.price * quantity
-      console.log(quantity, price)
       let cartValue = {
         restaurantId: props.restaurantId,
         cart: Object.assign(cartItems.cart, {

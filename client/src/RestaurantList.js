@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react"
 import Restaurant from "./Restaurant"
 import Food from "./images/food.webp"
 
-const RestaurantList = () => {
+const RestaurantList = (props) => {
+  console.log("props", props)
+  
   const dataset = []
   const [restaurant, setRestaurant] = useState(dataset)
 
