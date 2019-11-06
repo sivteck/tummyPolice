@@ -19,7 +19,7 @@ let createUserTable = `CREATE TABLE IF NOT EXISTS users (
                        phone VARCHAR UNIQUE
                        )`
 
-let createDeliverPartnerTable = `CREATE TABLE IF NOT EXISTS deliverypartners (
+let createDeliveryPartnerTable = `CREATE TABLE IF NOT EXISTS deliverypartners (
                        id UUID PRIMARY KEY,
                        name VARCHAR,
                        salt VARCHAR,
