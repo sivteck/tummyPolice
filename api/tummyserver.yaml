@@ -4,7 +4,7 @@ info:
   description: Food Delivery App
   version: 1.0.0
 servers:
-  - url: http://tummypolice.iyangi.com/api/v1
+  - url: 'http://tummypolice.iyangi.com/api/v1'
 paths:
   /restaurants:
     get:
@@ -16,10 +16,8 @@ paths:
         - name: city
           in: query
           required: true
-          content:
-            application/json:
-              schema:
-                type: string
+          schema:
+            type: string
       responses:
         '200':
           description: returns a list of restaurants
@@ -52,10 +50,8 @@ paths:
         - name: id
           in: query
           required: true
-          content:
-            application/json:
-              schema:
-                type: string
+          schema:
+            type: string
       responses:
         '200':
           description: returns a list of restaurants
@@ -86,10 +82,8 @@ paths:
         - name: restaurantid
           in: query
           required: true
-          content:
-            application/json:
-              schema:
-                type: string
+          schema:
+            type: string
       responses:
         '200':
           description: returns a list of menu items
@@ -107,9 +101,7 @@ paths:
                     vegetarian:
                       type: boolean
                     category:
-                      description: >-
-                        category of the menu item eg. bowl, sandwich, breakfast
-                        etc,.
+                      description: 'category of the menu item eg. bowl, sandwich, breakfast etc,.'
                       type: string
                     image:
                       type: string
@@ -121,7 +113,7 @@ paths:
   /cart:
     get:
       tags:
-      - Cart
+        - Cart
       summary: retrieve the current cart state
       operationId: cartGET
       responses:
@@ -133,7 +125,7 @@ paths:
                 type: object
     post:
       tags:
-      - Cart
+        - Cart
       summary: store cart state in the server
       operationId: cartPOST
       parameters:
@@ -150,7 +142,7 @@ paths:
   /checkout:
     get:
       tags:
-      - Checkout
+        - Checkout
       summary: retrieve the current cart state with bill and delivery fee details
       operationId: checkoutGET
       responses:
@@ -160,10 +152,27 @@ paths:
             application/json:
               schema:
                 type: object
+  /order:
+    post:
+      tags:
+        - Order
+      summary: place order
+      operationId: orderPOST
+      parameters:
+        - name: orderdetails
+          in: path
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: returns object with delivery partner tracking info
   /register:
     post:
       tags:
-      - User Management
+        - User Management
       summary: register user
       operationId: registerPOST
       parameters:
@@ -180,7 +189,7 @@ paths:
   /login:
     post:
       tags:
-      - User Management
+        - User Management
       summary: login user
       operationId: loginPOST
       parameters:
@@ -194,7 +203,32 @@ paths:
       responses:
         '200':
           description: successful login
-      
+  /place/autocomplete/json:
+    get:
+      tags:
+        - Places
+      summary: gives places predictions as the user types
+      operationId: placesGET
+      parameters: 
+        - name: input
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: returns an array of objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
 components:
   schemas:
     Menu:
@@ -218,4 +252,5 @@ components:
       properties:
         phone:
           type: string
-
+    Order:
+      type: object
