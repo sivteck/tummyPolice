@@ -1,0 +1,275 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+.bg {
+    background-image: url('images/background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 480px;
+}
+
+/* css design, implement route protection, implement css seperatly,lazy loading,  */
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+    /* align-self: center; */
+}
+
+.rest {
+    width: 254px;
+    height: 160px;
+    padding: 10px;
+}
+
+.restaurant {
+    margin: 10px;
+}
+
+.restaurant div {
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.bg h1, .bg h2 {
+    color: white;
+    text-align: center;
+    /* font-weight: 500; */
+}
+
+.bg h1 {
+    font-weight: 500;
+}
+
+.bg h2 {
+    font-weight: 300;
+}
+
+.location {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    /* border: 1px solid #bebfc5; */
+    height: 50px;
+    width: 500px;
+}
+
+button.findfood {
+    position: absolute;
+}
+
+button.findfood, button.login, button.signup {
+    background-color: #db741e;
+    color: #fff;
+    /* right: 0; */
+    width: 100px;
+    height: 45px;
+    border: none;
+}
+
+.location input {
+    border: none;
+    padding: 15px;
+    width: 80%;
+}
+
+.location span {
+    position: absolute;
+    right: 60px;
+    padding: 18px;
+    color: #535665;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.flex-1 {
+    /* margin-left: 10%; */
+    /* margin-right: 20%;  */
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-1 div {
+    flex-basis: 25%
+}
+
+.step {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
+}
+
+h3 {
+    font-weight: 400;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+.itemList {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.item {
+    padding: 10px;
+    margin: 10px;
+    /* flex: 200px; */
+    text-align: center;
+    border: 1px solid black;
+    width: 250px;
+    height: 300px;
+}
+
+h5 {
+    color: rgb(121, 112, 112);
+    font-weight: 400;
+    padding: 0;
+    margin: 5px;
+}
+
+h4 {
+    margin: 5px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+}
+
+.menuComponents1 {
+    flex-basis: 70%;
+}
+
+.menuComponents2 {
+    flex-basis: 30%;
+}
+
+button.seeRestaurant {
+    background-color: #db741e;
+    color: #fff;
+    width: 100px;
+    height: 47px;
+    border: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    border-radius: 25px;
+    text-decoration: none;
+}
+
+.order h1 {
+    text-align: center;
+    font-size: 50px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.order h5 {
+    text-align: center;
+    margin-top: 0;
+    font-weight: 500px;
+    color: rgb(121, 112, 112);
+    font-size: 15px;
+}
+
+.item img {
+    width: 250px;
+    height: 200px;
+}
+
+.rest img {
+    width: 254px;
+    height: 160px;
+}
+
+.cartItem {
+    display: flex;
+    flex-direction: row;
+}
+
+.cartItem div {
+    flex-basis: 25%;
+}
+
+.flex1 {
+    display: flex;
+}
+
+.billDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.billDetails div {
+    flex-basis: 25%;
+}
+
+.signUpForm {
+    /* display: block; */
+    /* box-sizing: border-box; */
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.signUpForm input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+label {
+    /* line-height: 2;
+    text-align: left; */
+    display: block;
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    margin-bottom: 13px;
+    margin-top: 20px;
+    /* color: #000;  */
+    font-size: 14px;
+    font-weight: 200;
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.flex2 {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+}
+
+.flex2 div {
+    margin: 10px;
+}
+
+.flex2 .logoDiv {
+    margin-left: auto;
+    margin-right: 10%;
+    /* display: block; */
+    text-align: center;
+}
