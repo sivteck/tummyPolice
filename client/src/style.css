@@ -203,6 +203,7 @@ button.seeRestaurant {
 
 .cartItem div {
     flex-basis: 25%;
+    padding:5px;
 }
 
 .flex1 {
@@ -272,4 +273,13 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     margin-right: 10%;
     /* display: block; */
     text-align: center;
+}
+
+.changeQuantity{
+    display: flex;
+    flex-direction: row;
+
+}
+.changeQuantity div{
+    border: 0.5px solid grey ;
 }

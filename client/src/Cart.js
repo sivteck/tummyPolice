@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 const Cart = () => {
   const [cartItems, setCartItems] = useContext(CartContext)
-  console.log("carttt", Object.keys(cartItems.cart))
+  console.log("carttt", cartItems)
 
   const totalPrice = Object.keys(cartItems.cart).reduce(
     (sum, key) => sum + cartItems.cart[key].price,
@@ -31,11 +31,57 @@ const Cart = () => {
     fetchData()
   }, [])
 
+  function decQuantity(event) {
+    let item = event.target.parentElement.id
+    let { name, price, quantity } = cartItems.cart[item]
+    let priceOfOneItem = price / quantity
+
+    quantity -= 1
+    if (quantity === 0) {
+      const newObj = Object.assign({}, cartItems.cart)
+      delete newObj[item]
+      let cartValue = {
+        restaurantId: cartItems.restaurantId,
+        cart: newObj
+      }
+      setCartItems(cartValue)
+    } else {
+      price = priceOfOneItem * quantity
+      let cartValue = {
+        restaurantId: cartItems.restaurantId,
+        cart: Object.assign(cartItems.cart, {
+          [item]: { name: name, price: price, quantity: quantity }
+        })
+      }
+      setCartItems(cartValue)
+    }
+  }
+
+  function incQuantity(event){
+    let item = event.target.parentElement.id
+    let { name, price, quantity } = cartItems.cart[item]
+    let priceOfOneItem = price / quantity
+    quantity += 1
+    price = priceOfOneItem * quantity
+    let cartValue = {
+      restaurantId: cartItems.restaurantId,
+      cart: Object.assign(cartItems.cart, {
+        [item]: { name: name, price: price, quantity: quantity }
+      })
+    }
+    setCartItems(cartValue)
+
+  }
+
   function renderCartItems(cart) {
     return Object.keys(cart).map(item => (
       <div className="cartItem">
         <div> {cart[item].name}</div>
-        <div> {cart[item].quantity}</div>
+        <div className="changeQuantity" id={item}>
+          <button onClick={decQuantity}>-</button>
+          <div> {cart[item].quantity}</div>
+          <button onClick={incQuantity}>+</button>
+        </div>
         <div> &#8377; {cart[item].price}</div>
       </div>
     ))

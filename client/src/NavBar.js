@@ -1,14 +1,13 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
+import { Link} from "react-router-dom"
 import { AppBar, Toolbar, Typography } from "@material-ui/core"
 import IconButton from "@material-ui/core/IconButton"
-import MenuIcon from "@material-ui/icons/Menu"
 import Logo from "./images/logoicon.png"
-import AccountCircle from "@material-ui/icons/AccountCircle"
 import styled from "styled-components"
-import Button from "@material-ui/core/Button"
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import Badge from '@material-ui/core/Badge';
+
 
 // const StyledButton = styled(Button)`
 //   background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
@@ -33,11 +32,35 @@ const StyledAppBar = styled(AppBar)`
 const inlineStyle = {
   FontWeight: 400,
   color: 'black',
-  padding: '15px'
+  padding: '15px',
+  textTransform : 'capitalize'
 }
 
 const NavBar = (props) => {
-  console.log(props)
+ 
+  const [cartItems, setCartItems] = useState({cart:{}})
+  console.log("carttt..", cartItems,Object.keys(cartItems.cart).length)
+  let cartLength = Object.keys(cartItems.cart).length
+  let userName = props.userDetails.username
+  async function fetchData() {
+    try {
+      let res = await fetch("http://tummypolice.iyangi.com/api/v1/cart")
+      let data = await res.json()
+
+      setCartItems(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+
+
+
+  console.log("props...",props.userDetails.username)
   return (
     <StyledAppBar position="static" >
       <Toolbar > 
@@ -50,18 +73,19 @@ const NavBar = (props) => {
         <IconButton style={{ backgroundColor: 'transparent' }} >
           <PermIdentityIcon />
           <Typography variant="h5" noWrap style = {inlineStyle}>
-            Sign In
+            {userName}
           </Typography>
         </IconButton>
-
+<Link to ="/checkout">
         <IconButton style={{ backgroundColor: 'transparent' }} >
-        <Badge badgeContent={4} color="secondary">
+        <Badge badgeContent={cartLength} color="secondary">
           <ShoppingCartIcon />
           </Badge>
           <Typography variant="h5" noWrap style = {inlineStyle}>
             Cart
           </Typography>
         </IconButton>
+</Link>
       </Toolbar>
     </StyledAppBar>
   )
