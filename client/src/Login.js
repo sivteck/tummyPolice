@@ -101,7 +101,7 @@ const Login = () => {
           <div>
             {" "}
             <Link to="/signup">
-              <a>Click here to Create New Account</a>
+            Click here to Create New Account
             </Link>{" "}
           </div>
         </div>

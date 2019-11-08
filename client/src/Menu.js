@@ -24,14 +24,16 @@ const Menu = props => {
         <div className="menuComponents1">
           <div className="itemList">
             {menuItems.map(item => (
+              // {id, name,ca}
               <Item
+                {...item}
                 restaurantId={id}
-                id={item.id}
-                name={item.name}
-                category={item.category}
-                ingredients={item.ingredients}
-                veg={item.vegetarian}
-                price={item.price}
+                // id={item.id}
+                // name={item.name}
+                // category={item.category}
+                // ingredients={item.ingredients}
+                // veg={item.vegetarian}
+                // price={item.price}
                 key={item.id}
                 quantity={1}
               />
