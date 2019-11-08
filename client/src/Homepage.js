@@ -36,9 +36,6 @@ function Homepage() {
         <h2> Enter your delivery location to get started </h2>
         <Location />
 
-        <Link to="/restaurant">
-          <button className="seeRestaurant">Restaurants</button>
-        </Link>
       </div>
 
       <div className="order">
