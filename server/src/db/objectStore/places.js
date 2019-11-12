@@ -9,7 +9,6 @@ async function getPlaces (str) {
     const res = await redis.zrevrangebylex('places', '[' + minStr, '[' + str)
     let placesInfo = getIds(res).map(getPlaceInfoById)
     placesInfo = await Promise.all(placesInfo)
-    transform(placesInfo)
     return buildPlacesObj(placesInfo)
   }
   catch (error) {
