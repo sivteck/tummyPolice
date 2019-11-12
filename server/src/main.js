@@ -1,5 +1,6 @@
 const restaurantRoutes = require('./routes/restaurants.js')
 const userManagementRoutes = require('./routes/userManagement.js')
+const placesRoutes = require('./routes/places.js')
 
 const express = require('express')
 const Redis = require('ioredis')
@@ -36,5 +37,6 @@ app.use(express.static('../../client/build'))
 
 app.use('/api/v1', restaurantRoutes)
 app.use('/api/v1', userManagementRoutes)
+app.use('/api/v1', placesRoutes)
 
 app.listen(port, () => console.log("gonna kill your hunger starting from port", port))
