@@ -3,6 +3,6 @@ const { deliveryPartnerTracking } = require("../controllers/tracking.js")
 const express = require("express")
 const router = express.Router()
 
-router.get('/deliverypartner/track', deliveryPartnerTracking)
+router.post('/deliverypartner/track', deliveryPartnerTracking)
 
 module.exports = router
