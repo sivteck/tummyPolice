@@ -11,12 +11,13 @@ const Menu = props => {
 
   const { id } = useParams()
 
-  useEffect(() => {
-    fetch(`http://tummypolice.iyangi.com/api/v1/menu?restaurantid=${id}`)
-      .then(res => res.json())
-      .then(data => setMenuItems(data))
-      .catch(err => console.log(err))
-  }, [])
+const fetchData = async () => {
+  let res = await fetch(`http://tummypolice.iyangi.com/api/v1/menu?restaurantid=${id}`)
+  let result = await res.json()
+  setMenuItems(result)
+}
+
+  useEffect(() => {fetchData()}, [])
 
   return (
     <CartProvider>

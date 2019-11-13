@@ -1,6 +1,5 @@
 import React from "react"
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
-import Menu from "./Menu"
+import { Link } from "react-router-dom"
 
 const Restaurant = props => {
   let id = `/restaurant/${props.id}`
@@ -9,7 +8,7 @@ const Restaurant = props => {
     <Link to={id}>
       <div className="restaurant">
         <div className="rest">
-          <img src={props.img} />
+          <img src={props.img} alt="Restaurant"/>
           <div>{props.name}</div>
         </div>
       </div>

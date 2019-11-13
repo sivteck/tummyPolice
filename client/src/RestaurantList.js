@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
 import Restaurant from "./Restaurant"
 import Food from "./images/food.webp"
-import NavBar from './NavBar'
+import NavBar from "./NavBar"
+
 const RestaurantList = ({ location }) => {
-  console.log("props", location.state.userDetails)
-  const {userDetails} = location.state
+  const { userDetails } = location.state
   const dataset = []
   const [restaurant, setRestaurant] = useState(dataset)
 
@@ -23,7 +23,7 @@ const RestaurantList = ({ location }) => {
 
   return (
     <div className="restaurantList">
-      <NavBar userDetails={userDetails}/>
+      <NavBar userDetails={userDetails} />
       <h1> Popular Brands </h1>
       {restaurant.map(item => (
         <Restaurant id={item.id} name={item.name} img={Food} key={item.id} />

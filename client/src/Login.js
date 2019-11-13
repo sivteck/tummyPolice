@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   padding: 20px;
 `
 
-const A = styled.a`
+const StyledLink = styled(Link)`
   color: #db741e;
 `
 
@@ -64,7 +64,6 @@ const Login = () => {
     mode: "onBlur"
   })
   const onSubmit = async data => {
-
     let res = await fetch("http://tummypolice.iyangi.com/api/v1/login", {
       method: "POST",
       headers: {
@@ -92,17 +91,13 @@ const Login = () => {
         <div>
           <h1>Account doesn't exist</h1>
           <div>
-            {" "}
             <a href="javascript:window.location.reload(true)">
               Click here to Login
-            </a>{" "}
+            </a>
           </div>
           Or
           <div>
-            {" "}
-            <Link to="/signup">
-            Click here to Create New Account
-            </Link>{" "}
+            <Link to="/signup">Click here to Create New Account</Link>
           </div>
         </div>
       )
@@ -111,10 +106,7 @@ const Login = () => {
       <div>
         <a class="closebtn">&times;</a>
         <Title>Login</Title>
-        Or{" "}
-        <Link to="/signup">
-          <A>Create your account</A>
-        </Link>
+        Or <StyledLink to="/signup">Create your account</StyledLink>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Label>Phone number</Label>
           <Input
@@ -125,7 +117,6 @@ const Login = () => {
           />
           {errors.phone && "Enter valid phone number"}
           <Submit type="submit" value="Login" />
-          {/* <Button onClick={onSubmit}> Login </Button> */}
         </form>
       </div>
     )

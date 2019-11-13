@@ -13,12 +13,14 @@ const Checkout = () => {
       console.log(error)
     }
   }
+
   useEffect(() => {
     fetchData()
   }, [])
+
   function placeOrder() {
     let location = navigator.geolocation.watchPosition(function(position) {
-      return position.coords.latitude, position.coords.longitude
+      return (position.coords.latitude, position.coords.longitude)
       console.log(location)
     })
     fetch("http://tummypolice.iyangi.com/api/v1/order", {
