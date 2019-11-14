@@ -21,7 +21,7 @@ const credentials = {
   key: privateKey,
   cert: certificate,
   ca: ca
-};
+}
 
 app.use(
   session({
@@ -54,21 +54,17 @@ const trackingRoutes = require('./routes/tracking.js')
 app.use('/api/v1', require('./routes/restaurants.js'))
 app.use('/api/v1', require('./routes/userManagement.js'))
 app.use('/api/v1', require('./routes/places.js'))
-app.use('/api/v1', require('./routes/tracking.js'))
+app.use('/api/v1', require('./Components/DeliveryPartner/trackingAPI.js'))
+app.use('/api/v1', require('./Components/Order/orderAPI.js'))
 
-const webSocketServer = new WebSocket.Server({ server })
+const httpServer = http.createServer(app)
+const httpsServer = https.createServer(credentials, app)
+
+const webSocketServer = new WebSocket.Server({ server: httpsServer })
 webSocketServer.on('connection', (webSocket) => {
   console.log('Clients: ', webSocketServer.clients.size)
   app.locals.clients = webSocketServer.clients
 })
-
-app.get('/track', (req, res) => {
-  if (client.readyState === WebSocket.OPEN) client.send('{ "msg": "yeah current location" }')
-  res.sendStatus(200)
-})
-
-const httpServer = http.createServer(app)
-const httpsServer = https.createServer(credentials, app)
 
 httpServer.listen(port, () => console.log("gonna kill your hunger starting from port", port))
 httpsServer.listen(8088, () => console.log('HTTPS Server running on port 8088'))

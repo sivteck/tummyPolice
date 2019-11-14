@@ -229,6 +229,23 @@ paths:
                 type: array
                 items:
                   type: object
+  /deliverypartner/updatelocation:
+    post:
+      tags:
+        - Delivery Partner
+      summary: update current location of delivery partner
+      operationId: updatelocationPOST
+      parameters:
+        - name: coordinates
+          in: path
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Coordinates'
+      responses:
+        '200':
+          description: updated location
 components:
   schemas:
     Menu:
@@ -254,3 +271,10 @@ components:
           type: string
     Order:
       type: object
+    Coordinates:
+      type: object
+      properties:
+        latitude:
+          type: string
+        longitude:
+          type: string
