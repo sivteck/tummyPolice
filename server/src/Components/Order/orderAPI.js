@@ -4,6 +4,6 @@ const router = express.Router()
 const { placeOrder, trackOrder } = require('./orderController.js')
 
 router.post('/order', placeOrder)
-router.get('/track', trackOrder)
+router.get('/trackorder', trackOrder)
 
 module.exports = router

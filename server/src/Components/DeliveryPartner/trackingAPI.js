@@ -2,12 +2,20 @@ const WebSocket = require('ws')
 const express = require('express')
 const { publishLoc } = require('./trackingDAL.js')
 
-const ws = new WebSocket()
+// const ws = new WebSocket()
 const router = express.Router()
 
-router.get('/deliverypartner/updatelocation', async (req, res) => {
-  if (req.body) await publishLoc(req.body)
-  res.sendStatus(200)
+router.post('/deliverypartner/updatelocation', async (req, res) => {
+  try {
+    if (req.body) {
+      await publishLoc(JSON.stringify(req.body))
+    }
+    res.sendStatus(200)
+  }
+  catch (error) {
+    console.error(error)
+    res.json({ error: 'unable to update location' })
+  }
 })
 
 module.exports = router

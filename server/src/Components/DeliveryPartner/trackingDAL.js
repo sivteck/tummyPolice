@@ -2,5 +2,8 @@ const Redis = require('ioredis')
 const publisher = new Redis()
 
 async function publishLoc (geo) {
-  publisher.publish(geo)
+  await publisher.publish('deliverpartnerlocation', geo)
+  return 'success'
 }
+
+module.exports = { publishLoc }
