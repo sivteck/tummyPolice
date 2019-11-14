@@ -3,12 +3,14 @@ import { CartContext, CartProvider } from "./CartContext"
 
 const Checkout = () => {
   const [checkout, setCheckout] = useState({ cart: {}, bill: {} })
+  const [fetchStatus, setFetchStatus] = useState(false)
 
   async function fetchData() {
     try {
-      let res = await fetch("http://tummypolice.iyangi.com/api/v1/checkout")
+      let res = await fetch("https://tummypolice.iyangi.com/api/v1/checkout")
       let data = await res.json()
       setCheckout(data)
+      setFetchStatus(res.ok)
     } catch (error) {
       console.log(error)
     }
@@ -20,10 +22,10 @@ const Checkout = () => {
 
   function placeOrder() {
     let location = navigator.geolocation.watchPosition(function(position) {
-      return (position.coords.latitude, position.coords.longitude)
+      return position.coords.latitude, position.coords.longitude
       console.log(location)
     })
-    fetch("http://tummypolice.iyangi.com/api/v1/order", {
+    fetch("https://tummypolice.iyangi.com/api/v1/order", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -35,7 +37,7 @@ const Checkout = () => {
       .then(() => {})
   }
 
-  return (
+  return { fetchStatus } ? (
     <CartProvider>
       <div>
         <h1>Items</h1>
@@ -64,6 +66,8 @@ const Checkout = () => {
         <button onClick={placeOrder}>Order</button>
       </div>
     </CartProvider>
+  ) : (
+    <div>unable to fetch bill details</div>
   )
 }
 

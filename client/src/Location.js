@@ -21,13 +21,14 @@ function Location() {
 
   async function fetchData() {
     try {
+      console.log("inp from fetch",inputValue)
       let res = await fetch(
-        `http://tummypolice.iyangi.com/api/v1/place/autocomplete/json?input=${inputValue}`
-      );
-      let data = await res.json();
+        `https://tummypolice.iyangi.com/api/v1/place/autocomplete/json?input=${inputValue}`
+      )
+      let data = await res.json()
       setLocation(data);
     } catch (error) {
-      // console.log(error)
+      console.log(error)
     }
   }
 
@@ -35,9 +36,11 @@ function Location() {
     console.log("length", event.target.value.length);
     if (event.target.value.length > 3) {
       setInputValue(event.target.value);
-      fetchData();
+      // fetchData();
     }
-  };
+  }
+
+useEffect(() => {fetchData()}, [inputValue])
 
   const populateDataList = () => {
     if (inputValue.length > 0) {
@@ -48,19 +51,18 @@ function Location() {
           <datalist id="places">
             {location.predictions.map(item => (
               <option key={item.description} value={item.description}>
-                {" "}
-                {item.description}{" "}
+                {item.description}
               </option>
             ))}
           </datalist>
         </div>
-      );
+      )
     }
-  };
+  }
 
   return (
     <div class="location">
-      <form>
+      <form >
         <input
           id="input"
           type="text"

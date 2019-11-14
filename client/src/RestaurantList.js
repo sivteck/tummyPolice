@@ -7,11 +7,13 @@ const RestaurantList = ({ location }) => {
   const { userDetails } = location.state
   const dataset = []
   const [restaurant, setRestaurant] = useState(dataset)
+  const [fetchStatus, setFetchStatus] = useState(false)
 
   async function fetchData() {
     try {
-      let res = await fetch("http://tummypolice.iyangi.com/api/v1/restaurants")
+      let res = await fetch("https://tummypolice.iyangi.com/api/v1/restaurants")
       let data = await res.json()
+      setFetchStatus(res.ok)
       setRestaurant(data)
     } catch (error) {
       console.log(error)
@@ -21,7 +23,7 @@ const RestaurantList = ({ location }) => {
     fetchData()
   }, [])
 
-  return (
+  return { fetchStatus } ? (
     <div className="restaurantList">
       <NavBar userDetails={userDetails} />
       <h1> Popular Brands </h1>
@@ -29,6 +31,8 @@ const RestaurantList = ({ location }) => {
         <Restaurant id={item.id} name={item.name} img={Food} key={item.id} />
       ))}
     </div>
+  ) : (
+    <div>unable to fetch restaurant list</div>
   )
 }
 export default RestaurantList

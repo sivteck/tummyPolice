@@ -5,9 +5,9 @@ import RestaurantList from "./RestaurantList"
 import Menu from "./Menu"
 import Checkout from "./Checkout"
 import Cart from "./Cart"
-
 import Login from "./Login"
 import Signup from "./Signup"
+
 function App() {
   return (
     <Router>

@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { CartContext } from "./CartContext"
 import Itemimg from "./images/item.webp"
 
 const Item = props => {
   const [cartItems, setCartItems] = useContext(CartContext)
+  const [fetchStatus, setFetchStatus] = useState(false)
 
   const addToCart = () => {
     let key = props.id
@@ -33,22 +34,33 @@ const Item = props => {
     }
   }
 
-  useEffect(() => {
-    fetch("http://tummypolice.iyangi.com/api/v1/cart", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        restaurantId: props.restaurantId,
-        cart: cartItems.cart
+  const fetchData = async () => {
+    try {
+      let res = await fetch("https://tummypolice.iyangi.com/api/v1/cart", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          restaurantId: props.restaurantId,
+          cart: cartItems.cart
+        })
       })
-    })
-      .then(resp => resp.json())
-      .then(() => {})
+      let result = await res.json()
+      setFetchStatus(res.ok)
+      // console.log("result",result)
+      // console.log('res', res.ok)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
   }, [cartItems])
-  return (
+
+  return { fetchStatus } ? (
     <div className="item">
       <img src={Itemimg} />
       <h3>{props.name}</h3>
@@ -56,6 +68,8 @@ const Item = props => {
       <h4>{props.price}</h4>
       <button onClick={addToCart}>Add to cart</button>
     </div>
+  ) : (
+    <div>Unable to fetch items</div>
   )
 }
 export default Item

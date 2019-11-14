@@ -3,32 +3,33 @@ import useForm from "react-hook-form"
 import { Link } from "react-router-dom"
 
 const Signup = () => {
-  const [statusCode, setStatusCode] = useState()
+  const [status, setStatus] = useState(false)
+  const [response, setResponse] = useState({})
   const { register, errors, handleSubmit } = useForm({
     mode: "onBlur"
   })
   const onSubmit = async data => {
-    let res = await fetch("http://tummypolice.iyangi.com/api/v1/register", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-    setStatusCode(res.status)
-  }
-
-  function renderPage() {
-    if (statusCode === 201) {
-      return (
-        <div>
-          <h1>Your accoount has been created successfully</h1>
-          <Link to="/login"> Click here to Login </Link>
-        </div>
-      )
+    try {
+      let res = await fetch("https://tummypolice.iyangi.com/api/v1/register", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      let result = await res.json()
+      console.log("res from await", res, result)
+      setResponse(result)
+      setStatus(res.ok)
+    } catch (error) {
+      console.log(error)
     }
-    if (statusCode === 200) {
+  }
+  console.log("status", status)
+  console.log("response", response)
+  function renderPage() {
+    if (status && response.hasOwnProperty("error")) {
       return (
         <div>
           <h1>Account already exist</h1>
@@ -44,6 +45,15 @@ const Signup = () => {
         </div>
       )
     }
+    if (status) {
+      return (
+        <div>
+          <h1>Your accoount has been created successfully</h1>
+          <Link to="/login"> Click here to Login </Link>
+        </div>
+      )
+    }
+
     return (
       <div>
         <h1>Sign Up</h1>

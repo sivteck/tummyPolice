@@ -8,7 +8,7 @@ const Restaurant = props => {
     <Link to={id}>
       <div className="restaurant">
         <div className="rest">
-          <img src={props.img} alt="Restaurant"/>
+          <img src={props.img} alt="Restaurant" />
           <div>{props.name}</div>
         </div>
       </div>

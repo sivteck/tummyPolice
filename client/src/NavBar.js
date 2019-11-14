@@ -23,13 +23,15 @@ const inlineStyle = {
 
 const NavBar = props => {
   const [cartItems, setCartItems] = useState({ cart: {} })
+  const [fetchStatus, setFetchStatus] = useState(false)
+
   let cartLength = Object.keys(cartItems.cart).length
   let userName = props.userDetails.username
   async function fetchData() {
     try {
-      let res = await fetch("http://tummypolice.iyangi.com/api/v1/cart")
+      let res = await fetch("https://tummypolice.iyangi.com/api/v1/cart")
       let data = await res.json()
-
+      setFetchStatus(res.ok)
       setCartItems(data)
     } catch (error) {
       console.log(error)
@@ -40,7 +42,7 @@ const NavBar = props => {
     fetchData()
   }, [])
 
-  return (
+  return { fetchStatus } ? (
     <StyledAppBar position="static">
       <Toolbar>
         <img src={Logo} alt="logo" />
@@ -71,6 +73,8 @@ const NavBar = props => {
         </Link>
       </Toolbar>
     </StyledAppBar>
+  ) : (
+    <div>Unable to create Nav bar </div>
   )
 }
 

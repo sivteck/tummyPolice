@@ -25,7 +25,7 @@ function Homepage() {
             <img className="logo" src={Logo} alt="" />
           </div>
           <div>
-            <StyledLink to="/login">Login</StyledLink>{" "}
+            <StyledLink to="/login">Login</StyledLink>
           </div>
           <div>
             <StyledLink to="/signup">Sign up</StyledLink>

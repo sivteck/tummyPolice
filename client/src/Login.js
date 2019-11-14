@@ -58,35 +58,38 @@ const Submit = styled.input.attrs({
 `
 
 const Login = () => {
-  const [isLoggedIn, setLogIn] = useState()
+  const [isLoggedIn, setLogIn] = useState(false)
+  // const [response, setResponse] = useState({})
   const [userDetails, setUserDetails] = useState({})
   const { register, errors, handleSubmit } = useForm({
     mode: "onBlur"
   })
   const onSubmit = async data => {
-    let res = await fetch("http://tummypolice.iyangi.com/api/v1/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
+    try {
+      let res = await fetch("https://tummypolice.iyangi.com/api/v1/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+  
+      let result = await res.json()
+      console.log("res from login fetch", res)
+      console.log("result from login", result)
+      setUserDetails(result)
+      setLogIn(res.ok)
+      // setResponse(result)
 
-    let result = await res.json()
-    setUserDetails(result)
-    setLogIn(res.status)
-  }
-
-  function renderPage() {
-    if (isLoggedIn === 200) {
-      return (
-        <div>
-          <Redirect to={{ pathname: "/restaurant", state: { userDetails } }} />{" "}
-        </div>
-      )
+    } catch (error) {
+      console.log(error)
     }
-    if (isLoggedIn === 401) {
+  }
+console.log("property", userDetails.hasOwnProperty('error'))
+  function renderPage() {
+
+    if (isLoggedIn && userDetails.hasOwnProperty('error')) {
       return (
         <div>
           <h1>Account doesn't exist</h1>
@@ -102,6 +105,14 @@ const Login = () => {
         </div>
       )
     }
+    if (isLoggedIn) {
+      return (
+        <div>
+          <Redirect to={{ pathname: "/restaurant", state: { userDetails } }} />{" "}
+        </div>
+      )
+    }
+    
     return (
       <div>
         <a class="closebtn">&times;</a>
