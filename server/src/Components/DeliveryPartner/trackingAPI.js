@@ -1,4 +1,4 @@
-const Websocket = require('ws')
+const WebSocket = require('ws')
 const express = require('express')
 const { publishLoc } = require('./trackingDAL.js')
 
