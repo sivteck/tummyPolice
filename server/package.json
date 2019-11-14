@@ -17,6 +17,7 @@
     "ioredis",
     "bcrypt",
     "express-session",
-    "connect-redis"
+    "connect-redis",
+    "ws"
   ]
 }
