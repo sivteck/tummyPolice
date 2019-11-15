@@ -5,7 +5,7 @@ const register = async (req, res) => {
   try {
     let id = await createUser(req.body.username, req.body.password, req.body.email, req.body.phone)
     insertCart(id, { 'restaurantId': '', cart: {}})
-    if (!id) res.status(200).json({ msg: 'failed to create user, phone number or email already exists' })
+    if (!id) res.status(200).json({ error: 'failed to create user, phone number or email already exists' })
     else res.status(201).json({ id: id, username: req.body.username, email: req.body.email, phone: req.body.phone })
   }
   catch (error) {
@@ -19,7 +19,7 @@ const login = async (req, res) => {
     // let passwordMatch = await verifyPassword(req.body.userName, req.body.password)
     // console.log('passwordMatch: ', passwordMatch)
     let phoneVerification = await verifyPhone(req.body.phone)
-    if (!phoneVerification.username) res.status(401).json({ msg: 'invalid phone number' })
+    if (!phoneVerification.username) res.status(200).json({ error: 'invalid phone number' })
     else {
       req.session.phone = req.body.phone
       req.session.loggedin = true
@@ -29,7 +29,7 @@ const login = async (req, res) => {
   }
   catch (error) {
     console.error('Unable to login user, ', error)
-    res.status(401).json({ msg: 'login failure, invalid phone number' })
+    res.status(200).json({ error: 'login failure, invalid phone number' })
   }
 }
 
