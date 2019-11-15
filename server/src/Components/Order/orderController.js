@@ -6,6 +6,7 @@ function placeOrder (req, res) {
 }
 
 function trackOrder (req, res) {
+  orderTracking()
 }
 
 module.exports = { placeOrder, trackOrder }

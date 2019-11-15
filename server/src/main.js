@@ -4,12 +4,15 @@ const Redis = require('ioredis')
 const http = require('http')
 const https = require('https')
 const WebSocket = require('ws')
+const url = require('url')
 
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 
 const port = 8080
 const client = new Redis()
+
+const { orderTracking } = require('./Components/Order/orderDAL.js')
 
 const app = express()
 
@@ -60,10 +63,23 @@ app.use('/api/v1', require('./Components/Order/orderAPI.js'))
 const httpServer = http.createServer(app)
 const httpsServer = https.createServer(credentials, app)
 
-const webSocketServer = new WebSocket.Server({ server: httpsServer })
+
+const webSocketServer = new WebSocket.Server({ noServer: true })
+
 webSocketServer.on('connection', (webSocket) => {
+  orderTracking(webSocket)
   console.log('Clients: ', webSocketServer.clients.size)
   app.locals.clients = webSocketServer.clients
+})
+
+httpsServer.on('upgrade', function upgrade (request, socket, head) {
+  const pathname = url.parse(request.url).pathname
+  console.log(pathname)
+  if (pathname === '/api/v1/trackorder') {
+    webSocketServer.handleUpgrade(request, socket, head, function done (ws) {
+      webSocketServer.emit('connection', ws, request)
+    })
+  } else socket.destroy()
 })
 
 httpServer.listen(port, () => console.log("gonna kill your hunger starting from port", port))
