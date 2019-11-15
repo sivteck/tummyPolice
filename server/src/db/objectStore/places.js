@@ -5,6 +5,7 @@ let itemsInDescription = ['name', 'street', 'city']
 
 async function getPlaces (str) {
   try {
+    if (str.length < 3) return buildPlacesObj([], 'input.length < 3')
     const minStr = str.slice(0,-1) + String.fromCharCode(String(str[str.length-1].charCodeAt()+1))
     const res = await redis.zrevrangebylex('places', '[' + minStr, '[' + str)
     let placesInfo = getIds(res).map(getPlaceInfoById)
@@ -13,6 +14,7 @@ async function getPlaces (str) {
   }
   catch (error) {
     console.error(error)
+    return { error: 'unable to get places' }
   }
 }
 
@@ -29,8 +31,8 @@ async function getPlaceInfoById (id) {
   return res
 }
 
-function buildPlacesObj (placesInfo) {
-  let places = { status: "OK" }
+function buildPlacesObj (placesInfo, statusInfo = 'OK') {
+  let places = { status: statusInfo }
   places.predictions = placesInfo
   return places
 }

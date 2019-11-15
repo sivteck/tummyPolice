@@ -10,7 +10,7 @@ router.post('/deliverypartner/updatelocation', async (req, res) => {
     if (req.body) {
       await publishLoc(JSON.stringify(req.body))
     }
-    res.sendStatus(200)
+    res.json({ msg: 'update location success' })
   }
   catch (error) {
     console.error(error)

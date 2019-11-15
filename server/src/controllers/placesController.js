@@ -1,4 +1,4 @@
-const { getPlaces } = require("../db/objectStore/places.js")
+const { getPlaces } = require('../db/objectStore/places.js')
 
 async function autocompletePlaces (req, res) {
   try {
@@ -7,6 +7,7 @@ async function autocompletePlaces (req, res) {
     res.json(places)
   }
   catch (error) {
+    res.json({ error: 'invalid input string' })
     console.error(error)
   }
 }
