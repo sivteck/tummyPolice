@@ -5,9 +5,9 @@ import RestaurantList from "./RestaurantList"
 import Menu from "./Menu"
 import Checkout from "./Checkout"
 import Cart from "./Cart"
-
 import Login from "./Login"
 import Signup from "./Signup"
+
 function App() {
   return (
     <Router>
@@ -19,7 +19,6 @@ function App() {
           <Route exact path="/checkout" component={Checkout} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/login" component={Login} />
           <Route exact path="/cart" component={Cart} />
         </Switch>
       </div>

@@ -6,36 +6,34 @@ import Restaurant from "./images/2.png"
 import Order from "./images/3.png"
 import Food from "./images/4.png"
 import Location from "./Location"
-import Login from "./Login"
+import styled from "styled-components"
 
 function Homepage() {
+  const StyledLink = styled(Link)`
+    background-color: #db741e;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    text-decoration: none;
+  `
+
   return (
     <div classname="flex1">
       <div className="bg">
         <div className="flex2">
           <div className="logoDiv">
-            {" "}
             <img className="logo" src={Logo} alt="" />
           </div>
-          {/* <button className="login" >Login</button> */}
-
-          <Link to="/login">
-            {" "}
-            <div>
-              <button className="login">Login</button>
-            </div>
-          </Link>
-          <Link to="/signup">
-            {" "}
-            <div>
-              <button className="signup">Sign up</button>
-            </div>
-          </Link>
+          <div>
+            <StyledLink to="/login">Login</StyledLink>
+          </div>
+          <div>
+            <StyledLink to="/signup">Sign up</StyledLink>
+          </div>
         </div>
         <h1>Order food online from the best restaurants </h1>
         <h2> Enter your delivery location to get started </h2>
         <Location />
-
       </div>
 
       <div className="order">

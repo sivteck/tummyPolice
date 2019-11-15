@@ -8,17 +8,28 @@ import { useParams } from "react-router-dom"
 const Menu = props => {
   const menu = []
   const [menuItems, setMenuItems] = useState(menu)
+  const [fetchStatus, setFetchStatus] = useState(false)
 
   const { id } = useParams()
 
+  const fetchData = async () => {
+    try {
+      let res = await fetch(
+        `https://tummypolice.iyangi.com/api/v1/menu?restaurantid=${id}`
+      )
+      let result = await res.json()
+      setFetchStatus(res.ok)
+      setMenuItems(result)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
-    fetch(`http://tummypolice.iyangi.com/api/v1/menu?restaurantid=${id}`)
-      .then(res => res.json())
-      .then(data => setMenuItems(data))
-      .catch(err => console.log(err))
+    fetchData()
   }, [])
 
-  return (
+  return { fetchStatus } ? (
     <CartProvider>
       <div className="menu">
         <div className="menuComponents1">
@@ -45,6 +56,8 @@ const Menu = props => {
         </div>
       </div>
     </CartProvider>
+  ) : (
+    <div>Unable to fetch cart</div>
   )
 }
 

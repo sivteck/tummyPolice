@@ -1,10 +1,19 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { CartContext } from "./CartContext"
 import { Link } from "react-router-dom"
+import styled from "styled-components"
+
+const StyledLink = styled(Link)`
+  background-color: #db741e;
+  color: #fff;
+  border: none;
+  padding: 15px;
+  text-decoration: none;
+`
 
 const Cart = () => {
   const [cartItems, setCartItems] = useContext(CartContext)
-  console.log("carttt", cartItems)
+  const [fetchStatus, setFetchStatus] = useState(false)
 
   const totalPrice = Object.keys(cartItems.cart).reduce(
     (sum, key) => sum + cartItems.cart[key].price,
@@ -14,13 +23,12 @@ const Cart = () => {
     (sum, key) => sum + cartItems.cart[key].quantity,
     0
   )
-  console.log("total items:" + totalPrice)
 
   async function fetchData() {
     try {
-      let res = await fetch("http://tummypolice.iyangi.com/api/v1/cart")
+      let res = await fetch("https://tummypolice.iyangi.com/api/v1/cart")
       let data = await res.json()
-
+      setFetchStatus(res.ok)
       setCartItems(data)
     } catch (error) {
       console.log(error)
@@ -35,7 +43,6 @@ const Cart = () => {
     let item = event.target.parentElement.id
     let { name, price, quantity } = cartItems.cart[item]
     let priceOfOneItem = price / quantity
-
     quantity -= 1
     if (quantity === 0) {
       const newObj = Object.assign({}, cartItems.cart)
@@ -57,7 +64,7 @@ const Cart = () => {
     }
   }
 
-  function incQuantity(event){
+  function incQuantity(event) {
     let item = event.target.parentElement.id
     let { name, price, quantity } = cartItems.cart[item]
     let priceOfOneItem = price / quantity
@@ -70,7 +77,6 @@ const Cart = () => {
       })
     }
     setCartItems(cartValue)
-
   }
 
   function renderCartItems(cart) {
@@ -87,7 +93,7 @@ const Cart = () => {
     ))
   }
 
-  return (
+  return { fetchStatus } ? (
     <div>
       {Object.keys(cartItems.cart).length === 0 ? (
         <div>
@@ -112,12 +118,12 @@ const Cart = () => {
           <h4>Subtotal :&#8377;{totalPrice}</h4>
           <br />
           <br />
-          <Link to="/checkout">
-            <button>Checkout</button>
-          </Link>
+          <StyledLink to="/checkout">Checkout</StyledLink>
         </div>
       )}
     </div>
+  ) : (
+    <div>unable to fetch cart</div>
   )
 }
 

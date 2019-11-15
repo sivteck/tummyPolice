@@ -3,68 +3,61 @@ import useForm from "react-hook-form"
 import { Link } from "react-router-dom"
 
 const Signup = () => {
-  const [statusCode, setStatusCode] = useState()
+  const [status, setStatus] = useState(false)
+  const [responseBody, setResponseBody] = useState({})
   const { register, errors, handleSubmit } = useForm({
     mode: "onBlur"
   })
-  const onSubmit = (data, e) => {
-    // console.log('Submit event', e)
-    // alert(JSON.stringify(data))
-
-    fetch("http://tummypolice.iyangi.com/api/v1/register", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-      .then(resp => {
-        console.log(resp.status)
-        setStatusCode(resp.status)
-        return resp.json()
+  const onSubmit = async data => {
+    try {
+      let res = await fetch("https://tummypolice.iyangi.com/api/v1/register", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
       })
-      .then(response => console.log(response, response.id))
-  }
-
-  function renderPage() {
-    if (statusCode === 201) {
-      return (
-        <div>
-          <h1>Your accoount has been created successfully</h1>
-          <Link to="/login">
-            <a>Click here to Login</a>
-          </Link>
-        </div>
-      )
+      let result = await res.json()
+      console.log("res from await", res, result)
+      setResponseBody(result)
+      setStatus(res.ok)
+    } catch (error) {
+      console.log(error)
     }
-    if (statusCode === 200) {
+  }
+  console.log("status", status)
+  console.log("response", responseBody)
+  function renderPage() {
+    if (status && responseBody.hasOwnProperty("error")) {
       return (
         <div>
           <h1>Account already exist</h1>
           <div>
-            {" "}
-            <Link to="/login">
-              <a>Click here to Login</a>
-            </Link>{" "}
+            <Link to="/login"> Click here to Login </Link>
           </div>
           Or
           <div>
-            {" "}
             <a href="javascript:window.location.reload(true)">
               Click here to Create New Account
-            </a>{" "}
+            </a>
           </div>
         </div>
       )
     }
+    if (status) {
+      return (
+        <div>
+          <h1>Your accoount has been created successfully</h1>
+          <Link to="/login"> Click here to Login </Link>
+        </div>
+      )
+    }
+
     return (
       <div>
         <h1>Sign Up</h1>
-        Or{" "}
-        <Link to="/login">
-          <a>Login to your account</a>
-        </Link>
+        Or <Link to="/login">Login to your account</Link>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label>Phone number</label>
@@ -110,7 +103,7 @@ const Signup = () => {
             {errors.password && "Password should be min 6 chars"}
           </div>
 
-          <input type="submit" />
+          <input type="submit" value="Sign Up" />
         </form>
       </div>
     )

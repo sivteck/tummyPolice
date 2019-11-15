@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react"
 import Restaurant from "./Restaurant"
 import Food from "./images/food.webp"
-import NavBar from './NavBar'
+import NavBar from "./NavBar"
+
 const RestaurantList = ({ location }) => {
-  console.log("props", location.state.userDetails)
-  const {userDetails} = location.state
+  const { userDetails } = location.state
   const dataset = []
   const [restaurant, setRestaurant] = useState(dataset)
+  const [fetchStatus, setFetchStatus] = useState(false)
 
   async function fetchData() {
     try {
-      let res = await fetch("http://tummypolice.iyangi.com/api/v1/restaurants")
+      let res = await fetch("https://tummypolice.iyangi.com/api/v1/restaurants")
       let data = await res.json()
+      setFetchStatus(res.ok)
       setRestaurant(data)
     } catch (error) {
       console.log(error)
@@ -21,14 +23,16 @@ const RestaurantList = ({ location }) => {
     fetchData()
   }, [])
 
-  return (
+  return { fetchStatus } ? (
     <div className="restaurantList">
-      <NavBar userDetails={userDetails}/>
+      <NavBar userDetails={userDetails} />
       <h1> Popular Brands </h1>
       {restaurant.map(item => (
         <Restaurant id={item.id} name={item.name} img={Food} key={item.id} />
       ))}
     </div>
+  ) : (
+    <div>unable to fetch restaurant list</div>
   )
 }
 export default RestaurantList

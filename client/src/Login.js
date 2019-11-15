@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   padding: 20px;
 `
 
-const A = styled.a`
+const StyledLink = styled(Link)`
   color: #db741e;
 `
 
@@ -58,63 +58,66 @@ const Submit = styled.input.attrs({
 `
 
 const Login = () => {
-  const [isLoggedIn, setLogIn] = useState()
+  const [isLoggedIn, setLogIn] = useState(false)
+  // const [response, setResponse] = useState({})
   const [userDetails, setUserDetails] = useState({})
   const { register, errors, handleSubmit } = useForm({
     mode: "onBlur"
   })
   const onSubmit = async data => {
+    try {
+      let res = await fetch("https://tummypolice.iyangi.com/api/v1/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+  
+      let result = await res.json()
+      console.log("res from login fetch", res)
+      console.log("result from login", result)
+      setUserDetails(result)
+      setLogIn(res.ok)
+      // setResponse(result)
 
-    let res = await fetch("http://tummypolice.iyangi.com/api/v1/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-
-    let result = await res.json()
-    setUserDetails(result)
-    setLogIn(res.status)
+    } catch (error) {
+      console.log(error)
+    }
   }
-
+console.log("property", userDetails.hasOwnProperty('error'))
   function renderPage() {
-    if (isLoggedIn === 200) {
+
+    if (isLoggedIn && userDetails.hasOwnProperty('error')) {
+      return (
+        <div>
+          <h1>Account doesn't exist</h1>
+          <div>
+            <a href="javascript:window.location.reload(true)">
+              Click here to Login
+            </a>
+          </div>
+          Or
+          <div>
+            <Link to="/signup">Click here to Create New Account</Link>
+          </div>
+        </div>
+      )
+    }
+    if (isLoggedIn) {
       return (
         <div>
           <Redirect to={{ pathname: "/restaurant", state: { userDetails } }} />{" "}
         </div>
       )
     }
-    if (isLoggedIn === 401) {
-      return (
-        <div>
-          <h1>Account doesn't exist</h1>
-          <div>
-            {" "}
-            <a href="javascript:window.location.reload(true)">
-              Click here to Login
-            </a>{" "}
-          </div>
-          Or
-          <div>
-            {" "}
-            <Link to="/signup">
-            Click here to Create New Account
-            </Link>{" "}
-          </div>
-        </div>
-      )
-    }
+    
     return (
       <div>
         <a class="closebtn">&times;</a>
         <Title>Login</Title>
-        Or{" "}
-        <Link to="/signup">
-          <A>Create your account</A>
-        </Link>
+        Or <StyledLink to="/signup">Create your account</StyledLink>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Label>Phone number</Label>
           <Input
@@ -125,7 +128,6 @@ const Login = () => {
           />
           {errors.phone && "Enter valid phone number"}
           <Submit type="submit" value="Login" />
-          {/* <Button onClick={onSubmit}> Login </Button> */}
         </form>
       </div>
     )
