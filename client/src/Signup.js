@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 const Signup = () => {
   const [status, setStatus] = useState(false)
-  const [response, setResponse] = useState({})
+  const [responseBody, setResponseBody] = useState({})
   const { register, errors, handleSubmit } = useForm({
     mode: "onBlur"
   })
@@ -20,16 +20,16 @@ const Signup = () => {
       })
       let result = await res.json()
       console.log("res from await", res, result)
-      setResponse(result)
+      setResponseBody(result)
       setStatus(res.ok)
     } catch (error) {
       console.log(error)
     }
   }
   console.log("status", status)
-  console.log("response", response)
+  console.log("response", responseBody)
   function renderPage() {
-    if (status && response.hasOwnProperty("error")) {
+    if (status && responseBody.hasOwnProperty("error")) {
       return (
         <div>
           <h1>Account already exist</h1>

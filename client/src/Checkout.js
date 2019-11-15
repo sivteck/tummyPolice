@@ -1,9 +1,15 @@
 import React, { useContext, useEffect, useState } from "react"
 import { CartContext, CartProvider } from "./CartContext"
+import Map from './delivery executive app/Map.js'
 
 const Checkout = () => {
   const [checkout, setCheckout] = useState({ cart: {}, bill: {} })
   const [fetchStatus, setFetchStatus] = useState(false)
+  const [liveLocation, setLiveLocation] = useState({
+    latitude: "",
+    longitude: ""
+  });
+ 
 
   async function fetchData() {
     try {
@@ -21,23 +27,17 @@ const Checkout = () => {
   }, [])
 
   function placeOrder() {
-    let location = navigator.geolocation.watchPosition(function(position) {
-      return position.coords.latitude, position.coords.longitude
-      console.log(location)
-    })
-    fetch("https://tummypolice.iyangi.com/api/v1/order", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ checkout, location })
-    })
-      .then(resp => resp.json())
-      .then(() => {})
+    navigator.geolocation.watchPosition(function(position) {
+      setLiveLocation({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      });
+    });  
   }
 
-  return { fetchStatus } ? (
+  return { fetchStatus } ? (<div className = "checkoutFlex">
+    <div className = "flexContainer">{<Map />}</div>
+    <div className = "flexContainer">
     <CartProvider>
       <div>
         <h1>Items</h1>
@@ -65,7 +65,7 @@ const Checkout = () => {
         </div>
         <button onClick={placeOrder}>Order</button>
       </div>
-    </CartProvider>
+    </CartProvider></div></div>
   ) : (
     <div>unable to fetch bill details</div>
   )

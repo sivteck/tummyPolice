@@ -54,15 +54,15 @@ body {
     font-weight: 300;
 }
 
-.location {
+/* .location {
     display: table;
     margin-left: auto;
     margin-right: auto;
     position: relative;
     /* border: 1px solid #bebfc5; */
-    height: 50px;
+    /* height: 50px;
     width: 500px;
-}
+} */ 
 
 button.findfood {
     position: absolute;
@@ -77,20 +77,20 @@ button.findfood, button.login, button.signup {
     border: none;
 }
 
-.location input {
+/* .location input {
     border: none;
     padding: 15px;
     width: 80%;
-}
+} */
 
-.location span {
+/* .location span {
     position: absolute;
     right: 60px;
     padding: 18px;
     color: #535665;
     font-size: 13px;
     cursor: pointer;
-}
+} */
 
 .flex-1 {
     /* margin-left: 10%; */
@@ -253,6 +253,10 @@ label {
     font-weight: 200;
 }
 
+[list]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
@@ -282,4 +286,11 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 }
 .changeQuantity div{
     border: 0.5px solid grey ;
+}
+.checkoutFlex{
+    display:flex;
+    flex-direction: row;
+}
+.flexContainer{
+    width: 50%;
 }

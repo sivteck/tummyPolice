@@ -4,30 +4,20 @@ import L from "leaflet"
 
 function Map() {
   var map = () => {
-    var mymap = L.map("mapid").setView([12.9614641, 77.6441892], 40)
+    var mymap = L.map("mapid")
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mymap)
 
-    L.marker([12.9614641, 77.6441892])
-      .addTo(mymap)
-      .bindPopup("A pretty CSS3 popup.<br> Easily customizable.")
-      .openPopup()
+    mymap.locate({ setView: true, maxZoom: 50, watch: true })
 
-    L.circle([12.9617, 77.6444], {
-      color: "red",
-      fillColor: "red",
-      fillOpacity: 0.5,
-      radius: 3
-    }).addTo(mymap)
-
-    function onMapClick(e) {
-      alert("You clicked the map at " + e.latlng)
+    function onLocationFound(e) {
+      L.marker(e.latlng).addTo(mymap)
     }
 
-    mymap.on("click", onMapClick)
+    mymap.on("locationfound", onLocationFound)
   }
 
   useEffect(() => {
