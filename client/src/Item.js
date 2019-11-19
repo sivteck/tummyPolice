@@ -3,26 +3,26 @@ import { CartContext } from "./CartContext"
 import Itemimg from "./images/item.webp"
 
 const Item = props => {
-  const [cartItems, setCartItems] = useContext(CartContext)
+  const [cart, setCart] = useContext(CartContext)
   const [fetchStatus, setFetchStatus] = useState(false)
 
   const addToCart = () => {
     let key = props.id
-    if (key in cartItems.cart) {
-      let { quantity, price } = cartItems.cart[key]
+    if (key in cart.cartItems) {
+      let { quantity, price } = cart.cartItems[key]
       quantity += 1
       price = props.price * quantity
       let cartValue = {
         restaurantId: props.restaurantId,
-        cart: Object.assign(cartItems.cart, {
+        cartItems: Object.assign(cart.cartItems, {
           [props.id]: { name: props.name, price: price, quantity: quantity }
         })
       }
-      setCartItems(cartValue)
+      setCart(cartValue)
     } else {
       let cartValue = {
         restaurantId: props.restaurantId,
-        cart: Object.assign(cartItems.cart, {
+        cartItems: Object.assign(cart.cartItems, {
           [props.id]: {
             name: props.name,
             price: props.price,
@@ -30,7 +30,7 @@ const Item = props => {
           }
         })
       }
-      setCartItems(cartValue)
+      setCart(cartValue)
     }
   }
 
@@ -44,7 +44,7 @@ const Item = props => {
         },
         body: JSON.stringify({
           restaurantId: props.restaurantId,
-          cart: cartItems.cart
+          cartItems: cart.cartItems
         })
       })
       let result = await res.json()
@@ -58,7 +58,7 @@ const Item = props => {
 
   useEffect(() => {
     fetchData()
-  }, [cartItems])
+  }, [cart])
 
   return { fetchStatus } ? (
     <div className="item">

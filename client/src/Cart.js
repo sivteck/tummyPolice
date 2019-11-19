@@ -12,15 +12,15 @@ const StyledLink = styled(Link)`
 `
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useContext(CartContext)
+  const [cart, setCart] = useContext(CartContext)
   const [fetchStatus, setFetchStatus] = useState(false)
 
-  const totalPrice = Object.keys(cartItems.cart).reduce(
-    (sum, key) => sum + cartItems.cart[key].price,
+  const totalPrice = Object.keys(cart.cartItems).reduce(
+    (sum, key) => sum + cart.cartItems[key].price,
     0
   )
-  const totalItems = Object.keys(cartItems.cart).reduce(
-    (sum, key) => sum + cartItems.cart[key].quantity,
+  const totalItems = Object.keys(cart.cartItems).reduce(
+    (sum, key) => sum + cart.cartItems[key].quantity,
     0
   )
 
@@ -29,7 +29,7 @@ const Cart = () => {
       let res = await fetch("https://tummypolice.iyangi.com/api/v1/cart")
       let data = await res.json()
       setFetchStatus(res.ok)
-      setCartItems(data)
+      setCart(data)
     } catch (error) {
       console.log(error)
     }
@@ -41,68 +41,68 @@ const Cart = () => {
 
   function decQuantity(event) {
     let item = event.target.parentElement.id
-    let { name, price, quantity } = cartItems.cart[item]
+    let { name, price, quantity } = cart.cartItems[item]
     let priceOfOneItem = price / quantity
     quantity -= 1
     if (quantity === 0) {
-      const newObj = Object.assign({}, cartItems.cart)
+      const newObj = Object.assign({}, cart.cartItems)
       delete newObj[item]
       let cartValue = {
-        restaurantId: cartItems.restaurantId,
-        cart: newObj
+        restaurantId: cart.restaurantId,
+        cartItems: newObj
       }
-      setCartItems(cartValue)
+      setCart(cartValue)
     } else {
       price = priceOfOneItem * quantity
       let cartValue = {
-        restaurantId: cartItems.restaurantId,
-        cart: Object.assign(cartItems.cart, {
+        restaurantId: cart.restaurantId,
+        cartItems: Object.assign(cart.cartItems, {
           [item]: { name: name, price: price, quantity: quantity }
         })
       }
-      setCartItems(cartValue)
+      setCart(cartValue)
     }
   }
 
   function incQuantity(event) {
     let item = event.target.parentElement.id
-    let { name, price, quantity } = cartItems.cart[item]
+    let { name, price, quantity } = cart.cartItems[item]
     let priceOfOneItem = price / quantity
     quantity += 1
     price = priceOfOneItem * quantity
     let cartValue = {
-      restaurantId: cartItems.restaurantId,
-      cart: Object.assign(cartItems.cart, {
+      restaurantId: cart.restaurantId,
+      cartItems: Object.assign(cart.cartItems, {
         [item]: { name: name, price: price, quantity: quantity }
       })
     }
-    setCartItems(cartValue)
+    setCart(cartValue)
   }
 
-  function renderCartItems(cart) {
-    return Object.keys(cart).map(item => (
+  function renderCartItems(cartItems) {
+    return Object.keys(cartItems).map(item => (
       <div className="cartItem">
-        <div> {cart[item].name}</div>
+        <div> {cartItems[item].name}</div>
         <div className="changeQuantity" id={item}>
           <button onClick={decQuantity}>-</button>
-          <div> {cart[item].quantity}</div>
+          <div> {cartItems[item].quantity}</div>
           <button onClick={incQuantity}>+</button>
         </div>
-        <div> &#8377; {cart[item].price}</div>
+        <div> &#8377; {cartItems[item].price}</div>
       </div>
     ))
   }
 
   return { fetchStatus } ? (
     <div>
-      {Object.keys(cartItems.cart).length === 0 ? (
+      {Object.keys(cart.cartItems).length === 0 ? (
         <div>
           <h1>Cart Empty</h1>
         </div>
       ) : (
         <div>
           <h1>Cart</h1>
-          {Object.keys(cartItems.cart).length === 1 ? (
+          {Object.keys(cart.cartItems).length === 1 ? (
             <div>
               <p>{totalItems} ITEM</p>
             </div>
@@ -112,7 +112,7 @@ const Cart = () => {
             </div>
           )}
 
-          {renderCartItems(cartItems.cart)}
+          {renderCartItems(cart.cartItems)}
           <br />
           <br />
           <h4>Subtotal :&#8377;{totalPrice}</h4>

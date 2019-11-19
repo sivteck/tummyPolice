@@ -3,7 +3,7 @@ import { CartContext, CartProvider } from "./CartContext"
 import Map from './delivery executive app/Map.js'
 
 const Checkout = () => {
-  const [checkout, setCheckout] = useState({ cart: {}, bill: {} })
+  const [checkout, setCheckout] = useState({ cartItems: {}, bill: {} })
   const [fetchStatus, setFetchStatus] = useState(false)
   const [liveLocation, setLiveLocation] = useState({
     latitude: "",
@@ -41,11 +41,11 @@ const Checkout = () => {
     <CartProvider>
       <div>
         <h1>Items</h1>
-        {Object.keys(checkout.cart).map(item => (
+        {Object.keys(checkout.cartItems).map(item => (
           <div className="cartItem">
-            <div> {checkout.cart[item].name}</div>
-            <div> {checkout.cart[item].quantity}</div>
-            <div> &#8377; {checkout.cart[item].price}</div>
+            <div> {checkout.cartItems[item].name}</div>
+            <div> {checkout.cartItems[item].quantity}</div>
+            <div> &#8377; {checkout.cartItems[item].price}</div>
           </div>
         ))}
         <h1>Bill Details</h1>
