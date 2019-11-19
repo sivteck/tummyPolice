@@ -58,7 +58,7 @@ const Submit = styled.input.attrs({
 `
 
 const Login = () => {
-  const [isLoggedIn, setLogIn] = useState(false)
+  const [isStatusOk, setStatusOk] = useState(false)
   // const [response, setResponse] = useState({})
   const [userDetails, setUserDetails] = useState({})
   const { register, errors, handleSubmit } = useForm({
@@ -74,66 +74,56 @@ const Login = () => {
         },
         body: JSON.stringify(data)
       })
-  
+
       let result = await res.json()
       console.log("res from login fetch", res)
       console.log("result from login", result)
       setUserDetails(result)
-      setLogIn(res.ok)
+      setStatusOk(res.ok)
       // setResponse(result)
-
     } catch (error) {
       console.log(error)
+      setStatusOk(false)
     }
   }
-console.log("property", userDetails.hasOwnProperty('error'))
+  
+  console.log("property", userDetails.hasOwnProperty("error"))
+  
   function renderPage() {
-
-    if (isLoggedIn && userDetails.hasOwnProperty('error')) {
+    if (isStatusOk && userDetails.hasOwnProperty("error")) {
       return (
         <div>
-          <h1>Account doesn't exist</h1>
-          <div>
-            <a href="javascript:window.location.reload(true)">
-              Click here to Login
-            </a>
-          </div>
-          Or
-          <div>
-            <Link to="/signup">Click here to Create New Account</Link>
-          </div>
+          <p>Account doesn't exist</p>
         </div>
       )
     }
-    if (isLoggedIn) {
+    if (isStatusOk) {
       return (
         <div>
           <Redirect to={{ pathname: "/restaurant", state: { userDetails } }} />{" "}
         </div>
       )
     }
-    
-    return (
-      <div>
-        <a class="closebtn">&times;</a>
-        <Title>Login</Title>
-        Or <StyledLink to="/signup">Create your account</StyledLink>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Label>Phone number</Label>
-          <Input
-            type="number"
-            name="phone"
-            ref={register({ required: true, pattern: /^\d{10}$/ })}
-            placeholder="Phone number"
-          />
-          {errors.phone && "Enter valid phone number"}
-          <Submit type="submit" value="Login" />
-        </form>
-      </div>
-    )
   }
 
-  return <Wrapper>{renderPage()}</Wrapper>
+  return (
+    <Wrapper>
+      <Title>Login</Title>
+      Or <StyledLink to="/signup">Create your account</StyledLink>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Label>Phone number</Label>
+        <Input
+          type="number"
+          name="phone"
+          ref={register({ required: true, pattern: /^\d{10}$/ })}
+          placeholder="Phone number"
+        />
+        {errors.phone && "Enter valid phone number"}
+        <Submit type="submit" value="Login" />
+        {renderPage()}
+      </form>
+    </Wrapper>
+  )
 }
 
 export default Login
