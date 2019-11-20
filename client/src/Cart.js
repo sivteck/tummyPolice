@@ -12,7 +12,7 @@ const StyledLink = styled(Link)`
 `
 
 const Cart = () => {
-  const [cart, setCart] = useContext(CartContext)
+  const [cart,dispatch] = useContext(CartContext)
   const [fetchStatus, setFetchStatus] = useState(false)
 
   const totalPrice = Object.keys(cart.cartItems).reduce(
@@ -28,8 +28,12 @@ const Cart = () => {
     try {
       let res = await fetch("https://tummypolice.iyangi.com/api/v1/cart")
       let data = await res.json()
+      // setCart(data)
+      console.log("fetchData", data)
+      dispatch({type: 'SET_CART', data: data})
       setFetchStatus(res.ok)
-      setCart(data)
+     
+     
     } catch (error) {
       console.log(error)
     }
@@ -40,43 +44,15 @@ const Cart = () => {
   }, [])
 
   function decQuantity(event) {
-    let item = event.target.parentElement.id
-    let { name, price, quantity } = cart.cartItems[item]
-    let priceOfOneItem = price / quantity
-    quantity -= 1
-    if (quantity === 0) {
-      const newObj = Object.assign({}, cart.cartItems)
-      delete newObj[item]
-      let cartValue = {
-        restaurantId: cart.restaurantId,
-        cartItems: newObj
-      }
-      setCart(cartValue)
-    } else {
-      price = priceOfOneItem * quantity
-      let cartValue = {
-        restaurantId: cart.restaurantId,
-        cartItems: Object.assign(cart.cartItems, {
-          [item]: { name: name, price: price, quantity: quantity }
-        })
-      }
-      setCart(cartValue)
-    }
+    dispatch({type: 'DECREMENT_ITEM' ,id: event.target.parentElement.id
+  })
+   
   }
 
   function incQuantity(event) {
-    let item = event.target.parentElement.id
-    let { name, price, quantity } = cart.cartItems[item]
-    let priceOfOneItem = price / quantity
-    quantity += 1
-    price = priceOfOneItem * quantity
-    let cartValue = {
-      restaurantId: cart.restaurantId,
-      cartItems: Object.assign(cart.cartItems, {
-        [item]: { name: name, price: price, quantity: quantity }
-      })
-    }
-    setCart(cartValue)
+    dispatch({type: 'INCREMENT_ITEM' ,id: event.target.parentElement.id
+  })
+    // setCart(cartValue)
   }
 
   function renderCartItems(cartItems) {

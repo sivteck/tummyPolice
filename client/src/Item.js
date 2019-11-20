@@ -3,38 +3,17 @@ import { CartContext } from "./CartContext"
 import Itemimg from "./images/item.webp"
 
 const Item = props => {
-  const [cart, setCart] = useContext(CartContext)
+  const [cart,dispatch] = useContext(CartContext)
+  console.log("props from Item", cart)
+  console.log("length of cart", Object.keys(cart).length)
   const [fetchStatus, setFetchStatus] = useState(false)
 
   const addToCart = () => {
-    let key = props.id
-    if (key in cart.cartItems) {
-      let { quantity, price } = cart.cartItems[key]
-      quantity += 1
-      price = props.price * quantity
-      let cartValue = {
-        restaurantId: props.restaurantId,
-        cartItems: Object.assign(cart.cartItems, {
-          [props.id]: { name: props.name, price: price, quantity: quantity }
-        })
-      }
-      setCart(cartValue)
-    } else {
-      let cartValue = {
-        restaurantId: props.restaurantId,
-        cartItems: Object.assign(cart.cartItems, {
-          [props.id]: {
-            name: props.name,
-            price: props.price,
-            quantity: props.quantity
-          }
-        })
-      }
-      setCart(cartValue)
-    }
+    dispatch({type: 'ADD_TO_CART', props: props
+  })
   }
-
   const fetchData = async () => {
+    if(Object.keys(cart).length > 1){
     try {
       let res = await fetch("https://tummypolice.iyangi.com/api/v1/cart", {
         method: "POST",
@@ -55,7 +34,7 @@ const Item = props => {
       console.log(error)
     }
   }
-
+}
   useEffect(() => {
     fetchData()
   }, [cart])

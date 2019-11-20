@@ -22,17 +22,17 @@ const inlineStyle = {
 }
 
 const NavBar = props => {
-  const [cartItems, setCartItems] = useState({ cart: {} })
+  const [cart, setCart] = useState({ cartItems: {} })
   const [fetchStatus, setFetchStatus] = useState(false)
 
-  let cartLength = Object.keys(cartItems.cart).length
+  let cartLength = Object.keys(cart.cartItems).length
   let userName = props.userDetails.username
   async function fetchData() {
     try {
       let res = await fetch("https://tummypolice.iyangi.com/api/v1/cart")
       let data = await res.json()
       setFetchStatus(res.ok)
-      setCartItems(data)
+      setCart(data)
     } catch (error) {
       console.log(error)
     }
