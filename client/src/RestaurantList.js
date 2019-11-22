@@ -5,15 +5,14 @@ import NavBar from "./NavBar"
 
 const RestaurantList = ({ location }) => {
   const { userDetails } = location.state
-  const dataset = []
-  const [restaurant, setRestaurant] = useState(dataset)
-  const [fetchStatus, setFetchStatus] = useState(false)
+  const [restaurant, setRestaurant] = useState([])
+  const [isStatusOk, setStatusOk] = useState(false)
 
   async function fetchData() {
     try {
       let res = await fetch("https://tummypolice.iyangi.com/api/v1/restaurants")
       let data = await res.json()
-      setFetchStatus(res.ok)
+      setStatusOk(res.ok)
       setRestaurant(data)
     } catch (error) {
       console.log(error)
@@ -23,7 +22,7 @@ const RestaurantList = ({ location }) => {
     fetchData()
   }, [])
 
-  return { fetchStatus } ? (
+  return { isStatusOk } ? (
     <div className="restaurantList">
       <NavBar userDetails={userDetails} />
       <h1> Popular Brands </h1>

@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { CartContext } from "./CartContext"
 
 function CartItem(props) {
   const [cart, dispatch] = useContext(CartContext)
+  const [isStatusOk, setStatusOk] = useState(false)
 
   const fetchData = async () => {
     console.log("from item com p", cart)
@@ -19,18 +20,17 @@ function CartItem(props) {
         })
       })
       let result = await res.json()
-      // setFetchStatus(res.ok)
-      console.log("result", result)
-      // console.log('res', res.ok)
+      setStatusOk(res.ok)
     } catch (error) {
       console.log(error)
+      setStatusOk(false)
     }
   }
+  useEffect(() => {
+    fetchData()
+  }, [])
 
-  fetchData()
-
-  console.log("props from cart item", props)
-  return (
+  return { isStatusOk } ? (
     <div className="cartItem">
       <div> {props.name}</div>
       <div className="changeQuantity" id={props.id}>
@@ -58,6 +58,8 @@ function CartItem(props) {
       </div>
       <div> &#8377; {props.price}</div>
     </div>
+  ) : (
+    <div>unable to fetch cart item</div>
   )
 }
 

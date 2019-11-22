@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 import Logo from "./images/logo.png"
 import Locate from "./images/1.png"
 import Restaurant from "./images/2.png"
@@ -7,6 +7,7 @@ import Order from "./images/3.png"
 import Food from "./images/4.png"
 import Location from "./Location"
 import styled from "styled-components"
+import Login from "./Login"
 
 function Homepage() {
   const StyledLink = styled(Link)`
