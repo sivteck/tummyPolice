@@ -56,7 +56,7 @@ const Menu = props => {
       </div>
     </CartProvider>
   ) : (
-    <div>Unable to fetch cart</div>
+    <div>Unable to fetch menu</div>
   )
 }
 

@@ -25,8 +25,11 @@ const NavBar = props => {
   const [cart, setCart] = useState({ cartItems: {} })
   const [fetchStatus, setFetchStatus] = useState(false)
 
-  let cartLength = Object.keys(cart.cartItems).length
+  let cartLength
+  if (cart.cartItems === undefined) cartLength = 0
+  else cartLength = Object.keys(cart.cartItems).length
   let userName = props.userDetails.username
+
   async function fetchData() {
     try {
       let res = await fetch("https://tummypolice.iyangi.com/api/v1/cart")
@@ -61,6 +64,7 @@ const NavBar = props => {
             {userName}
           </Typography>
         </IconButton>
+
         <Link to="/checkout">
           <IconButton style={{ backgroundColor: "transparent" }}>
             <Badge badgeContent={cartLength} color="secondary">

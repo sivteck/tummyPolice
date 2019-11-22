@@ -59,11 +59,11 @@ const Submit = styled.input.attrs({
 
 const Login = () => {
   const [isStatusOk, setStatusOk] = useState(false)
-  // const [response, setResponse] = useState({})
   const [userDetails, setUserDetails] = useState({})
   const { register, errors, handleSubmit } = useForm({
     mode: "onBlur"
   })
+
   const onSubmit = async data => {
     try {
       let res = await fetch("https://tummypolice.iyangi.com/api/v1/login", {
@@ -76,24 +76,18 @@ const Login = () => {
       })
 
       let result = await res.json()
-      console.log("res from login fetch", res)
-      console.log("result from login", result)
       setUserDetails(result)
       setStatusOk(res.ok)
-      // setResponse(result)
     } catch (error) {
-      console.log(error)
       setStatusOk(false)
     }
   }
-  
-  console.log("property", userDetails.hasOwnProperty("error"))
-  
+
   function renderPage() {
     if (isStatusOk && userDetails.hasOwnProperty("error")) {
       return (
         <div>
-          <p>Account doesn't exist</p>
+          <p style={{ textTransform: "capitalize" }}>{userDetails.error}</p>
         </div>
       )
     }
@@ -113,7 +107,7 @@ const Login = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Label>Phone number</Label>
         <Input
-          type="number"
+          type="text"
           name="phone"
           ref={register({ required: true, pattern: /^\d{10}$/ })}
           placeholder="Phone number"

@@ -4,7 +4,7 @@ import Itemimg from "./images/item.webp"
 
 const Item = props => {
   const [_, dispatch] = useContext(CartContext)
-  console.log(props.name)
+
   const addToCart = () => {
     dispatch({ type: "ADD_TO_CART", props: props })
   }

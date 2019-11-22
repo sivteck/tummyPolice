@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { CartContext } from "./CartContext"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-// import { getRequest } from "./fetchApi"
 import CartItem from "./CartItem"
 
 const StyledLink = styled(Link)`
@@ -15,16 +14,18 @@ const StyledLink = styled(Link)`
 
 const Cart = () => {
   const [cart, dispatch] = useContext(CartContext)
+  const [isStatusOk, setStatusOk] = useState(false)
   async function fetchData() {
     try {
-      let res = await fetch("https://tummypolice.iyangi.com/api/v1/cart")
-      let data = await res.json()
-      // setCart(data)
-      console.log("fetchData", data)
+      let response = await fetch("https://tummypolice.iyangi.com/api/v1/cart")
+      console.log("response", response)
+      let data = await response.json()
+      setStatusOk(response.ok)
+      if (data.cartItems === undefined) data.cartItems = {}
       dispatch({ type: "SET_CART", data: data })
-      // setFetchStatus(res.ok)
     } catch (error) {
       console.log(error)
+      setStatusOk(false)
     }
   }
 
@@ -50,7 +51,7 @@ const Cart = () => {
     ))
   }
 
-  return (
+  return { isStatusOk } ? (
     <div>
       {Object.keys(cart.cartItems).length === 0 ? (
         <div>
@@ -78,6 +79,8 @@ const Cart = () => {
         </div>
       )}
     </div>
+  ) : (
+    <div> Unable to fetch cart</div>
   )
 }
 

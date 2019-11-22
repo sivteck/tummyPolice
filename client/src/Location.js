@@ -43,26 +43,26 @@ const Submit = styled.input.attrs({
 
 function Location() {
   const [location, setLocation] = useState({ predictions: [] })
-  const [inputValue, setInputValue] = useState([])
+  const [inputValue, setInputValue] = useState("")
+  const [isStatusOk, setStatusOk] = useState(false)
 
   async function fetchData() {
     try {
-      console.log("inp from fetch", inputValue)
       let res = await fetch(
         `https://tummypolice.iyangi.com/api/v1/place/autocomplete/json?input=${inputValue}`
       )
       let data = await res.json()
       setLocation(data)
+      setStatusOk(res.ok)
     } catch (error) {
       console.log(error)
+      setStatusOk(false)
     }
   }
 
   const handleChange = event => {
-    console.log("length", event.target.value.length)
     if (event.target.value.length > 3) {
       setInputValue(event.target.value)
-      // fetchData();
     }
   }
 
@@ -71,9 +71,7 @@ function Location() {
   }, [inputValue])
 
   const populateDataList = () => {
-    if (inputValue.length > 0) {
-      console.log("gfh", inputValue)
-      //   console.log("populatedata", data)
+    if (inputValue.length > 0)
       return (
         <div>
           <datalist id="places">
@@ -85,12 +83,11 @@ function Location() {
           </datalist>
         </div>
       )
-    }
   }
 
   const onSubmit = () => <Redirect to="/restaurant" />
 
-  return (
+  return { isStatusOk } ? (
     <Wrapper>
       <form onSubmit={onSubmit()}>
         <Input
@@ -107,6 +104,8 @@ function Location() {
       </form>
       {/* <StyledLink to="/restaurant">Find Food</StyledLink> */}
     </Wrapper>
+  ) : (
+    <div>Unable to locate</div>
   )
 }
 
