@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useState } from "react"
-import { CartContext, CartProvider } from "./CartContext"
-import Map from './delivery executive app/Map.js'
+import React, { useEffect, useState } from "react"
+import { CartProvider } from "./CartContext"
+import Map from "./delivery executive app/Map.js"
 
 const Checkout = () => {
-  const [checkout, setCheckout] = useState({ cart: {}, bill: {} })
+  const [checkout, setCheckout] = useState({ cartItems: {}, bill: {} })
   const [fetchStatus, setFetchStatus] = useState(false)
   const [liveLocation, setLiveLocation] = useState({
     latitude: "",
     longitude: ""
-  });
- 
+  })
 
   async function fetchData() {
     try {
@@ -31,41 +30,44 @@ const Checkout = () => {
       setLiveLocation({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
-      });
-    });  
+      })
+    })
   }
 
-  return { fetchStatus } ? (<div className = "checkoutFlex">
-    <div className = "flexContainer">{<Map />}</div>
-    <div className = "flexContainer">
-    <CartProvider>
-      <div>
-        <h1>Items</h1>
-        {Object.keys(checkout.cart).map(item => (
-          <div className="cartItem">
-            <div> {checkout.cart[item].name}</div>
-            <div> {checkout.cart[item].quantity}</div>
-            <div> &#8377; {checkout.cart[item].price}</div>
+  return { fetchStatus } ? (
+    <div className="checkoutFlex">
+      <div className="flexContainer">{<Map />}</div>
+      <div className="flexContainer">
+        <CartProvider>
+          <div>
+            <h1>Items</h1>
+            {Object.keys(checkout.cartItems).map(item => (
+              <div className="cartItem">
+                <div> {checkout.cartItems[item].name}</div>
+                <div> {checkout.cartItems[item].quantity}</div>
+                <div> &#8377; {checkout.cartItems[item].price}</div>
+              </div>
+            ))}
+            <h1>Bill Details</h1>
+            <div className="billDetails">
+              <div className="cartItem">
+                <div>Item Total</div>
+                <div> &#8377; {checkout.bill.subtotal}</div>
+              </div>
+              <div className="cartItem">
+                <div>Delivery Fee</div>
+                <div> &#8377; {checkout.bill.deliveryfee}</div>
+              </div>
+              <div className="cartItem">
+                <div>To Pay:</div>
+                <div> &#8377; {checkout.bill.total}</div>
+              </div>
+            </div>
+            <button onClick={placeOrder}>Order</button>
           </div>
-        ))}
-        <h1>Bill Details</h1>
-        <div className="billDetails">
-          <div className="cartItem">
-            <div>Item Total</div>
-            <div> &#8377; {checkout.bill.subtotal}</div>
-          </div>
-          <div className="cartItem">
-            <div>Delivery Fee</div>
-            <div> &#8377; {checkout.bill.deliveryfee}</div>
-          </div>
-          <div className="cartItem">
-            <div>To Pay:</div>
-            <div> &#8377; {checkout.bill.total}</div>
-          </div>
-        </div>
-        <button onClick={placeOrder}>Order</button>
+        </CartProvider>
       </div>
-    </CartProvider></div></div>
+    </div>
   ) : (
     <div>unable to fetch bill details</div>
   )

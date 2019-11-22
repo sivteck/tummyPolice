@@ -1,7 +1,9 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect } from "react"
 import { CartContext } from "./CartContext"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+// import { getRequest } from "./fetchApi"
+import CartItem from "./CartItem"
 
 const StyledLink = styled(Link)`
   background-color: #db741e;
@@ -12,24 +14,15 @@ const StyledLink = styled(Link)`
 `
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useContext(CartContext)
-  const [fetchStatus, setFetchStatus] = useState(false)
-
-  const totalPrice = Object.keys(cartItems.cart).reduce(
-    (sum, key) => sum + cartItems.cart[key].price,
-    0
-  )
-  const totalItems = Object.keys(cartItems.cart).reduce(
-    (sum, key) => sum + cartItems.cart[key].quantity,
-    0
-  )
-
+  const [cart, dispatch] = useContext(CartContext)
   async function fetchData() {
     try {
       let res = await fetch("https://tummypolice.iyangi.com/api/v1/cart")
       let data = await res.json()
-      setFetchStatus(res.ok)
-      setCartItems(data)
+      // setCart(data)
+      console.log("fetchData", data)
+      dispatch({ type: "SET_CART", data: data })
+      // setFetchStatus(res.ok)
     } catch (error) {
       console.log(error)
     }
@@ -39,70 +32,34 @@ const Cart = () => {
     fetchData()
   }, [])
 
-  function decQuantity(event) {
-    let item = event.target.parentElement.id
-    let { name, price, quantity } = cartItems.cart[item]
-    let priceOfOneItem = price / quantity
-    quantity -= 1
-    if (quantity === 0) {
-      const newObj = Object.assign({}, cartItems.cart)
-      delete newObj[item]
-      let cartValue = {
-        restaurantId: cartItems.restaurantId,
-        cart: newObj
-      }
-      setCartItems(cartValue)
-    } else {
-      price = priceOfOneItem * quantity
-      let cartValue = {
-        restaurantId: cartItems.restaurantId,
-        cart: Object.assign(cartItems.cart, {
-          [item]: { name: name, price: price, quantity: quantity }
-        })
-      }
-      setCartItems(cartValue)
-    }
-  }
+  let totalPrice = 0
+  for (let key in cart.cartItems) totalPrice += cart.cartItems[key].price
 
-  function incQuantity(event) {
-    let item = event.target.parentElement.id
-    let { name, price, quantity } = cartItems.cart[item]
-    let priceOfOneItem = price / quantity
-    quantity += 1
-    price = priceOfOneItem * quantity
-    let cartValue = {
-      restaurantId: cartItems.restaurantId,
-      cart: Object.assign(cartItems.cart, {
-        [item]: { name: name, price: price, quantity: quantity }
-      })
-    }
-    setCartItems(cartValue)
-  }
+  let totalItems = 0
+  for (let key in cart.cartItems) totalItems += cart.cartItems[key].quantity
 
-  function renderCartItems(cart) {
-    return Object.keys(cart).map(item => (
-      <div className="cartItem">
-        <div> {cart[item].name}</div>
-        <div className="changeQuantity" id={item}>
-          <button onClick={decQuantity}>-</button>
-          <div> {cart[item].quantity}</div>
-          <button onClick={incQuantity}>+</button>
-        </div>
-        <div> &#8377; {cart[item].price}</div>
-      </div>
+  function renderCartItems(cartItems) {
+    return Object.keys(cartItems).map(item => (
+      <CartItem
+        name={cartItems[item].name}
+        price={cartItems[item].price}
+        quantity={cartItems[item].quantity}
+        id={item}
+        key={item}
+      />
     ))
   }
 
-  return { fetchStatus } ? (
+  return (
     <div>
-      {Object.keys(cartItems.cart).length === 0 ? (
+      {Object.keys(cart.cartItems).length === 0 ? (
         <div>
           <h1>Cart Empty</h1>
         </div>
       ) : (
         <div>
           <h1>Cart</h1>
-          {Object.keys(cartItems.cart).length === 1 ? (
+          {Object.keys(cart.cartItems).length === 1 ? (
             <div>
               <p>{totalItems} ITEM</p>
             </div>
@@ -111,8 +68,7 @@ const Cart = () => {
               <p>{totalItems} ITEMS</p>
             </div>
           )}
-
-          {renderCartItems(cartItems.cart)}
+          {renderCartItems(cart.cartItems)}
           <br />
           <br />
           <h4>Subtotal :&#8377;{totalPrice}</h4>
@@ -122,8 +78,6 @@ const Cart = () => {
         </div>
       )}
     </div>
-  ) : (
-    <div>unable to fetch cart</div>
   )
 }
 

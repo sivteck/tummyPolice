@@ -8,10 +8,10 @@ function LiveLocation() {
   console.log("nav", navigator);
 
   navigator.geolocation.watchPosition(function(position) {
-    setLiveLocation({
+    setTimeout(setLiveLocation({
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
-    });
+    }), 30000)
   });
 
   async function fetchData() {

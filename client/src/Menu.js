@@ -35,7 +35,6 @@ const Menu = props => {
         <div className="menuComponents1">
           <div className="itemList">
             {menuItems.map(item => (
-              // {id, name,ca}
               <Item
                 {...item}
                 restaurantId={id}
