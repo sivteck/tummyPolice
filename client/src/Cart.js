@@ -1,7 +1,9 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect } from "react"
 import { CartContext } from "./CartContext"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+// import { getRequest } from "./fetchApi"
+import CartItem from "./CartItem"
 
 const StyledLink = styled(Link)`
   background-color: #db741e;
@@ -12,28 +14,15 @@ const StyledLink = styled(Link)`
 `
 
 const Cart = () => {
-  const [cart,dispatch] = useContext(CartContext)
-  const [fetchStatus, setFetchStatus] = useState(false)
-
-  const totalPrice = Object.keys(cart.cartItems).reduce(
-    (sum, key) => sum + cart.cartItems[key].price,
-    0
-  )
-  const totalItems = Object.keys(cart.cartItems).reduce(
-    (sum, key) => sum + cart.cartItems[key].quantity,
-    0
-  )
-
+  const [cart, dispatch] = useContext(CartContext)
   async function fetchData() {
     try {
       let res = await fetch("https://tummypolice.iyangi.com/api/v1/cart")
       let data = await res.json()
       // setCart(data)
       console.log("fetchData", data)
-      dispatch({type: 'SET_CART', data: data})
-      setFetchStatus(res.ok)
-     
-     
+      dispatch({ type: "SET_CART", data: data })
+      // setFetchStatus(res.ok)
     } catch (error) {
       console.log(error)
     }
@@ -43,33 +32,25 @@ const Cart = () => {
     fetchData()
   }, [])
 
-  function decQuantity(event) {
-    dispatch({type: 'DECREMENT_ITEM' ,id: event.target.parentElement.id
-  })
-   
-  }
+  let totalPrice = 0
+  for (let key in cart.cartItems) totalPrice += cart.cartItems[key].price
 
-  function incQuantity(event) {
-    dispatch({type: 'INCREMENT_ITEM' ,id: event.target.parentElement.id
-  })
-    // setCart(cartValue)
-  }
+  let totalItems = 0
+  for (let key in cart.cartItems) totalItems += cart.cartItems[key].quantity
 
   function renderCartItems(cartItems) {
     return Object.keys(cartItems).map(item => (
-      <div className="cartItem">
-        <div> {cartItems[item].name}</div>
-        <div className="changeQuantity" id={item}>
-          <button onClick={decQuantity}>-</button>
-          <div> {cartItems[item].quantity}</div>
-          <button onClick={incQuantity}>+</button>
-        </div>
-        <div> &#8377; {cartItems[item].price}</div>
-      </div>
+      <CartItem
+        name={cartItems[item].name}
+        price={cartItems[item].price}
+        quantity={cartItems[item].quantity}
+        id={item}
+        key={item}
+      />
     ))
   }
 
-  return { fetchStatus } ? (
+  return (
     <div>
       {Object.keys(cart.cartItems).length === 0 ? (
         <div>
@@ -87,7 +68,6 @@ const Cart = () => {
               <p>{totalItems} ITEMS</p>
             </div>
           )}
-
           {renderCartItems(cart.cartItems)}
           <br />
           <br />
@@ -98,8 +78,6 @@ const Cart = () => {
         </div>
       )}
     </div>
-  ) : (
-    <div>unable to fetch cart</div>
   )
 }
 
