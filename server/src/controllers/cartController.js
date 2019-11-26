@@ -3,6 +3,7 @@ const { getCartState, insertCart } = require("../db/objectStore/cart.js")
 async function getCart (req, res) {
   let sessionId = req.session.id
   let userId = req.session.userid
+  console.log('getCart', req.session)
   try {
     let cart = await getCartState(userId)
     res.status(200).json(cart)
@@ -16,6 +17,7 @@ async function updateCart (req, res) {
   let sessionId = req.session.id
   let userid = req.session.userid
   let cart = req.body
+  console.log('updateCart', req.session)
   try {
     await insertCart(userid, cart)
     res.status(201).json(cart)
@@ -27,6 +29,7 @@ async function updateCart (req, res) {
 
 async function checkout (req, res) {
   let userid = req.session.userid
+  console.log('checkout', req.session)
   try {
     let cartState = await getCartState(userid)
     let bill =  { ...cartState, bill: genBill(cartState.cart) }
