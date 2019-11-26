@@ -60,6 +60,10 @@ app.use('/api/v1', require('./routes/places.js'))
 app.use('/api/v1', require('./Components/DeliveryPartner/trackingAPI.js'))
 app.use('/api/v1', require('./Components/Order/orderAPI.js'))
 
+server.get('/*', (req, res) => {
+  res.sendFile('../../client/build' + '/index.html');
+})
+
 const httpServer = http.createServer(app)
 const httpsServer = https.createServer(credentials, app)
 
