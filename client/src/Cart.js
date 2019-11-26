@@ -15,6 +15,7 @@ const StyledLink = styled(Link)`
 const Cart = () => {
   const [cart, dispatch] = useContext(CartContext)
   const [isStatusOk, setStatusOk] = useState(false)
+
   async function fetchData() {
     try {
       let response = await fetch("https://tummypolice.iyangi.com/api/v1/cart")
@@ -60,15 +61,14 @@ const Cart = () => {
       ) : (
         <div>
           <h1>Cart</h1>
-          {Object.keys(cart.cartItems).length === 1 ? (
-            <div>
+          <div>
+            {console.log("totalItems", totalItems)}
+            {totalItems.length === 1 ? (
               <p>{totalItems} ITEM</p>
-            </div>
-          ) : (
-            <div>
-              <p>{totalItems} ITEMS</p>
-            </div>
-          )}
+            ) : (
+              <p>{totalItems}ITEMS</p>
+            )}
+          </div>
           {renderCartItems(cart.cartItems)}
           <br />
           <br />
