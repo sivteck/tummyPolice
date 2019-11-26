@@ -5,6 +5,7 @@ const http = require('http')
 const https = require('https')
 const WebSocket = require('ws')
 const url = require('url')
+const path = require('path')
 
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
@@ -59,6 +60,10 @@ app.use('/api/v1', require('./routes/userManagement.js'))
 app.use('/api/v1', require('./routes/places.js'))
 app.use('/api/v1', require('./Components/DeliveryPartner/trackingAPI.js'))
 app.use('/api/v1', require('./Components/Order/orderAPI.js'))
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.normalize(__dirname + '../../../client/build' + '/index.html'))
+})
 
 const httpServer = http.createServer(app)
 const httpsServer = https.createServer(credentials, app)
