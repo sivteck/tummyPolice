@@ -3,25 +3,25 @@ const { insertCart } = require("../db/objectStore/cart.js")
 
 const register = async (req, res) => {
   try {
-    let id = await createUser(req.body.username, req.body.password, req.body.email, req.body.phone)
+    const { username, password, email, phone } = req.body
+    let id = await createUser(username, password, email, phone)
     insertCart(id, { 'restaurantId': '', cartItems: {}})
     if (!id) res.status(200).json({ error: 'failed to create user, phone number or email already exists' })
-    else res.status(201).json({ id: id, username: req.body.username, email: req.body.email, phone: req.body.phone })
+    else res.status(201).json({ id, username, email, phone })
   }
   catch (error) {
     console.error('Registration Error, ', error)
-    res.status(200).json({ error: error })
+    res.status(200).json({ error })
   }
 }
 
 const login = async (req, res) => {
+  const phone = req.body.phone
   try {
-    // let passwordMatch = await verifyPassword(req.body.userName, req.body.password)
-    // console.log('passwordMatch: ', passwordMatch)
-    let phoneVerification = await verifyPhone(req.body.phone)
+    let phoneVerification = await verifyPhone(phone)
     if (!phoneVerification.username) res.status(200).json({ error: 'invalid phone number' })
     else {
-      req.session.phone = req.body.phone
+      req.session.phone = phone
       req.session.loggedin = true
       req.session.userid = phoneVerification.id
       res.status(200).json({ msg: 'login success', session: req.session.id, ...phoneVerification })

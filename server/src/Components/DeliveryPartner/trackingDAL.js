@@ -1,8 +1,8 @@
 const Redis = require('ioredis')
-const publisher = new Redis()
+const producer = new Redis()
 
 async function publishLoc (geo) {
-  await publisher.publish('deliverypartnerlocation', geo)
+  await producer.xadd('deliverypartnerlocation', geo)
   return 'success'
 }
 
