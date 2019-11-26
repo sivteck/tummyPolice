@@ -1,20 +1,21 @@
 import React, { useEffect } from "react"
 import "./mapStyle.css"
-import L from "leaflet"
+import Leaflet from "leaflet"
 
 function Map() {
-  var map = () => {
-    var mymap = L.map("mapid")
+  let map = () => {
+    let mymap = Leaflet.map("mapid")
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    Leaflet.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mymap)
+    console.log("1")
 
     mymap.locate({ setView: true, maxZoom: 50, watch: true })
-
+    console.log("2")
     function onLocationFound(e) {
-      L.marker(e.latlng).addTo(mymap)
+      Leaflet.marker(e.latlng).addTo(mymap)
     }
 
     mymap.on("locationfound", onLocationFound)
