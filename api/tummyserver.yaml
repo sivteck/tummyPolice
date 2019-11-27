@@ -209,7 +209,7 @@ paths:
         - Places
       summary: gives places predictions as the user types
       operationId: placesGET
-      parameters: 
+      parameters:
         - name: input
           in: query
           required: true
@@ -229,11 +229,30 @@ paths:
                 type: array
                 items:
                   type: object
+                  
+  /deliverypartner/login:
+    post:
+      tags:
+        - Delivery Partner
+      summary: login for deliver partner
+      operationId: logindpPOST
+      parameters:
+        - name: coordinates
+          in: path
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DPLogin'
+      responses:
+        '200':
+          description: updated location
+          
   /deliverypartner/updatelocation:
     post:
       tags:
         - Delivery Partner
-      summary: update current location of delivery partner
+      summary: updatelocation of delivery partner
       operationId: updatelocationPOST
       parameters:
         - name: coordinates
@@ -246,8 +265,35 @@ paths:
       responses:
         '200':
           description: updated location
+  /restaurant/login:
+    post:
+      tags:
+        - Restaurant
+      summary: login, Restaurant
+      operationId: restaurantLoginPOST
+      parameters:
+        - name: coordinates
+          in: path
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestaurantLogin'
+      responses:
+        '200':
+          description: updated location
 components:
   schemas:
+    RestaurantLogin:
+      type: object
+      properties:
+        name:
+          type: string
+    DPLogin:
+      type: object
+      properties:
+        id:
+          type: string
     Menu:
       type: object
       properties:
