@@ -3,22 +3,23 @@ import "./mapStyle.css"
 import Leaflet from "leaflet"
 
 function Map() {
-  let map = () => {
-    let mymap = Leaflet.map("mapid")
+  const map = () => {
+    const position = [51.505, -0.09]
+    const position2 = [51.504, -0.09]
+    const mymap = Leaflet.map("mapid").setView(position, 40)
 
-    Leaflet.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    Leaflet.tileLayer(
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    ).addTo(mymap)
+
+    Leaflet.marker(position).addTo(mymap)
+
+    Leaflet.circle(position2, {
+      color: "red",
+      fillColor: "red",
+      fillOpacity: 0.5,
+      radius: 5
     }).addTo(mymap)
-    console.log("1")
-
-    mymap.locate({ setView: true, maxZoom: 50, watch: true })
-    console.log("2")
-    function onLocationFound(e) {
-      Leaflet.marker(e.latlng).addTo(mymap)
-    }
-
-    mymap.on("locationfound", onLocationFound)
   }
 
   useEffect(() => {
