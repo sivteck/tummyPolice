@@ -7,6 +7,7 @@ import Checkout from "./Checkout"
 import Cart from "./Cart"
 import Login from "./Login"
 import Signup from "./Signup"
+import Tracking from "./delivery executive app/Tracking"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/cart" component={Cart} />
+          <Route exact path="/deliverypartner/tracking" component={Tracking} />
         </Switch>
       </div>
     </Router>
