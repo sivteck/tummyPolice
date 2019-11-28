@@ -1,13 +1,11 @@
-const { createUser, verifyPassword, verifyPhone, userExists } = require("../db/relational/userManagement.js")
-const { insertCart } = require("../db/objectStore/cart.js")
+const { createDP, verifyDP, DPExists} = require('./deliverpartnerDAL.js')
 
 const register = async (req, res) => {
   try {
-    const { username, password, email, phone } = req.body
-    const id = await createUser(username, password, email, phone)
-    insertCart(id, { 'restaurantId': '', cartItems: {}})
+    const { phone } = req.body
+    const id = await createDP(phone)
     if (!id) res.json({ error: 'failed to create user, phone number or email already exists' })
-    else res.json({ id, username, email, phone })
+    else res.json({ id, phone })
   }
   catch (error) {
     console.error('Registration Error, ', error)
@@ -18,9 +16,10 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const phone = req.body.phone
   try {
-    const phoneVerification = await verifyPhone(phone)
+    const phoneVerification = await verifyDP(phone)
     if (!phoneVerification.username) res.status(200).json({ error: 'invalid phone number' })
     else {
+      const { phone
       req.session.phone = phone
       req.session.loggedin = true
       req.session.userid = phoneVerification.id
@@ -38,7 +37,7 @@ const logout = async (req, res) => {
 }
 
 const checkValidSession = async (req, res) => {
-  if (req.session.user) res.json({ userName: req.session.user })
+  if (req.session.phone) res.json({ phone: req.session.phone })
   else res.json({ msg: "not logged in" })
 }
 

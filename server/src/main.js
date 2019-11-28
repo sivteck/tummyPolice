@@ -58,7 +58,7 @@ const trackingRoutes = require('./routes/tracking.js')
 app.use('/api/v1', require('./routes/restaurants.js'))
 app.use('/api/v1', require('./routes/userManagement.js'))
 app.use('/api/v1', require('./routes/places.js'))
-app.use('/api/v1', require('./Components/DeliveryPartner/trackingAPI.js'))
+app.use('/api/v1/deliverypartner', require('./Components/DeliveryPartner/deliveryPartnerAPI.js'))
 app.use('/api/v1', require('./Components/Order/orderAPI.js'))
 
 app.get('/*', (req, res) => {
