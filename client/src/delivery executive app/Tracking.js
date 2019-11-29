@@ -10,7 +10,6 @@ function Tracking() {
   })
 
   const internalRef = useRef(undefined)
-
   useEffect(() => {
     clearInterval(internalRef.current)
     internalRef.current = setInterval(
@@ -29,6 +28,7 @@ function Tracking() {
     latitude: liveLocation.latitude,
     longitude: liveLocation.longitude
   })
+
   return (
     <div>
       <h2> Live Location</h2>
