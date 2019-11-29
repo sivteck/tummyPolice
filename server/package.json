@@ -18,6 +18,15 @@
     "bcrypt",
     "express-session",
     "connect-redis",
+<<<<<<< HEAD
     "ws"
   ]
+=======
+    "ws",
+    "socket.io"
+  ],
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  }
+>>>>>>> d49d8da... setup socket.io
 }
