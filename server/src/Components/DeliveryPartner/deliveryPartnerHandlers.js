@@ -1,4 +1,4 @@
-const { createDP, verifyDP, DPExists} = require('./deliverpartnerDAL.js')
+const { createDP, verifyDP, DPExists} = require('./deliveryPartnerDAL.js')
 
 const register = async (req, res) => {
   try {
