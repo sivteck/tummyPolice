@@ -1,29 +1,50 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import "./mapStyle.css"
 import Leaflet from "leaflet"
+import "leaflet-routing-machine"
+
+const io = require("socket.io-client")
+const socket = io("https://tummypolice.iyangi.com")
 
 function Map() {
-  let map = () => {
-    let mymap = Leaflet.map("mapid")
+  const [liveLocation, setLiveLocation] = useState({
+    latitude: "",
+    longitude: ""
+  })
 
-    Leaflet.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(mymap)
-    console.log("1")
+  const position = [12.9372864, 77.61919999999999]
+  const position2 = [liveLocation.latitude, liveLocation.longitude]
 
-    mymap.locate({ setView: true, maxZoom: 50, watch: true })
-    console.log("2")
-    function onLocationFound(e) {
-      Leaflet.marker(e.latlng).addTo(mymap)
-    }
+  socket.on("current location", function(location) {
+    console.log("location from map component: ", location)
+    setLiveLocation(location)
+  })
 
-    mymap.on("locationfound", onLocationFound)
+  const mapRef = useRef(null)
+
+  const map = () => {
+    mapRef.current = Leaflet.map("mapid").setView(position, 40)
+    Leaflet.tileLayer(
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    ).addTo(mapRef.current)
+    Leaflet.marker(position).addTo(mapRef.current)
   }
 
   useEffect(() => {
     map()
   }, [])
+
+  const markerRef = useRef(null)
+  useEffect(() => {
+    if (markerRef.current) {
+      markerRef.current.setLatLng(position2)
+    } else {
+      markerRef.current = Leaflet.marker(position2).addTo(mapRef.current)
+    }
+    Leaflet.Routing.control({
+      waypoints: [Leaflet.latLng(position), Leaflet.latLng(position2)]
+    }).addTo(mapRef.current)
+  }, [liveLocation])
 
   return <div id="mapid"></div>
 }
