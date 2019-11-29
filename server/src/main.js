@@ -69,9 +69,16 @@ const httpsServer = https.createServer(credentials, app)
 
 const io = require('socket.io')(httpsServer)
 
-io.on("connection", (socket) => {
-  console.log('connected')
-  socket.on('new location', (msg) => console.log(msg))
+// io.on("connection", (socket) => {
+//   console.log('connected')
+//   socket.on('new location', (msg) => console.log(msg))
+// })
+
+io.on("connection", socket => {
+  console.log("Connected!")
+  socket.on("send location", function(location) {
+    io.emit("current location", location)
+  })
 })
 
 httpServer.listen(port, () => console.log("gonna kill your hunger starting from port", port))
