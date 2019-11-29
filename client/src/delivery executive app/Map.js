@@ -16,17 +16,16 @@ function Map() {
   const position2 = [liveLocation.latitude, liveLocation.longitude]
 
   socket.on("current location", function(location) {
-    console.log("location from map component: ", location)
     setLiveLocation(location)
   })
-
   const mapRef = useRef(null)
-
   const map = () => {
     mapRef.current = Leaflet.map("mapid").setView(position, 40)
+
     Leaflet.tileLayer(
       "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     ).addTo(mapRef.current)
+
     Leaflet.marker(position).addTo(mapRef.current)
   }
 
@@ -37,13 +36,14 @@ function Map() {
   const markerRef = useRef(null)
   useEffect(() => {
     if (markerRef.current) {
+      console.log("markerRef", markerRef.current)
       markerRef.current.setLatLng(position2)
     } else {
       markerRef.current = Leaflet.marker(position2).addTo(mapRef.current)
     }
-    Leaflet.Routing.control({
-      waypoints: [Leaflet.latLng(position), Leaflet.latLng(position2)]
-    }).addTo(mapRef.current)
+    // Leaflet.Routing.control({
+    //   waypoints: [Leaflet.latLng(position), Leaflet.latLng(position2)]
+    // }).addTo(mapRef.current)
   }, [liveLocation])
 
   return <div id="mapid"></div>
