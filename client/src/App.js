@@ -8,6 +8,7 @@ import Cart from "./Cart"
 import Login from "./Login"
 import Signup from "./Signup"
 import Tracking from "./delivery executive app/Tracking"
+import Map from "./delivery executive app/Map"
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/cart" component={Cart} />
           <Route exact path="/deliverypartner/tracking" component={Tracking} />
+          <Route exact path="/order/track" component={Map} />
         </Switch>
       </div>
     </Router>
