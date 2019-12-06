@@ -1,4 +1,3 @@
-const { query } = require('./schema.js')
 const uuid = require('uuid/v4')
 
 async function createDP (phone) {
