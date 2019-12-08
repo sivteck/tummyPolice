@@ -37,4 +37,16 @@ async function getRestaurantInfoById (id) {
   }
 }
 
-module.exports = { insertRestaurant, getRestaurantsByCity, getRestaurantInfoById }
+async function getRestaurantsByLoc ({ latitude, longitude }, radius = 1000) {
+  const text = `SELECT * FROM restaurants where ST_Distance(ST_GeogFromWKB(location), ST_GeogFromWKB(ST_MakePoint($1, $2))) < $3`
+  const values = [latitude, longitude, radius]
+  try {
+    const result = await query(text, values)
+    return result.rows
+  }
+  catch (error) {
+    console.error(error)
+  }
+}
+
+module.exports = { insertRestaurant, getRestaurantsByCity, getRestaurantInfoById, getRestaurantsByLoc }
