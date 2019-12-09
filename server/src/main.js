@@ -75,7 +75,6 @@ const io = require('socket.io')(httpsServer)
 // })
 
 io.on("connection", socket => {
-  console.log("Connected!")
   socket.on("send location", function(location) {
     io.emit("current location", location)
   })

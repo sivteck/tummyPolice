@@ -7,7 +7,8 @@ let restaurantTable = `CREATE TABLE IF NOT EXISTS restaurants (
                        id UUID PRIMARY KEY,
                        name VARCHAR NOT NULL,
                        address VARCHAR NOT NULL,
-                       city VARCHAR NOT NULL
+                       city VARCHAR NOT NULL,
+                       location geometry
                        )`
 
 let createUserTable = `CREATE TABLE IF NOT EXISTS users (
