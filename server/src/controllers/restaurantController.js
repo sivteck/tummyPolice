@@ -1,4 +1,4 @@
-const { getRestaurantsByCity, getRestaurantInfoById, getRestaurantsByLoc } = require("../db/relational/restaurants.js")
+const { getRestaurantsByCity, getRestaurantInfoById, getRestaurantsByLoc, getRestaurantsByPlace } = require("../db/relational/restaurants.js")
 
 async function restaurants (req, res) {
   const restaurants = await getRestaurantsByCity('Bangalore')
@@ -11,15 +11,19 @@ async function restaurantInfo (req, res) {
 }
 
 async function restaurantsByLoc (req, res) {
-  const { latitude, longitude } = req.query
-  if (latitude && longitude) {
-    try {
+  const { latitude, longitude, placeid } = req.query
+  try {
+    if (placeid) {
+      const restaurants = await getRestaurantsByPlace(placeid)
+      res.json(restaurants)
+    }
+    else if (latitude && longitude) {
       const restaurants = await getRestaurantsByLoc({ latitude, longitude })
       res.json(restaurants)
     }
-    catch (error) {
-      console.error(error)
-    }
+  }
+  catch (error) {
+    console.error(error)
   }
 }
 

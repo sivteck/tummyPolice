@@ -37,4 +37,4 @@ function buildPlacesObj (placesInfo, statusInfo = 'OK') {
   return places
 }
 
-module.exports = { getPlaces }
+module.exports = { getPlaces, getPlaceInfoById }

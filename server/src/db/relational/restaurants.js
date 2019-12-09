@@ -1,4 +1,5 @@
 const { query } = require("./schema.js")
+const { getPlaceInfoById } = require("../objectStore/places")
 
 async function insertRestaurant (restaurantObj) {
   let { id, restaurantName, address, city } = restaurantObj
@@ -37,6 +38,18 @@ async function getRestaurantInfoById (id) {
   }
 }
 
+async function getRestaurantsByPlace (placeid) {
+  try {
+    let placeInfo = await getPlaceInfoById(placeid)
+    const { lat: latitude, lon: longitude } = placeInfo
+    const restaurants = await getRestaurantsByLoc({ latitude, longitude })
+    return restaurants
+  }
+  catch (error) {
+    console.error(error)
+  }
+}
+
 async function getRestaurantsByLoc ({ latitude, longitude }, radius = 1000) {
   const text = `SELECT * FROM restaurants where ST_Distance(ST_GeogFromWKB(location), ST_GeogFromWKB(ST_MakePoint($1, $2))) < $3`
   const values = [latitude, longitude, radius]
@@ -49,4 +62,4 @@ async function getRestaurantsByLoc ({ latitude, longitude }, radius = 1000) {
   }
 }
 
-module.exports = { insertRestaurant, getRestaurantsByCity, getRestaurantInfoById, getRestaurantsByLoc }
+module.exports = { insertRestaurant, getRestaurantsByCity, getRestaurantInfoById, getRestaurantsByLoc, getRestaurantsByPlace }
