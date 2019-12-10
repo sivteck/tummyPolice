@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { AppBar, Toolbar, Typography } from "@material-ui/core"
 import IconButton from "@material-ui/core/IconButton"
-import Logo from "./images/logoicon.png"
+import Logo from "../images/logoicon.png"
 import styled from "styled-components"
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"
 import PermIdentityIcon from "@material-ui/icons/PermIdentity"
@@ -28,7 +28,9 @@ const NavBar = props => {
   let cartLength
   if (cart.cartItems === undefined) cartLength = 0
   else cartLength = Object.keys(cart.cartItems).length
-  let userName = props.userDetails.username
+  let userName
+  if (props.userDetails === undefined) userName = "User"
+  else userName = props.userDetails.username
 
   async function fetchData() {
     try {

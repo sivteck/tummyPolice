@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react"
 import Restaurant from "./Restaurant"
-import Food from "./images/food.webp"
+import Food from "../images/food.webp"
 import NavBar from "./NavBar"
 
 const RestaurantList = ({ location }) => {
-  const { userDetails } = location.state
+  console.log("from Restaurant list", location)
+  const { userDetails, locationId } = location.state
   const [restaurant, setRestaurant] = useState([])
   const [isStatusOk, setStatusOk] = useState(false)
+  let url = "https://tummypolice.iyangi.com/api/v1/restaurants"
 
-  async function fetchData() {
+  async function fetchData({ latitude, longitude }) {
+    console.log("lat-lng from fetch", latitude, longitude)
     try {
-      let res = await fetch("https://tummypolice.iyangi.com/api/v1/restaurants")
+      let res = await fetch(url)
       let data = await res.json()
       setStatusOk(res.ok)
       setRestaurant(data)
@@ -19,7 +22,15 @@ const RestaurantList = ({ location }) => {
     }
   }
   useEffect(() => {
-    fetchData()
+    if (locationId) {
+      url = `${url}?placeid= ${locationId}`
+      fetchData(url)
+    } else {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        url = `${url}?latitude=${position.cords.latitude}&longitude=${position.cords.longitude}`
+        fetchData(url)
+      })
+    }
   }, [])
 
   return { isStatusOk } ? (

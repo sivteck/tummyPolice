@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { CartContext } from "./CartContext"
-import Itemimg from "./images/item.webp"
+import Itemimg from "../images/item.webp"
 
 const Item = props => {
   const [, dispatch] = useContext(CartContext)

@@ -171,7 +171,7 @@ button.seeRestaurant {
     text-decoration: none;
 }
 
-.order h1 {
+.orderSteps h1 {
     text-align: center;
     font-size: 50px;
     font-weight: 400;
@@ -179,7 +179,7 @@ button.seeRestaurant {
     margin-bottom: 0;
 }
 
-.order h5 {
+.orderSteps h5 {
     text-align: center;
     margin-top: 0;
     font-weight: 500px;

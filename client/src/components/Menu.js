@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import "./style.css"
 import Item from "./Item"
 import Cart from "./Cart"
 import { CartProvider } from "./CartContext"

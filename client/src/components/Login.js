@@ -63,6 +63,10 @@ const Login = () => {
   const { register, errors, handleSubmit } = useForm({
     mode: "onBlur"
   })
+  const [liveLocation, setLiveLocation] = useState({
+    latitude: "",
+    longitude: ""
+  })
 
   const onSubmit = async data => {
     try {
@@ -83,7 +87,7 @@ const Login = () => {
     }
   }
 
-  function renderPage() {
+  function loginAction() {
     if (isStatusOk && userDetails.hasOwnProperty("error")) {
       return (
         <div>
@@ -114,7 +118,7 @@ const Login = () => {
         />
         {errors.phone && "Enter valid phone number"}
         <Submit type="submit" value="Login" />
-        {renderPage()}
+        {loginAction()}
       </form>
     </Wrapper>
   )
