@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import Logo from "../../images/logo.png"
-import Locate from "../UserLocation/Locate"
+import Locate from "../Locate/Locate"
 import styled from "styled-components"
 import OrderSteps from "./OrderSteps"
 

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react"
 import { Redirect } from "react-router-dom"
-import { Wrapper, Input, Submit, Span } from "./styles"
-import CheckStatus from "../CheckStatus"
+import { Wrapper, Input, Submit } from "./styles"
+import CheckStatus from "../Checkstatus/CheckStatus"
 import PopulateDataList from "./PopulateDataList"
+import URL from "../../config"
 
 const Locate = () => {
   const [location, setLocation] = useState({ predictions: [] })
   const [inputValue, setInputValue] = useState("")
   const [isStatusOk, setStatusOk] = useState(true)
   const [isSubmit, setSubmit] = useState(false)
-  const [input, setInput] = useState("")
 
   const handleChange = ({ target }) => {
     if (target.value.length > 3) setInputValue(target.value)
@@ -30,9 +30,7 @@ const Locate = () => {
 
   const fetchData = async input => {
     try {
-      let res = await fetch(
-        `https://tummypolice.iyangi.com/api/v1/place/autocomplete/json?input=${input}`
-      )
+      let res = await fetch(`${URL}place/autocomplete/json?input=${input}`)
       let data = await res.json()
       setLocation(data)
       setStatusOk(res.ok)
@@ -47,7 +45,7 @@ const Locate = () => {
 
   return (
     <Wrapper>
-      <CheckStatus status={isStatusOk} />
+      {/* <CheckStatus status={isStatusOk} /> */}
       <form
         onSubmit={event => {
           event.preventDefault()
@@ -58,11 +56,11 @@ const Locate = () => {
           id="input"
           type="text"
           placeholder="Enter your delivery location"
-          // maxlength="50"
+          maxLength="10"
           list="places"
           onChange={handleChange}
         />
-        <Span>Locate Me</Span>
+
         <Submit type="submit" value="Find Food" />
         <PopulateDataList
           inputValueLength={inputValue.length}

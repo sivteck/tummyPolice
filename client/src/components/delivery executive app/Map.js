@@ -41,9 +41,6 @@ function Map() {
     } else {
       markerRef.current = Leaflet.marker(position2).addTo(mapRef.current)
     }
-    // Leaflet.Routing.control({
-    //   waypoints: [Leaflet.latLng(position), Leaflet.latLng(position2)]
-    // }).addTo(mapRef.current)
   }, [liveLocation])
 
   return <div id="mapid"></div>

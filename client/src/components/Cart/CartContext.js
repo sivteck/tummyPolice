@@ -1,18 +1,22 @@
 import React, { useReducer, createContext } from "react"
-import { incrementItem, addToCart, decrementItem } from "./Reducers"
+import {
+  incrementItem,
+  addToCart,
+  decrementItem
+} from "../../Reducers/Reducers"
 
 export const CartContext = createContext()
 
-const reducer = (cart, action) => {
-  switch (action.type) {
+const reducer = (cart, { type, data, props, id }) => {
+  switch (type) {
     case "SET_CART":
-      return action.data
+      return data
     case "ADD_TO_CART":
-      return addToCart(cart, action.props)
+      return addToCart(cart, props)
     case "INCREMENT_ITEM":
-      return incrementItem(cart, action.id)
+      return incrementItem(cart, id)
     case "DECREMENT_ITEM":
-      return decrementItem(cart, action.id)
+      return decrementItem(cart, id)
     default:
       return cart
   }

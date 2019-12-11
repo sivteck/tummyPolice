@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect } from "react"
 import { CartContext } from "./CartContext"
+import URL from "../../config"
 
 function CartItem(props) {
   const [cart, dispatch] = useContext(CartContext)
-  // const [isStatusOk, setStatusOk] = useState(false)
 
   const fetchData = async () => {
     console.log("from item com p", cart)
     try {
-      let res = await fetch("https://tummypolice.iyangi.com/api/v1/cart", {
+      let res = await fetch(`${URL}cart`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -19,11 +19,9 @@ function CartItem(props) {
           cartItems: cart.cartItems
         })
       })
-      let result = await res.json()
-      // setStatusOk(res.ok)
+      await res.json()
     } catch (error) {
       console.log(error)
-      // setStatusOk(false)
     }
   }
   useEffect(() => {

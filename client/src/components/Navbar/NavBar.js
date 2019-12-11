@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { AppBar, Toolbar, Typography } from "@material-ui/core"
 import IconButton from "@material-ui/core/IconButton"
-import Logo from "../images/logoicon.png"
+import Logo from "../../images/logoicon.png"
 import styled from "styled-components"
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"
 import PermIdentityIcon from "@material-ui/icons/PermIdentity"
 import Badge from "@material-ui/core/Badge"
+import URL from "../../config"
+import CheckStatus from "../Checkstatus/CheckStatus"
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -34,7 +36,7 @@ const NavBar = props => {
 
   async function fetchData() {
     try {
-      let res = await fetch("https://tummypolice.iyangi.com/api/v1/cart")
+      let res = await fetch(`${URL}cart`)
       let data = await res.json()
       setFetchStatus(res.ok)
       setCart(data)
@@ -47,8 +49,9 @@ const NavBar = props => {
     fetchData()
   }, [])
 
-  return { fetchStatus } ? (
+  return (
     <StyledAppBar position="static">
+      <CheckStatus status={fetchStatus} />
       <Toolbar>
         <img src={Logo} alt="logo" />
 
@@ -79,8 +82,6 @@ const NavBar = props => {
         </Link>
       </Toolbar>
     </StyledAppBar>
-  ) : (
-    <div>Unable to create Nav bar </div>
   )
 }
 

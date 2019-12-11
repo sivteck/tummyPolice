@@ -1,15 +1,15 @@
 import React from "react"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Homepage from "./components/Homepage/Homepage"
-import RestaurantList from "./components/RestaurantList"
-import Menu from "./components/Menu"
-import Checkout from "./components/Checkout"
-import Cart from "./components/Cart"
-import Login from "./components/Login"
-import Signup from "./components/Signup"
+import RestaurantList from "./components/Restaurant/RestaurantList"
+import Menu from "./components/Menu/Menu"
+import Checkout from "./components/Checkout/Checkout"
+import Cart from "./components/Cart/Cart"
+import Login from "./components/Login/Login"
+import Signup from "./components/Register/Signup"
 import Tracking from "./components/delivery executive app/Tracking"
 import Map from "./components/delivery executive app/Map"
-import ErrrorPage from "./components/ErrrorPage"
+import ErrrorPage from "./components/Checkstatus/ErrrorPage"
 
 function Routes() {
   return (

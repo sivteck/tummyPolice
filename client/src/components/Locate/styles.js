@@ -13,17 +13,20 @@ const Wrapper = styled.div`
 const Input = styled.input`
   border: none;
   padding: 15px;
-  width: 80%;
+  width: 75%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `
 
-const Span = styled.span`
-  position: absolute;
-  right: 60px;
-  padding: 18px;
-  color: #535665;
-  font-size: 13px;
-  cursor: pointer;
-`
+// const Span = styled.span`
+//   position: absolute;
+//   right: 100px;
+//   padding: 15px;
+//   color: #535665;
+//   cursor: pointer;
+//   font-size: 13px;
+// `
 
 const Submit = styled.input.attrs({
   type: "submit",
@@ -38,4 +41,4 @@ const Submit = styled.input.attrs({
   width: 100px;
   border: none;
 `
-export { Wrapper, Input, Span, Submit }
+export { Wrapper, Input, Submit }

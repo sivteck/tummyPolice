@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { CartProvider } from "./CartContext"
-import Map from "./delivery executive app/Map.js"
+import { CartProvider } from "../Cart/CartContext"
+import Map from "../delivery executive app/Map.js"
+import URL from "../../config"
+import CheckStatus from "../Checkstatus/CheckStatus"
 
 const Checkout = () => {
   const [checkout, setCheckout] = useState({ cartItems: {}, bill: {} })
-  const [fetchStatus, setFetchStatus] = useState(false)
+  const [fetchStatus, setFetchStatus] = useState(true)
   const [liveLocation, setLiveLocation] = useState({
     latitude: "",
     longitude: ""
@@ -12,7 +14,7 @@ const Checkout = () => {
 
   async function fetchData() {
     try {
-      let res = await fetch("https://tummypolice.iyangi.com/api/v1/checkout")
+      let res = await fetch(`${URL}checkout`)
       let data = await res.json()
       setCheckout(data)
       setFetchStatus(res.ok)
@@ -34,8 +36,9 @@ const Checkout = () => {
     })
   }
 
-  return { fetchStatus } ? (
+  return (
     <div className="checkoutFlex">
+      <CheckStatus status={fetchStatus} />
       <div className="flexContainer">{<Map />}</div>
       <div className="flexContainer">
         <CartProvider>
@@ -68,8 +71,6 @@ const Checkout = () => {
         </CartProvider>
       </div>
     </div>
-  ) : (
-    <div>unable to fetch bill details</div>
   )
 }
 

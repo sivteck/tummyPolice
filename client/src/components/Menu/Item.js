@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
-import { CartContext } from "./CartContext"
-import Itemimg from "../images/item.webp"
+import { CartContext } from "../Cart/CartContext"
+import Itemimg from "../../images/item.webp"
 
 const Item = props => {
   const [, dispatch] = useContext(CartContext)
@@ -9,12 +9,14 @@ const Item = props => {
     dispatch({ type: "ADD_TO_CART", props: props })
   }
 
+  const { name, category, price } = props
+
   return (
     <div className="item">
-      <img src={Itemimg} />
-      <h3>{props.name}</h3>
-      <h5>{props.category}</h5>
-      <h4>{props.price}</h4>
+      <img src={Itemimg} alt="Menu Item" />
+      <h3>{name}</h3>
+      <h5>{category}</h5>
+      <h4>{price}</h4>
       <button onClick={addToCart}>Add to cart</button>
     </div>
   )

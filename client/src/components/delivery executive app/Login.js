@@ -1,6 +1,7 @@
 import React from "react"
 import Logo from "../images/logo.png"
 import styled from "styled-components"
+import URL from "../../config"
 
 const Label = styled.label`
   display: block;
@@ -54,17 +55,14 @@ const Submit = styled.input.attrs({
 function Login() {
   const onSubmit = async data => {
     console.log("submit")
-    let res = await fetch(
-      "http://tummypolice.iyangi.com/api/v1/deliveryPartner",
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      }
-    )
+    let res = await fetch(`${URL}deliveryPartner`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
 
     await res.json()
   }

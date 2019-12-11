@@ -50,27 +50,35 @@ export const decrementItem = (cart, id) => {
   return cartValue
 }
 
-export const addToCart = (cart, props) => {
-  let key = props.id
-  if (key in cart.cartItems) {
-    let { quantity, price } = cart.cartItems[key]
-    quantity += 1
-    price = props.price * quantity
+export const addToCart = (
+  { cartItems },
+  { id, restaurantId, name, price, quantity }
+) => {
+  if (id in cartItems) {
+    let updateQuantity = cartItems[id].quantity
+    let updatePrice = cartItems[id].price
+    updateQuantity += 1
+    updatePrice = price * updateQuantity
     let cartValue = {
-      restaurantId: props.restaurantId,
-      cartItems: Object.assign(cart.cartItems, {
-        [props.id]: { name: props.name, price: price, quantity: quantity }
+      restaurantId,
+      cartItems: Object.assign(cartItems, {
+        [id]: {
+          name,
+          price: updatePrice,
+          quantity: updateQuantity
+        }
       })
     }
     return cartValue
   }
+
   let cartValue = {
-    restaurantId: props.restaurantId,
-    cartItems: Object.assign(cart.cartItems, {
-      [props.id]: {
-        name: props.name,
-        price: props.price,
-        quantity: props.quantity
+    restaurantId,
+    cartItems: Object.assign(cartItems, {
+      [id]: {
+        name,
+        price,
+        quantity
       }
     })
   }
