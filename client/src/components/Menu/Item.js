@@ -1,12 +1,26 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { CartContext } from "../Cart/CartContext"
 import Itemimg from "../../images/item.webp"
+import { useParams } from "react-router-dom"
+import URL from "../../config"
 
 const Item = props => {
-  const [, dispatch] = useContext(CartContext)
+  const [cart, dispatch] = useContext(CartContext)
+  const { id } = useParams()
 
   const addToCart = () => {
-    dispatch({ type: "ADD_TO_CART", props: props })
+    console.log("cart from item component", cart)
+    console.log(id)
+    if (cart.restaurantId !== id) {
+      let cart = {
+        restaurantId: id,
+        cartItems: {}
+      }
+      dispatch({
+        type: "EMPTY_CART",
+        data: cart
+      })
+    } else dispatch({ type: "ADD_TO_CART", props: props })
   }
 
   const { name, category, price } = props

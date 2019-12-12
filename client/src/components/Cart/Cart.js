@@ -20,7 +20,7 @@ const Cart = () => {
 
   async function fetchData() {
     try {
-      let response = await fetch(`${URL}cart`)
+      let response = await fetch(`${URL}/cart`)
       let data = await response.json()
       setStatusOk(response.ok)
       if (data.cartItems === undefined) data.cartItems = {}
@@ -43,7 +43,7 @@ const Cart = () => {
   function renderCartItems(cartItems) {
     return Object.keys(cartItems).map(itemId => {
       let { name, price, quantity } = cartItems[itemId]
-      return <CartItem props={(name, price, quantity, itemId)} />
+      return <CartItem item={{ name, price, quantity, itemId }} key={itemId} />
     })
   }
 
@@ -58,7 +58,6 @@ const Cart = () => {
         <div>
           <h1>Cart</h1>
           <div>
-            {console.log("totalItems", totalItems)}
             {totalItems.length === 1 ? (
               <p>{totalItems} ITEM</p>
             ) : (

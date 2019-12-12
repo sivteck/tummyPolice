@@ -7,14 +7,14 @@ import CheckStatus from "../Checkstatus/CheckStatus"
 const Checkout = () => {
   const [checkout, setCheckout] = useState({ cartItems: {}, bill: {} })
   const [fetchStatus, setFetchStatus] = useState(true)
-  const [liveLocation, setLiveLocation] = useState({
+  const [, setLiveLocation] = useState({
     latitude: "",
     longitude: ""
   })
 
   async function fetchData() {
     try {
-      let res = await fetch(`${URL}checkout`)
+      let res = await fetch(`${URL}/checkout`)
       let data = await res.json()
       setCheckout(data)
       setFetchStatus(res.ok)
@@ -45,7 +45,7 @@ const Checkout = () => {
           <div>
             <h1>Items</h1>
             {Object.keys(checkout.cartItems).map(item => (
-              <div className="cartItem">
+              <div className="cartItem" key={item}>
                 <div> {checkout.cartItems[item].name}</div>
                 <div> {checkout.cartItems[item].quantity}</div>
                 <div> &#8377; {checkout.cartItems[item].price}</div>

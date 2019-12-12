@@ -1,5 +1,5 @@
 export const incrementItem = (cart, id) => {
-  // let item = event.target.parentElement.id
+  console.log("increment item")
   let { name, price, quantity } = cart.cartItems[id]
   let priceOfOneItem = price / quantity
   quantity += 1
@@ -14,30 +14,21 @@ export const incrementItem = (cart, id) => {
 }
 
 export const decrementItem = (cart, id) => {
-  // let item = event.target.parentElement.id
+  console.log("decrement item", cart)
   let { name, price, quantity } = cart.cartItems[id]
   let priceOfOneItem = price / quantity
   quantity -= 1
   console.log(quantity)
   if (quantity === 0) {
-    console.log("items in cart", cart.cartItems)
     const newObj = Object.assign({}, cart.cartItems)
 
-    console.log("newobj before del", newObj)
-    console.log("beforelength", Object.keys(newObj).length)
-    console.log("id", id)
     delete newObj[id]
-    console.log("newobj after del", newObj)
-
-    console.log("afterlength", Object.keys(newObj).length)
 
     let cartValue = {
       restaurantId: cart.restaurantId,
       cartItems: newObj
     }
-    console.log("cartlength", Object.keys(cartValue.cartItems).length)
-
-    console.log(cartValue)
+    console.log("item decremented", cartValue)
     return cartValue
   }
   price = priceOfOneItem * quantity
@@ -47,6 +38,7 @@ export const decrementItem = (cart, id) => {
       [id]: { name: name, price: price, quantity: quantity }
     })
   }
+  console.log("item decremented", cartValue)
   return cartValue
 }
 
@@ -54,6 +46,7 @@ export const addToCart = (
   { cartItems },
   { id, restaurantId, name, price, quantity }
 ) => {
+  console.log("add to cart")
   if (id in cartItems) {
     let updateQuantity = cartItems[id].quantity
     let updatePrice = cartItems[id].price

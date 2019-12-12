@@ -15,7 +15,7 @@ const Homepage = () => {
   `
 
   return (
-    <div classname="flex1">
+    <div className="flex1">
       <div className="bg">
         <div className="flex2">
           <div className="logoDiv">

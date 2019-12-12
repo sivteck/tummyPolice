@@ -5,6 +5,7 @@ import { CartProvider } from "../Cart/CartContext"
 import { useParams } from "react-router-dom"
 import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
+import MenuItems from "./MenuItems"
 
 const Menu = props => {
   const [menuItems, setMenuItems] = useState([])
@@ -14,7 +15,7 @@ const Menu = props => {
 
   const fetchData = async () => {
     try {
-      let res = await fetch(`${URL}menu?restaurantid=${id}`)
+      let res = await fetch(`${URL}/menu?restaurantid=${id}`)
       let result = await res.json()
       setStatusOk(res.ok)
       setMenuItems(result)
@@ -33,11 +34,7 @@ const Menu = props => {
       <CheckStatus status={isStatusOk} />
       <div className="menu">
         <div className="menuComponents1">
-          <div className="itemList">
-            {menuItems.map(item => (
-              <Item {...item} restaurantId={id} key={item.id} quantity={1} />
-            ))}
-          </div>
+          <MenuItems menuItems={menuItems} id={id} key={id} />
         </div>
         <div className="menuComponents2">
           <Cart />

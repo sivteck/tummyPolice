@@ -30,7 +30,7 @@ const Locate = () => {
 
   const fetchData = async input => {
     try {
-      let res = await fetch(`${URL}place/autocomplete/json?input=${input}`)
+      let res = await fetch(`${URL}/place/autocomplete/json?input=${input}`)
       let data = await res.json()
       setLocation(data)
       setStatusOk(res.ok)
@@ -56,7 +56,6 @@ const Locate = () => {
           id="input"
           type="text"
           placeholder="Enter your delivery location"
-          maxLength="10"
           list="places"
           onChange={handleChange}
         />

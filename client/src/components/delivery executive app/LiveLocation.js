@@ -17,7 +17,7 @@ function LiveLocation() {
 
   async function fetchData() {
     try {
-      const res = await fetch(`${URL}deliverypartner/track`, {
+      const res = await fetch(`${URL}/deliverypartner/track`, {
         method: "POST",
         headers: {
           Accept: "application/json",

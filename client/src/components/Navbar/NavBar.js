@@ -25,7 +25,7 @@ const inlineStyle = {
 
 const NavBar = props => {
   const [cart, setCart] = useState({ cartItems: {} })
-  const [fetchStatus, setFetchStatus] = useState(false)
+  const [fetchStatus, setFetchStatus] = useState(true)
 
   let cartLength
   if (cart.cartItems === undefined) cartLength = 0
@@ -36,7 +36,7 @@ const NavBar = props => {
 
   async function fetchData() {
     try {
-      let res = await fetch(`${URL}cart`)
+      let res = await fetch(`${URL}/cart`)
       let data = await res.json()
       setFetchStatus(res.ok)
       setCart(data)

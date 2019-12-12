@@ -96,6 +96,7 @@ const Login = () => {
       )
     }
     if (isStatusOk) {
+      console.log("from login", isStatusOk)
       return (
         <div>
           <Redirect to={{ pathname: "/restaurant", state: { userDetails } }} />{" "}

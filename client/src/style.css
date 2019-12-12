@@ -212,7 +212,7 @@ button.seeRestaurant {
 }
 
 .flex1 {
-    display: flex;
+    display: grid;
 }
 
 .billDetails {

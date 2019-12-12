@@ -2,36 +2,14 @@ import React, { useContext, useEffect } from "react"
 import { CartContext } from "./CartContext"
 import URL from "../../config"
 
-function CartItem(props) {
+function CartItem({ item }) {
   const [cart, dispatch] = useContext(CartContext)
-
-  const fetchData = async () => {
-    console.log("from item com p", cart)
-    try {
-      let res = await fetch(`${URL}cart`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          restaurantId: cart.restaurantId,
-          cartItems: cart.cartItems
-        })
-      })
-      await res.json()
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  useEffect(() => {
-    fetchData()
-  }, [cart])
+  console.log("post req", cart)
 
   return (
     <div className="cartItem">
-      <div> {props.name}</div>
-      <div className="changeQuantity" id={props.id}>
+      <div> {item.name}</div>
+      <div className="changeQuantity" id={item.itemId}>
         <button
           onClick={event =>
             dispatch({
@@ -42,7 +20,7 @@ function CartItem(props) {
         >
           -
         </button>
-        <div> {props.quantity}</div>
+        <div> {item.quantity}</div>
         <button
           onClick={event =>
             dispatch({
@@ -54,7 +32,7 @@ function CartItem(props) {
           +
         </button>
       </div>
-      <div> &#8377; {props.price}</div>
+      <div> &#8377; {item.price}</div>
     </div>
   )
 }

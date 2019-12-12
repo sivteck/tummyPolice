@@ -55,7 +55,7 @@ const Submit = styled.input.attrs({
 function Login() {
   const onSubmit = async data => {
     console.log("submit")
-    let res = await fetch(`${URL}deliveryPartner`, {
+    let res = await fetch(`${URL}/deliveryPartner`, {
       method: "POST",
       headers: {
         Accept: "application/json",
