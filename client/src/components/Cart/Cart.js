@@ -3,6 +3,8 @@ import { CartContext } from "./CartContext"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import CartItem from "./CartItem"
+import URL from "../../config"
+import CheckStatus from "../Checkstatus/CheckStatus"
 
 const StyledLink = styled(Link)`
   background-color: #db741e;
@@ -14,18 +16,16 @@ const StyledLink = styled(Link)`
 
 const Cart = () => {
   const [cart, dispatch] = useContext(CartContext)
-  const [isStatusOk, setStatusOk] = useState(false)
+  const [isStatusOk, setStatusOk] = useState(true)
 
   async function fetchData() {
     try {
-      let response = await fetch("https://tummypolice.iyangi.com/api/v1/cart")
-      console.log("response", response)
+      let response = await fetch(`${URL}/cart`)
       let data = await response.json()
       setStatusOk(response.ok)
       if (data.cartItems === undefined) data.cartItems = {}
       dispatch({ type: "SET_CART", data: data })
     } catch (error) {
-      console.log(error)
       setStatusOk(false)
     }
   }
@@ -41,19 +41,15 @@ const Cart = () => {
   for (let key in cart.cartItems) totalItems += cart.cartItems[key].quantity
 
   function renderCartItems(cartItems) {
-    return Object.keys(cartItems).map(item => (
-      <CartItem
-        name={cartItems[item].name}
-        price={cartItems[item].price}
-        quantity={cartItems[item].quantity}
-        id={item}
-        key={item}
-      />
-    ))
+    return Object.keys(cartItems).map(itemId => {
+      let { name, price, quantity } = cartItems[itemId]
+      return <CartItem item={{ name, price, quantity, itemId }} key={itemId} />
+    })
   }
 
-  return { isStatusOk } ? (
+  return (
     <div>
+      <CheckStatus status={isStatusOk} />
       {Object.keys(cart.cartItems).length === 0 ? (
         <div>
           <h1>Cart Empty</h1>
@@ -62,7 +58,6 @@ const Cart = () => {
         <div>
           <h1>Cart</h1>
           <div>
-            {console.log("totalItems", totalItems)}
             {totalItems.length === 1 ? (
               <p>{totalItems} ITEM</p>
             ) : (
@@ -79,8 +74,6 @@ const Cart = () => {
         </div>
       )}
     </div>
-  ) : (
-    <div> Unable to fetch cart</div>
   )
 }
 

@@ -9,10 +9,11 @@ function Tracking() {
     longitude: ""
   })
 
-  const internalRef = useRef(undefined)
+  const intervalRef = useRef(undefined)
+
   useEffect(() => {
-    clearInterval(internalRef.current)
-    internalRef.current = setInterval(
+    clearInterval(intervalRef.current)
+    intervalRef.current = setInterval(
       () =>
         navigator.geolocation.getCurrentPosition(function(position) {
           setLiveLocation({

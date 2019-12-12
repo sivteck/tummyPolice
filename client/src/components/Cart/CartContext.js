@@ -1,5 +1,9 @@
 import React, { useReducer, createContext } from "react"
-import { incrementItem, addToCart, decrementItem } from "./Reducers"
+import {
+  incrementItem,
+  addToCart,
+  decrementItem
+} from "../../Reducers/Reducers"
 
 export const CartContext = createContext()
 
@@ -13,6 +17,8 @@ const reducer = (cart, action) => {
       return incrementItem(cart, action.id)
     case "DECREMENT_ITEM":
       return decrementItem(cart, action.id)
+    case "EMPTY_CART":
+      return action.data
     default:
       return cart
   }

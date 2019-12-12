@@ -12,7 +12,7 @@ function Map() {
     longitude: ""
   })
 
-  const position = [12.9372864, 77.61919999999999]
+  const position = [12.9606811, 77.6436253]
   const position2 = [liveLocation.latitude, liveLocation.longitude]
 
   socket.on("current location", function(location) {
@@ -41,9 +41,6 @@ function Map() {
     } else {
       markerRef.current = Leaflet.marker(position2).addTo(mapRef.current)
     }
-    // Leaflet.Routing.control({
-    //   waypoints: [Leaflet.latLng(position), Leaflet.latLng(position2)]
-    // }).addTo(mapRef.current)
   }, [liveLocation])
 
   return <div id="mapid"></div>

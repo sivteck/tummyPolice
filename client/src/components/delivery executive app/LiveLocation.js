@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import URL from "../../config"
 
 function LiveLocation() {
   const [liveLocation, setLiveLocation] = useState({
@@ -16,17 +17,14 @@ function LiveLocation() {
 
   async function fetchData() {
     try {
-      const res = await fetch(
-        "https://tummypolice.iyangi.com/api/v1/deliverypartner/track",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(liveLocation)
-        }
-      )
+      const res = await fetch(`${URL}/deliverypartner/track`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(liveLocation)
+      })
 
       console.log("body", JSON.stringify(liveLocation))
       const result = await res.json()

@@ -1,28 +1,41 @@
 import React, { useState, useEffect } from "react"
 import Restaurant from "./Restaurant"
-import Food from "./images/food.webp"
-import NavBar from "./NavBar"
+import Food from "../../images/food.webp"
+import NavBar from "../Navbar/NavBar"
+import URL from "../../config"
+import CheckStatus from "../Checkstatus/CheckStatus"
 
 const RestaurantList = ({ location }) => {
-  const { userDetails } = location.state
+  const { userDetails, locationId } = location.state
   const [restaurant, setRestaurant] = useState([])
   const [isStatusOk, setStatusOk] = useState(false)
+  let url = `${URL}/restaurants`
 
-  async function fetchData() {
+  async function fetchData(url) {
     try {
-      let res = await fetch("https://tummypolice.iyangi.com/api/v1/restaurants")
+      let res = await fetch(url)
       let data = await res.json()
+
       setStatusOk(res.ok)
       setRestaurant(data)
     } catch (error) {
+      setStatusOk(false)
       console.log(error)
     }
   }
   useEffect(() => {
-    fetchData()
+    if (locationId) {
+      url = `${url}?placeid=${locationId}`
+      fetchData(url)
+    } else {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        url = `${url}?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
+        fetchData(url)
+      })
+    }
   }, [])
 
-  return { isStatusOk } ? (
+  return (
     <div className="restaurantList">
       <NavBar userDetails={userDetails} />
       <h1> Popular Brands </h1>
@@ -30,8 +43,6 @@ const RestaurantList = ({ location }) => {
         <Restaurant id={item.id} name={item.name} img={Food} key={item.id} />
       ))}
     </div>
-  ) : (
-    <div>unable to fetch restaurant list</div>
   )
 }
 export default RestaurantList
