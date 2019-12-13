@@ -1,7 +1,9 @@
-import React from "react"
+import React, { useState } from "react"
 import Logo from "../../images/logo.png"
 import styled from "styled-components"
 import URL from "../../config"
+
+import { Redirect } from "react-router-dom"
 
 const Label = styled.label`
   display: block;
@@ -54,28 +56,73 @@ const Submit = styled.input.attrs({
 `
 
 function DeliveryPartnerLogin() {
-  const onSubmit = async data => {
-    console.log("submit")
-    let res = await fetch(`${URL}/deliveryPartner`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
+  const [isStatusOk, setStatusOk] = useState(false)
+  const [response, setResponse] = useState({})
+  const [inputValue, setInputValue] = useState("")
 
-    await res.json()
+  const handleChange = ({ target }) => {
+    console.log("input value", target.value)
+    setInputValue(target.value)
+  }
+
+  const onSubmit = async inputValue => {
+    console.log("submit", inputValue)
+    try {
+      let res = await fetch(`${URL}/deliverypartner/login`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: inputValue })
+      })
+      let result = await res.json()
+      setResponse(result)
+      setStatusOk(res.ok)
+    } catch (error) {
+      setStatusOk(false)
+    }
+  }
+
+  function loginAction() {
+    if (isStatusOk && response.hasOwnProperty("error")) {
+      return (
+        <div>
+          <p style={{ textTransform: "capitalize" }}>{response.error}</p>
+        </div>
+      )
+    }
+    if (isStatusOk) {
+      console.log("from login", isStatusOk)
+      return (
+        <div>
+          <Redirect to="/deliverypartner/tracking" />
+        </div>
+      )
+    }
   }
 
   return (
     <Wrapper>
       <img className="logo" src={Logo} alt="" />
-      <form style={{ display: "grid" }}>
+      <form
+        style={{ display: "grid" }}
+        onSubmit={e => {
+          e.preventDefault()
+          onSubmit(inputValue)
+        }}
+      >
         <Label>Enter your DE ID</Label>
-        <Input type="text" name="id" pattern="[0-9]" />
+        <Input
+          type="text"
+          name="id"
+          required="true"
+          pattern="[0-9]{10}"
+          onBlur={handleChange}
+        />
         <br />
         <Submit type="submit" value="Submit" />
+        {loginAction()}
       </form>
     </Wrapper>
   )
