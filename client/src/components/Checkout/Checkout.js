@@ -4,9 +4,12 @@ import Map from "../delivery executive app/Map.js"
 import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
 
+import { Redirect } from "react-router-dom"
+
 const Checkout = () => {
   const [checkout, setCheckout] = useState({ cartItems: {}, bill: {} })
   const [fetchStatus, setFetchStatus] = useState(true)
+  const [order, setOrder] = useState(false)
   const [, setLiveLocation] = useState({
     latitude: "",
     longitude: ""
@@ -28,18 +31,15 @@ const Checkout = () => {
   }, [])
 
   function placeOrder() {
-    navigator.geolocation.watchPosition(function(position) {
-      setLiveLocation({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      })
-    })
+    if (order) {
+      return <Redirect to="/order/track" />
+    }
   }
 
   return (
     <div className="checkoutFlex">
       <CheckStatus status={fetchStatus} />
-      <div className="flexContainer">{<Map />}</div>
+      {/* <div className="flexContainer">{<Map />}</div> */}
       <div className="flexContainer">
         <CartProvider>
           <div>
@@ -66,7 +66,14 @@ const Checkout = () => {
                 <div> &#8377; {checkout.bill.total}</div>
               </div>
             </div>
-            <button onClick={placeOrder}>Order</button>
+            <button
+              onClick={() => {
+                setOrder(true)
+              }}
+            >
+              Order
+            </button>
+            {placeOrder()}
           </div>
         </CartProvider>
       </div>

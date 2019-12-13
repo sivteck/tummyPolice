@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import useForm from "react-hook-form"
 import { Link, Redirect } from "react-router-dom"
 import styled from "styled-components"
+import URL from "../../config"
 
 const Title = styled.h1`
   margin-top: 25px;
@@ -63,14 +64,10 @@ const Login = () => {
   const { register, errors, handleSubmit } = useForm({
     mode: "onBlur"
   })
-  const [liveLocation, setLiveLocation] = useState({
-    latitude: "",
-    longitude: ""
-  })
 
   const onSubmit = async data => {
     try {
-      let res = await fetch("https://tummypolice.iyangi.com/api/v1/login", {
+      let res = await fetch(`${URL}/login`, {
         method: "POST",
         headers: {
           Accept: "application/json",
