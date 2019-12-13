@@ -13,7 +13,7 @@ async function createDP (phone) {
 }
 
 async function verifyDP (phone) {
-  const text  = 'SELECT id, phone FROM deliverypartners WHER phone = $1'
+  const text  = 'SELECT id, phone FROM deliverypartners WHERE phone = $1'
   try {
     const result = await query(text, [phone])
     return { ...result.rows[0] }
