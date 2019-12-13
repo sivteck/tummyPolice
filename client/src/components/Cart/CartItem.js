@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext } from "react"
 import { CartContext } from "./CartContext"
-import URL from "../../config"
+import { INCREMENT_ITEM, DECREMENT_ITEM } from "../../Reducers/Actions"
 
 function CartItem({ item }) {
   const [cart, dispatch] = useContext(CartContext)
@@ -13,7 +13,7 @@ function CartItem({ item }) {
         <button
           onClick={event =>
             dispatch({
-              type: "DECREMENT_ITEM",
+              type: DECREMENT_ITEM,
               id: event.target.parentElement.id
             })
           }
@@ -24,7 +24,7 @@ function CartItem({ item }) {
         <button
           onClick={event =>
             dispatch({
-              type: "INCREMENT_ITEM",
+              type: INCREMENT_ITEM,
               id: event.target.parentElement.id
             })
           }

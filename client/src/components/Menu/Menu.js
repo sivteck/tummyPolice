@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import Item from "./Item"
 import Cart from "../Cart/Cart"
 import { CartProvider } from "../Cart/CartContext"
 import { useParams } from "react-router-dom"
@@ -37,7 +36,7 @@ const Menu = props => {
           <MenuItems menuItems={menuItems} id={id} key={id} />
         </div>
         <div className="menuComponents2">
-          <Cart />
+          <Cart restaurantId={id} />
         </div>
       </div>
     </CartProvider>

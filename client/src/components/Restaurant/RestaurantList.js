@@ -8,7 +8,7 @@ import CheckStatus from "../Checkstatus/CheckStatus"
 const RestaurantList = ({ location }) => {
   const { userDetails, locationId } = location.state
   const [restaurant, setRestaurant] = useState([])
-  const [isStatusOk, setStatusOk] = useState(false)
+  const [isStatusOk, setStatusOk] = useState(true)
   let url = `${URL}/restaurants`
 
   async function fetchData(url) {
@@ -37,6 +37,7 @@ const RestaurantList = ({ location }) => {
 
   return (
     <div className="restaurantList">
+      <CheckStatus status={isStatusOk} />
       <NavBar userDetails={userDetails} />
       <h1> Popular Brands </h1>
       {restaurant.map(item => (

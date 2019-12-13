@@ -10,6 +10,7 @@ import Signup from "./components/Register/Signup"
 import Tracking from "./components/delivery executive app/Tracking"
 import Map from "./components/delivery executive app/Map"
 import ErrrorPage from "./components/Checkstatus/ErrrorPage"
+import DeliveryPartnerLogin from "./components/delivery executive app/DeliveryPartnerLogin"
 
 function Routes() {
   return (
@@ -25,6 +26,11 @@ function Routes() {
         <Route exact path="/deliverypartner/tracking" component={Tracking} />
         <Route exact path="/order/track" component={Map} />
         <Route exact path="/errorpage" component={ErrrorPage} />
+        <Route
+          exact
+          path="/deliverypartner/login"
+          component={DeliveryPartnerLogin}
+        />
       </Switch>
     </Router>
   )
