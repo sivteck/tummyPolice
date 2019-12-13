@@ -1,5 +1,5 @@
 import React from "react"
-import Logo from "../images/logo.png"
+import Logo from "../../images/logo.png"
 import styled from "styled-components"
 import URL from "../../config"
 
@@ -39,6 +39,7 @@ const Submit = styled.input.attrs({
   value: "Submit"
 })`
   width: 30%;
+  margin-top: 15px;
   margin-left: auto;
   margin-right: auto;
   padding: 5px;
@@ -52,7 +53,7 @@ const Submit = styled.input.attrs({
   text-transform: uppercase;
 `
 
-function Login() {
+function DeliveryPartnerLogin() {
   const onSubmit = async data => {
     console.log("submit")
     let res = await fetch(`${URL}/deliveryPartner`, {
@@ -72,7 +73,7 @@ function Login() {
       <img className="logo" src={Logo} alt="" />
       <form style={{ display: "grid" }}>
         <Label>Enter your DE ID</Label>
-        <Input type="number" name="id" />
+        <Input type="text" name="id" pattern="[0-9]" />
         <br />
         <Submit type="submit" value="Submit" />
       </form>
@@ -80,4 +81,4 @@ function Login() {
   )
 }
 
-export default Login
+export default DeliveryPartnerLogin

@@ -5,6 +5,7 @@ import styled from "styled-components"
 import CartItem from "./CartItem"
 import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
+import { SET_CART } from "../../Reducers/Actions"
 
 const StyledLink = styled(Link)`
   background-color: #db741e;
@@ -14,7 +15,7 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `
 
-const Cart = () => {
+const Cart = props => {
   const [cart, dispatch] = useContext(CartContext)
   const [isStatusOk, setStatusOk] = useState(true)
 
@@ -23,8 +24,10 @@ const Cart = () => {
       let response = await fetch(`${URL}/cart`)
       let data = await response.json()
       setStatusOk(response.ok)
+      if (data.restaurantId === undefined)
+        data.restaurantId = props.restaurantId
       if (data.cartItems === undefined) data.cartItems = {}
-      dispatch({ type: "SET_CART", data: data })
+      dispatch({ type: SET_CART, data: data })
     } catch (error) {
       setStatusOk(false)
     }
