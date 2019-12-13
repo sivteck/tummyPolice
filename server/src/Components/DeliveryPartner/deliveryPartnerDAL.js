@@ -1,4 +1,5 @@
 const uuid = require('uuid/v4')
+const { query } = require('../../db/relational/schema.js')
 
 async function createDP (phone) {
   const id = uuid()
