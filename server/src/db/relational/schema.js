@@ -25,6 +25,12 @@ let createDeliveryPartnerTable = `CREATE TABLE IF NOT EXISTS deliverypartners (
                        phone VARCHAR UNIQUE
                        )`
 
+let createOrderTable = `CREATE TABLE IF NOT EXISTS orders (
+                       id UUID PRIMARY KEY,
+                       orderDetails json
+                       )`
+
+
 async function initDb () {
   try {
     await pool.query(restaurantTable)
