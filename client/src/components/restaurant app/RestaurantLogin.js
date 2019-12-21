@@ -73,7 +73,7 @@ function RestaurantLogin() {
           Accept: "application/json",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ restaurantName: inputValue })
+        body: JSON.stringify({ name: inputValue })
       })
       let result = await res.json()
       setResponse(result)
