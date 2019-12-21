@@ -11,7 +11,7 @@ import Tracking from "./components/delivery executive app/Tracking"
 import Map from "./components/delivery executive app/Map"
 import ErrrorPage from "./components/Checkstatus/ErrrorPage"
 import DeliveryPartnerLogin from "./components/delivery executive app/DeliveryPartnerLogin"
-import RestaurantLogin from "./components/restaurant/RestaurantLogin"
+import RestaurantLogin from "./components/restaurant app/RestaurantLogin"
 
 function Routes() {
   return (

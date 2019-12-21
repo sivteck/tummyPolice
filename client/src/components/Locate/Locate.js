@@ -29,13 +29,15 @@ const Locate = () => {
   }
 
   const fetchData = async input => {
-    try {
-      let res = await fetch(`${URL}/place/autocomplete/json?input=${input}`)
-      let data = await res.json()
-      setLocation(data)
-      setStatusOk(res.ok)
-    } catch (error) {
-      setStatusOk(false)
+    if (input.length > 0) {
+      try {
+        let res = await fetch(`${URL}/place/autocomplete/json?input=${input}`)
+        let data = await res.json()
+        setLocation(data)
+        setStatusOk(res.ok)
+      } catch (error) {
+        setStatusOk(false)
+      }
     }
   }
 
