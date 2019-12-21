@@ -51,6 +51,7 @@ export const addToCart = (
   if (cart.restaurantId !== urlId && cart.restaurantId !== undefined) {
     alert("Empty Cart")
     cart.restaurantId = urlId
+    console.log("empty cart in reducer in addToCart")
     cart.cartItems = {}
   }
 
