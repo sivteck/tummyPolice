@@ -16,13 +16,13 @@ async function getCart (req, res) {
 
 async function updateCart (req, res) {
   let sessionId = req.session.id
-  let userid = req.session.userid
+  let userId = req.session.userid
   let cart = req.body
   console.log('updateCart', req.session)
   console.log('getCart', req.session)
   if (userId === undefined) return res.json({ error: 'undefined user :-|' })
   try {
-    await insertCart(userid, cart)
+    await insertCart(userId, cart)
     res.status(201).json(cart)
   }
   catch (error) {
