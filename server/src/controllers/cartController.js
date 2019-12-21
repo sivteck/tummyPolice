@@ -4,7 +4,7 @@ async function getCart (req, res) {
   let sessionId = req.session.id
   let userId = req.session.userid
   console.log('getCart', req.session)
-  if (userId === undefined) res.json({ error: 'undefined user :-|' })
+  if (userId === undefined) return res.json({ error: 'undefined user :-|' })
   try {
     let cart = await getCartState(userId)
     res.status(200).json(cart)
@@ -19,6 +19,8 @@ async function updateCart (req, res) {
   let userid = req.session.userid
   let cart = req.body
   console.log('updateCart', req.session)
+  console.log('getCart', req.session)
+  if (userId === undefined) return res.json({ error: 'undefined user :-|' })
   try {
     await insertCart(userid, cart)
     res.status(201).json(cart)
