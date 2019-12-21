@@ -77,6 +77,8 @@ const Login = () => {
       })
 
       let result = await res.json()
+      console.log("result from login", result)
+      localStorage.setItem("userDetails", JSON.stringify(result))
       setUserDetails(result)
       setStatusOk(res.ok)
     } catch (error) {

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { CartProvider } from "../Cart/CartContext"
-import Map from "../delivery executive app/Map.js"
 import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
-
+import NavBar from "../Navbar/NavBar"
 import { Redirect } from "react-router-dom"
 
 const Checkout = () => {

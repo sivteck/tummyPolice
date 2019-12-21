@@ -11,6 +11,7 @@ import Tracking from "./components/delivery executive app/Tracking"
 import Map from "./components/delivery executive app/Map"
 import ErrrorPage from "./components/Checkstatus/ErrrorPage"
 import DeliveryPartnerLogin from "./components/delivery executive app/DeliveryPartnerLogin"
+import RestaurantLogin from "./components/restaurant/RestaurantLogin"
 
 function Routes() {
   return (
@@ -18,19 +19,16 @@ function Routes() {
       <Switch>
         <Route exact path="/" component={Homepage} />
         <Route exact path="/restaurant" component={RestaurantList} />
-        <Route exact path="/restaurant/:id" component={Menu} />
-        <Route exact path="/checkout" component={Checkout} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={Signup} />
-        <Route exact path="/cart" component={Cart} />
-        <Route exact path="/deliverypartner/tracking" component={Tracking} />
-        <Route exact path="/order/track" component={Map} />
-        <Route exact path="/errorpage" component={ErrrorPage} />
-        <Route
-          exact
-          path="/deliverypartner/login"
-          component={DeliveryPartnerLogin}
-        />
+        <Route path="/restaurant/:id" component={Menu} />
+        <Route path="/checkout" component={Checkout} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/cart" component={Cart} />
+        <Route path="/deliverypartner/tracking" component={Tracking} />
+        <Route path="/order/track" component={Map} />
+        <Route path="/errorpage" component={ErrrorPage} />
+        <Route path="/restaurantapp/login" component={RestaurantLogin} />
+        <Route path="/deliverypartner/login" component={DeliveryPartnerLogin} />
       </Switch>
     </Router>
   )
