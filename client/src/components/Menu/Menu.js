@@ -34,11 +34,11 @@ const Menu = props => {
       <NavBar />
       <CheckStatus status={isStatusOk} />
       <div className="menu">
-        <div className="menuComponents1">
-          <MenuItems menuItems={menuItems} id={id} key={id} />
-        </div>
         <div className="menuComponents2">
           <Cart restaurantId={id} />
+        </div>
+        <div className="menuComponents1">
+          <MenuItems menuItems={menuItems} id={id} key={id} />
         </div>
       </div>
     </CartProvider>
