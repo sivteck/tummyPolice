@@ -9,6 +9,8 @@ import PermIdentityIcon from "@material-ui/icons/PermIdentity"
 import Badge from "@material-ui/core/Badge"
 import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
+import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded"
+import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded"
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -24,7 +26,7 @@ const inlineStyle = {
 }
 
 const NavBar = () => {
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"))
+  let userDetails = JSON.parse(localStorage.getItem("userDetails"))
   console.log("userDetails from nav bar", userDetails)
   const [cart, setCart] = useState({ cartItems: {} })
   const [fetchStatus, setFetchStatus] = useState(true)
@@ -33,7 +35,7 @@ const NavBar = () => {
   if (cart.cartItems === undefined) cartLength = 0
   else cartLength = Object.keys(cart.cartItems).length
   let userName
-  if (userDetails === undefined) userName = "User"
+  if (userDetails === null) userName = "User"
   else userName = userDetails.username
 
   async function fetchData() {
@@ -50,6 +52,17 @@ const NavBar = () => {
   useEffect(() => {
     fetchData()
   }, [])
+
+  const logout = async () => {
+    try {
+      let res = await fetch(`${URL}/logout`)
+      console.log(res)
+      if (res.ok) {
+        localStorage.clear()
+        setCart({ cartItems: {} })
+      }
+    } catch (error) {}
+  }
 
   return (
     <StyledAppBar position="static">
@@ -82,6 +95,27 @@ const NavBar = () => {
             </Typography>
           </IconButton>
         </Link>
+
+        {userDetails ? (
+          <IconButton
+            style={{ backgroundColor: "transparent" }}
+            onClick={logout}
+          >
+            <ExitToAppRoundedIcon />
+            <Typography variant="h5" noWrap style={inlineStyle}>
+              Logout
+            </Typography>
+          </IconButton>
+        ) : (
+          <Link to="/login">
+            <IconButton style={{ backgroundColor: "transparent" }}>
+              <AccountCircleRoundedIcon />
+              <Typography variant="h5" noWrap style={inlineStyle}>
+                Login
+              </Typography>
+            </IconButton>
+          </Link>
+        )}
       </Toolbar>
     </StyledAppBar>
   )

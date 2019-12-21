@@ -8,11 +8,11 @@ import { Redirect } from "react-router-dom"
 const Checkout = () => {
   const [checkout, setCheckout] = useState({ cartItems: {}, bill: {} })
   const [fetchStatus, setFetchStatus] = useState(true)
-  const [order, setOrder] = useState(false)
-  const [, setLiveLocation] = useState({
-    latitude: "",
-    longitude: ""
-  })
+  const [orderStatus, setOrderStatus] = useState(false)
+  const [isStatusOk, setStatusOk] = useState(false)
+  const [response, setResponse] = useState({})
+
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"))
 
   async function fetchData() {
     try {
@@ -29,53 +29,89 @@ const Checkout = () => {
     fetchData()
   }, [])
 
+  if (setOrderStatus) {
+    order()
+  }
+
+  async function order() {
+    console.log(orderStatus)
+    try {
+      let res = await fetch(`${URL}/order`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ userDetails, order: checkout })
+      })
+      console.log("res", res)
+      let result = await res.json()
+      setResponse(result)
+      setStatusOk(res.ok)
+    } catch (error) {
+      console.log("error", error)
+      setStatusOk(false)
+    }
+  }
+
   function placeOrder() {
-    if (order) {
-      return <Redirect to="/order/track" />
+    console.log(isStatusOk)
+    if (isStatusOk && response.hasOwnProperty("error")) {
+      return (
+        <div>
+          <p style={{ textTransform: "capitalize" }}>{response.error}</p>
+        </div>
+      )
+    }
+    if (isStatusOk) {
+      console.log("Order status", isStatusOk)
+      return (
+        <div>
+          <Redirect to="/order/track" />
+        </div>
+      )
     }
   }
 
   return (
-    <div className="checkoutFlex">
-      <CheckStatus status={fetchStatus} />
-      {/* <div className="flexContainer">{<Map />}</div> */}
-      <div className="flexContainer">
-        <CartProvider>
-          <div>
-            <h1>Items</h1>
-            {Object.keys(checkout.cartItems).map(item => (
-              <div className="cartItem" key={item}>
-                <div> {checkout.cartItems[item].name}</div>
-                <div> {checkout.cartItems[item].quantity}</div>
-                <div> &#8377; {checkout.cartItems[item].price}</div>
-              </div>
-            ))}
-            <h1>Bill Details</h1>
-            <div className="billDetails">
-              <div className="cartItem">
-                <div>Item Total</div>
-                <div> &#8377; {checkout.bill.subtotal}</div>
-              </div>
-              <div className="cartItem">
-                <div>Delivery Fee</div>
-                <div> &#8377; {checkout.bill.deliveryfee}</div>
-              </div>
-              <div className="cartItem">
-                <div>To Pay:</div>
-                <div> &#8377; {checkout.bill.total}</div>
-              </div>
+    <div>
+      <CartProvider>
+        <CheckStatus status={fetchStatus} />
+        <NavBar />
+        <div>
+          <h1>Items</h1>
+          {Object.keys(checkout.cartItems).map(item => (
+            <div className="cartItem" key={item}>
+              <div> {checkout.cartItems[item].name}</div>
+              <div> {checkout.cartItems[item].quantity}</div>
+              <div> &#8377; {checkout.cartItems[item].price}</div>
             </div>
-            <button
-              onClick={() => {
-                setOrder(true)
-              }}
-            >
-              Order
-            </button>
-            {placeOrder()}
+          ))}
+          <h1>Bill Details</h1>
+          <div className="billDetails">
+            <div className="cartItem">
+              <div>Item Total</div>
+              <div> &#8377; {checkout.bill.subtotal}</div>
+            </div>
+            <div className="cartItem">
+              <div>Delivery Fee</div>
+              <div> &#8377; {checkout.bill.deliveryfee}</div>
+            </div>
+            <div className="cartItem">
+              <div>To Pay:</div>
+              <div> &#8377; {checkout.bill.total}</div>
+            </div>
           </div>
-        </CartProvider>
-      </div>
+          <button
+            onClick={() => {
+              setOrderStatus(true)
+            }}
+          >
+            Order
+          </button>
+          {placeOrder()}
+        </div>
+      </CartProvider>
     </div>
   )
 }
