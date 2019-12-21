@@ -19,7 +19,8 @@ const MenuItems = ({ menuItems, id }) => {
           cartItems: cart.cartItems
         })
       })
-      await res.json()
+      let result = await res.json()
+      console.log("cart from menuItems", result)
     } catch (error) {
       console.log(error)
     }

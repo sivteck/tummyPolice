@@ -59,6 +59,7 @@ const NavBar = () => {
       console.log(res)
       if (res.ok) {
         localStorage.clear()
+        console.log("empty cart in navbar")
         setCart({ cartItems: {} })
       }
     } catch (error) {}
