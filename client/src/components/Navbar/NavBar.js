@@ -23,7 +23,9 @@ const inlineStyle = {
   textTransform: "capitalize"
 }
 
-const NavBar = props => {
+const NavBar = () => {
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"))
+  console.log("userDetails from nav bar", userDetails)
   const [cart, setCart] = useState({ cartItems: {} })
   const [fetchStatus, setFetchStatus] = useState(true)
 
@@ -31,8 +33,8 @@ const NavBar = props => {
   if (cart.cartItems === undefined) cartLength = 0
   else cartLength = Object.keys(cart.cartItems).length
   let userName
-  if (props.userDetails === undefined) userName = "User"
-  else userName = props.userDetails.username
+  if (userDetails === undefined) userName = "User"
+  else userName = userDetails.username
 
   async function fetchData() {
     try {

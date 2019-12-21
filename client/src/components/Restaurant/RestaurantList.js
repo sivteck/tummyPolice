@@ -38,7 +38,7 @@ const RestaurantList = ({ location }) => {
   return (
     <div className="restaurantList">
       <CheckStatus status={isStatusOk} />
-      <NavBar userDetails={userDetails} />
+      <NavBar />
       <h1> Popular Brands </h1>
       {restaurant.map(item => (
         <Restaurant id={item.id} name={item.name} img={Food} key={item.id} />
