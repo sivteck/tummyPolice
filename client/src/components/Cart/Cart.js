@@ -35,7 +35,7 @@ const Cart = props => {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  })
 
   let totalPrice = 0
   for (let key in cart.cartItems) totalPrice += cart.cartItems[key].price
