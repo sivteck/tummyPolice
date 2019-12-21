@@ -4,6 +4,7 @@ async function getCart (req, res) {
   let sessionId = req.session.id
   let userId = req.session.userid
   console.log('getCart', req.session)
+  if (userId === undefined) res.json({ error: 'undefined user :-|' })
   try {
     let cart = await getCartState(userId)
     res.status(200).json(cart)
