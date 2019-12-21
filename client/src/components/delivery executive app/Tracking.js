@@ -21,7 +21,7 @@ function Tracking() {
             longitude: position.coords.longitude
           })
         }),
-      1000
+      5000
     )
   }, [])
 

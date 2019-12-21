@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom"
 import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
 import MenuItems from "./MenuItems"
+import NavBar from "../Navbar/NavBar"
 
 const Menu = props => {
   const [menuItems, setMenuItems] = useState([])
@@ -30,6 +31,7 @@ const Menu = props => {
 
   return (
     <CartProvider>
+      <NavBar />
       <CheckStatus status={isStatusOk} />
       <div className="menu">
         <div className="menuComponents1">
