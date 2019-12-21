@@ -4,7 +4,7 @@ const { query } = require('../../db/relational/schema.js')
 async function createDP (phone) {
   const id = uuid()
   try {
-    const text = 'INSERT INTO users VALUES($1, $2) RETURNING id'
+    const text = 'INSERT INTO deliverypartners VALUES($1, $2) RETURNING id'
     const result = await query(text, [id, phone])
     return result.rows[0].id
   }
@@ -36,4 +36,15 @@ async function DPExists (phone) {
   }
 }
 
-module.exports = { createDP, verifyDP, DPExists }
+async function updateLocation ({ latitude, longitude }) {
+  try {
+    const text = 'INSERT INTO deliverypartners(location) VALUES(ST_MakePoint($1, $2)) ON CONFLICT (location) DO UPDATE SET location = ST_MakePoint($1, $2)'
+    const result = await query(text, [latitude, longitude])
+    return result.rows[0].id
+  }
+  catch (error) {
+    console.error('Unable to create Delivery Partner,', phone)
+  }
+}
+
+module.exports = { createDP, verifyDP, DPExists, updateLocation }

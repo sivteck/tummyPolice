@@ -21,8 +21,9 @@ let createUserTable = `CREATE TABLE IF NOT EXISTS users (
                        )`
 
 let createDeliveryPartnerTable = `CREATE TABLE IF NOT EXISTS deliverypartners (
-                       id UUID PRIMARY KEY,
-                       phone VARCHAR UNIQUE
+                       id VARCHAR(10) PRIMARY KEY,
+                       phone VARCHAR UNIQUE,
+                       location geometry
                        )`
 
 let createOrderTable = `CREATE TABLE IF NOT EXISTS orders (

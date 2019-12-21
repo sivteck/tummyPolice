@@ -18,7 +18,7 @@ const login = async (req, res) => {
   const phone = req.body.id
   try {
     const phoneVerification = await verifyDP(phone)
-    if (!phoneVerification.username) res.status(200).json({ error: 'invalid phone number' })
+    if (!phoneVerification.phone) res.status(200).json({ error: 'invalid phone number' })
     else {
       req.session.phone = phone
       req.session.loggedin = true
