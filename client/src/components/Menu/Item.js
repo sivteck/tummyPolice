@@ -9,7 +9,11 @@ const Item = props => {
   const { id } = useParams()
 
   const addToCart = () => {
-    if (cart.restaurantId !== id && cart.restaurantId !== undefined) {
+    if (
+      cart.restaurantId !== id &&
+      cart.restaurantId !== undefined &&
+      Object.keys(cart.cartItems).length !== 0
+    ) {
       alert("Empty Cart")
       emptyCartAction(id, dispatch)
     }
