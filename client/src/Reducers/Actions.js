@@ -1,3 +1,4 @@
+import URL from "../config"
 const SET_CART = "SET_CART"
 const ADD_TO_CART = "ADD_TO_CART"
 const INCREMENT_ITEM = "INCREMENT_ITEM"
@@ -19,11 +20,23 @@ const emptyCartAction = async (id, dispatch) => {
   dispatch({ type: EMPTY_CART, id: id })
 }
 
+const decrementItemAction = (cart, dispatch, id) => {
+  if (Object.keys(cart.CartItems).length === 1) {
+    emptyCartAction(cart.restaurantId, dispatch)
+    return
+  }
+  dispatch({
+    type: DECREMENT_ITEM,
+    id
+  })
+}
+
 export {
   SET_CART,
   ADD_TO_CART,
   INCREMENT_ITEM,
   DECREMENT_ITEM,
   EMPTY_CART,
-  emptyCartAction
+  emptyCartAction,
+  decrementItemAction
 }

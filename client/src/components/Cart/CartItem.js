@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { CartContext } from "./CartContext"
-import { INCREMENT_ITEM, DECREMENT_ITEM } from "../../Reducers/Actions"
+import { INCREMENT_ITEM, decrementItemAction } from "../../Reducers/Actions"
 
 function CartItem({ item }) {
   const [cart, dispatch] = useContext(CartContext)
@@ -11,12 +11,9 @@ function CartItem({ item }) {
       <div> {item.name}</div>
       <div className="changeQuantity" id={item.itemId}>
         <button
-          onClick={event =>
-            dispatch({
-              type: DECREMENT_ITEM,
-              id: event.target.parentElement.id
-            })
-          }
+          onClick={event => {
+            decrementItemAction(cart, dispatch, event.target.parentElement.id)
+          }}
         >
           -
         </button>
