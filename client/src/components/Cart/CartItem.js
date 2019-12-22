@@ -11,8 +11,12 @@ function CartItem({ item }) {
       <div> {item.name}</div>
       <div className="changeQuantity" id={item.itemId}>
         <button
-          onClick={event => {
-            decrementItemAction(cart, dispatch, event.target.parentElement.id)
+          onClick={async event => {
+            await decrementItemAction(
+              cart,
+              dispatch,
+              event.target.parentElement.id
+            )
           }}
         >
           -
