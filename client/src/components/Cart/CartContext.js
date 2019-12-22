@@ -26,7 +26,7 @@ const reducer = (cart, action) => {
     case DECREMENT_ITEM:
       return decrementItem(cart, action.id)
     case EMPTY_CART:
-      return emptyCart(cart, action.id)
+      return emptyCart(action.id)
     default:
       return cart
   }
