@@ -78,8 +78,11 @@ export const addToCart = (
   return cartValue
 }
 
-export const emptyCart = (cart, id) => {
-  cart.restaurantId = id
-  cart.cartItems = {}
-  return cart
+export const emptyCart = id => {
+  const cartValue = {
+    restaurantId: id,
+    cartItems: {}
+  }
+  console.log("cartValue from emptycart", cartValue)
+  return cartValue
 }
