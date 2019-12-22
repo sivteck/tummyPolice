@@ -22,7 +22,10 @@ const emptyCartAction = async (id, dispatch) => {
 }
 
 const decrementItemAction = (cart, dispatch, id) => {
-  if (Object.keys(cart.cartItems).length === 1) {
+  if (
+    Object.keys(cart.cartItems).length === 1 &&
+    cart.cartItems[id].quantity === 1
+  ) {
     console.log("1 item in cart")
     emptyCartAction(cart.restaurantId, dispatch)
     return
