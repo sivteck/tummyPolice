@@ -7,7 +7,8 @@ const MenuItems = ({ menuItems, id }) => {
   const [cart, dispatch] = useContext(CartContext)
 
   const fetchData = async cart => {
-    if (cart.cartItems !== {}) {
+    if (Object.keys(cart.cartItems).length !== 0) {
+      console.log("items in cart", Object.keys(cart.cartItems).length)
       try {
         let res = await fetch(`${URL}/cart`, {
           method: "POST",
@@ -29,7 +30,7 @@ const MenuItems = ({ menuItems, id }) => {
   }
   useEffect(() => {
     fetchData(cart)
-  }, [cart])
+  }, [])
 
   return (
     <div className="itemList">
