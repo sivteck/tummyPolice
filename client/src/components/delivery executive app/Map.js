@@ -12,12 +12,18 @@ function Map() {
     longitude: ""
   })
 
+  const userId = JSON.parse(localStorage.getItem("userDetails")).id
+  console.log("userId from map", userId)
+
   const position = [12.9606811, 77.6436253]
   const position2 = [liveLocation.latitude, liveLocation.longitude]
 
   socket.on("current location", function(location) {
     setLiveLocation(location)
   })
+
+  socket.emit("user id", userId)
+
   const mapRef = useRef(null)
   const map = () => {
     mapRef.current = Leaflet.map("mapid").setView(position, 40)

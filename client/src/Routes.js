@@ -12,6 +12,7 @@ import Map from "./components/delivery executive app/Map"
 import ErrrorPage from "./components/Checkstatus/ErrrorPage"
 import DeliveryPartnerLogin from "./components/delivery executive app/DeliveryPartnerLogin"
 import RestaurantLogin from "./components/restaurant app/RestaurantLogin"
+import RestaurantOrder from "./components/restaurant app/RestaurantOrder"
 
 function Routes() {
   return (
@@ -29,6 +30,7 @@ function Routes() {
         <Route path="/errorpage" component={ErrrorPage} />
         <Route path="/restaurantapp/login" component={RestaurantLogin} />
         <Route path="/deliverypartner/login" component={DeliveryPartnerLogin} />
+        <Route path="/restaurantapp/order" component={RestaurantOrder} />
       </Switch>
     </Router>
   )
