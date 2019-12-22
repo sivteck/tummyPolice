@@ -6,6 +6,7 @@ const DECREMENT_ITEM = "DECREMENT_ITEM"
 const EMPTY_CART = "EMPTY_CART"
 
 const emptyCartAction = async (id, dispatch) => {
+  console.log("console in emptyCartAction")
   await fetch(`${URL}/cart`, {
     method: "POST",
     headers: {
@@ -21,7 +22,8 @@ const emptyCartAction = async (id, dispatch) => {
 }
 
 const decrementItemAction = (cart, dispatch, id) => {
-  if (Object.keys(cart.CartItems).length === 1) {
+  if (Object.keys(cart.cartItems).length === 1) {
+    console.log("1 item in cart")
     emptyCartAction(cart.restaurantId, dispatch)
     return
   }
