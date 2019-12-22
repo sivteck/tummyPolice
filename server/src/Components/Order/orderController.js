@@ -1,6 +1,6 @@
 const { orderTracking } = require('./orderDAL.js')
 
-function placeOrder (req, res) {
+async function placeOrder (req, res) {
   const orderDeets = req.body
   try {
     const orderid = await insertOrder(orderDeets)
