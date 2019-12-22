@@ -34,7 +34,7 @@ const Checkout = () => {
     fetchData()
   }, [])
 
-  if (setOrderStatus) {
+  if (orderStatus) {
     order()
   }
 
@@ -113,13 +113,7 @@ const Checkout = () => {
               <div> &#8377; {checkout.bill.total}</div>
             </div>
           </div>
-          <button
-            onClick={() => {
-              setOrderStatus(true)
-            }}
-          >
-            Order
-          </button>
+          <button onClick={order}>Order</button>
           {placeOrder()}
         </div>
       </CartProvider>
