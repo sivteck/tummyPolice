@@ -4,9 +4,14 @@ import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
 import NavBar from "../Navbar/NavBar"
 import { Redirect } from "react-router-dom"
+import { promisifiedGetCurrentPosition } from "../../Utils/promisifiedGetCurrentPosition"
 
 const Checkout = () => {
-  const [checkout, setCheckout] = useState({ cartItems: {}, bill: {} })
+  const [checkout, setCheckout] = useState({
+    restaurantId: "",
+    cartItems: {},
+    bill: {}
+  })
   const [fetchStatus, setFetchStatus] = useState(true)
   const [orderStatus, setOrderStatus] = useState(false)
   const [isStatusOk, setStatusOk] = useState(false)
@@ -29,12 +34,15 @@ const Checkout = () => {
     fetchData()
   }, [])
 
-  if (setOrderStatus) {
+  if (orderStatus) {
     order()
   }
 
   async function order() {
     console.log(orderStatus)
+
+    let location = await promisifiedGetCurrentPosition()
+    console.log("location from promisified function", location)
     try {
       let res = await fetch(`${URL}/order`, {
         method: "POST",
@@ -42,9 +50,12 @@ const Checkout = () => {
           Accept: "application/json",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ userDetails, order: checkout })
+        body: JSON.stringify({
+          userDetails,
+          order: checkout,
+          location
+        })
       })
-      console.log("res", res)
       let result = await res.json()
       setResponse(result)
       setStatusOk(res.ok)
@@ -102,13 +113,7 @@ const Checkout = () => {
               <div> &#8377; {checkout.bill.total}</div>
             </div>
           </div>
-          <button
-            onClick={() => {
-              setOrderStatus(true)
-            }}
-          >
-            Order
-          </button>
+          <button onClick={order}>Order</button>
           {placeOrder()}
         </div>
       </CartProvider>

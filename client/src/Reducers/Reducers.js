@@ -47,22 +47,14 @@ export const addToCart = (
   { id, restaurantId, name, price, quantity },
   urlId
 ) => {
-  console.log("cart from reducer", cart)
-  if (cart.restaurantId !== urlId && cart.restaurantId !== undefined) {
-    alert("Empty Cart")
-    cart.restaurantId = urlId
-    console.log("empty cart in reducer in addToCart")
-    cart.cartItems = {}
-  }
-
-  console.log("add to cart")
+  console.log("urlid", urlId)
   if (id in cart.cartItems) {
     let updateQuantity = cart.cartItems[id].quantity
     let updatePrice = cart.cartItems[id].price
     updateQuantity += 1
     updatePrice = price * updateQuantity
     let cartValue = {
-      restaurantId,
+      restaurantId: urlId,
       cartItems: Object.assign(cart.cartItems, {
         [id]: {
           name,
@@ -75,7 +67,7 @@ export const addToCart = (
   }
 
   let cartValue = {
-    restaurantId,
+    restaurantId: urlId,
     cartItems: Object.assign(cart.cartItems, {
       [id]: {
         name,
@@ -84,5 +76,14 @@ export const addToCart = (
       }
     })
   }
+  return cartValue
+}
+
+export const emptyCart = id => {
+  const cartValue = {
+    restaurantId: id,
+    cartItems: {}
+  }
+  console.log("cartValue from emptycart", cartValue)
   return cartValue
 }

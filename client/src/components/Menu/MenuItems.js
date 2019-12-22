@@ -7,22 +7,33 @@ const MenuItems = ({ menuItems, id }) => {
   const [cart, dispatch] = useContext(CartContext)
 
   const fetchData = async cart => {
-    try {
-      let res = await fetch(`${URL}/cart`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          restaurantId: cart.restaurantId,
-          cartItems: cart.cartItems
+    console.log("fetchData")
+    console.log(
+      " 1st console items in cart",
+      Object.keys(cart.cartItems).length
+    )
+    if (Object.keys(cart.cartItems).length !== 0) {
+      console.log(
+        "2nd consoleitems in cart",
+        Object.keys(cart.cartItems).length
+      )
+      try {
+        let res = await fetch(`${URL}/cart`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            restaurantId: cart.restaurantId,
+            cartItems: cart.cartItems
+          })
         })
-      })
-      let result = await res.json()
-      console.log("cart from menuItems", result)
-    } catch (error) {
-      console.log(error)
+        let result = await res.json()
+        console.log("cart from menuItems", result)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
   useEffect(() => {

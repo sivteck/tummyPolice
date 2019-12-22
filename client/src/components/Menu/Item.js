@@ -2,15 +2,22 @@ import React, { useContext } from "react"
 import { CartContext } from "../Cart/CartContext"
 import Itemimg from "../../images/item.webp"
 import { useParams } from "react-router-dom"
-import { ADD_TO_CART } from "../../Reducers/Actions"
+import { ADD_TO_CART, emptyCartAction } from "../../Reducers/Actions"
 
 const Item = props => {
   const [cart, dispatch] = useContext(CartContext)
   const { id } = useParams()
 
-  const addToCart = () => {
-    console.log("cart from item component", cart)
-    console.log(id)
+  const addToCart = async () => {
+    if (
+      cart.restaurantId !== id &&
+      cart.restaurantId !== undefined &&
+      Object.keys(cart.cartItems).length !== 0
+    ) {
+      alert("Empty Cart")
+      await emptyCartAction(id, dispatch)
+    }
+    console.log("console from addtocart function")
     dispatch({ type: ADD_TO_CART, props: props, id: id })
   }
 

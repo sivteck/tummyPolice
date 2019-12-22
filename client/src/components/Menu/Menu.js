@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, Fragment } from "react"
 import Cart from "../Cart/Cart"
 import { CartProvider } from "../Cart/CartContext"
 import { useParams } from "react-router-dom"
@@ -30,18 +30,20 @@ const Menu = props => {
   }, [])
 
   return (
-    <CartProvider>
+    <Fragment>
       <NavBar />
-      <CheckStatus status={isStatusOk} />
-      <div className="menu">
-        <div className="menuComponents2">
-          <Cart restaurantId={id} />
+      <CartProvider>
+        <CheckStatus status={isStatusOk} />
+        <div className="menu">
+          <div className="menuComponents2">
+            <Cart restaurantId={id} />
+          </div>
+          <div className="menuComponents1">
+            <MenuItems menuItems={menuItems} id={id} key={id} />
+          </div>
         </div>
-        <div className="menuComponents1">
-          <MenuItems menuItems={menuItems} id={id} key={id} />
-        </div>
-      </div>
-    </CartProvider>
+      </CartProvider>
+    </Fragment>
   )
 }
 
