@@ -12,7 +12,7 @@ const { query } = require('../../db/relational/schema.js')
 //   })
 // }
 
-function insertOrder (orderDeets) {
+async function insertOrder (orderDeets) {
   const { userDetails, order, location } = orderDeets
   const { restaurantId, cartItems, bill } = order
   const { latitude, longitude } = location
