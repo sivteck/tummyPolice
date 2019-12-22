@@ -1,4 +1,4 @@
-const { orderTracking } = require('./orderDAL.js')
+const { insertOrder } = require('./orderDAL.js')
 
 async function placeOrder (req, res) {
   const orderDeets = req.body
