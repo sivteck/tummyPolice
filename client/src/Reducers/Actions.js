@@ -21,13 +21,13 @@ const emptyCartAction = async (id, dispatch) => {
   dispatch({ type: EMPTY_CART, id: id })
 }
 
-const decrementItemAction = (cart, dispatch, id) => {
+const decrementItemAction = async (cart, dispatch, id) => {
   if (
     Object.keys(cart.cartItems).length === 1 &&
     cart.cartItems[id].quantity === 1
   ) {
     console.log("1 item in cart")
-    emptyCartAction(cart.restaurantId, dispatch)
+    await emptyCartAction(cart.restaurantId, dispatch)
     return
   }
   dispatch({
