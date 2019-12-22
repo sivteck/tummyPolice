@@ -1,8 +1,14 @@
-const Redis = require('ioredis')
-const redis = new Redis()
 const { orderTracking } = require('./orderDAL.js')
 
 function placeOrder (req, res) {
+  const orderDeets = req.body
+  try {
+    const orderid = await insertOrder(orderDeets)
+    res.send({ orderid })
+  }
+  catch (error) {
+    console.error(error)
+  }
 }
 
 function trackOrder (req, res) {
@@ -10,3 +16,4 @@ function trackOrder (req, res) {
 }
 
 module.exports = { placeOrder, trackOrder }
+

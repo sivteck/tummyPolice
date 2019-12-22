@@ -28,6 +28,9 @@ let createDeliveryPartnerTable = `CREATE TABLE IF NOT EXISTS deliverypartners (
 
 let createOrderTable = `CREATE TABLE IF NOT EXISTS orders (
                        id UUID PRIMARY KEY,
+                       userid VARCHAR,
+                       restaurantId VARCHAR,
+                       deliveryLocation geometry,
                        orderDetails json
                        )`
 
@@ -37,6 +40,7 @@ async function initDb () {
     await pool.query(restaurantTable)
     await pool.query(createUserTable)
     await pool.query(createDeliveryPartnerTable)
+    await pool.query(createOrderTable)
   }
   catch (error) {
     console.error(error)
