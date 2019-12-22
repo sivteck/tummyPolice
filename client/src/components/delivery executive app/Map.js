@@ -22,7 +22,7 @@ function Map() {
     setLiveLocation(location)
   })
 
-  socket.emit("user id", userId)
+  socket.emit("active user", userId)
 
   const mapRef = useRef(null)
   const map = () => {
