@@ -20,6 +20,10 @@ const privateKey = fs.readFileSync('/etc/letsencrypt/live/tummypolice.iyangi.com
 const certificate = fs.readFileSync('/etc/letsencrypt/live/tummypolice.iyangi.com/cert.pem', 'utf8');
 const ca = fs.readFileSync('/etc/letsencrypt/live/tummypolice.iyangi.com/chain.pem', 'utf8');
 
+let Restaurants = {}
+let Users = {}
+let DeliverPartners = {}
+
 const credentials = {
   key: privateKey,
   cert: certificate,
@@ -80,6 +84,16 @@ io.on("connection", socket => {
   socket.on("send location", function(location) {
     io.emit("current location", location)
   })
+  socket.on('active restaurant', function (id) {
+    Restaurants[id] = socket 
+  })
+  socket.on('active user', function (id) {
+    Users[id]= socket 
+  })
+  socket.on('active delivery partner', function (id) {
+    DeliverPartners[id] = socket
+  })
+  console.log({ Restaurants, Users, DeliverPartners })
 })
 
 httpServer.listen(port, () => console.log("gonna kill your hunger starting from port", port))
