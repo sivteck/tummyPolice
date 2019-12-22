@@ -8,14 +8,14 @@ const Item = props => {
   const [cart, dispatch] = useContext(CartContext)
   const { id } = useParams()
 
-  const addToCart = () => {
+  const addToCart = async () => {
     if (
       cart.restaurantId !== id &&
       cart.restaurantId !== undefined &&
       Object.keys(cart.cartItems).length !== 0
     ) {
       alert("Empty Cart")
-      emptyCartAction(id, dispatch)
+      await emptyCartAction(id, dispatch)
     }
     console.log("console from addtocart function")
     dispatch({ type: ADD_TO_CART, props: props, id: id })
