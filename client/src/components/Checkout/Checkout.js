@@ -4,7 +4,7 @@ import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
 import NavBar from "../Navbar/NavBar"
 import { Redirect } from "react-router-dom"
-import promisifiedGetCurrentPosition from "../../Utils/promisifiedGetCurrentPosition"
+import { promisifiedGetCurrentPosition } from "../../Utils/promisifiedGetCurrentPosition"
 
 const Checkout = () => {
   const [checkout, setCheckout] = useState({
