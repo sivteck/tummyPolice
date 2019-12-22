@@ -3,12 +3,14 @@ import {
   SET_CART,
   ADD_TO_CART,
   INCREMENT_ITEM,
-  DECREMENT_ITEM
+  DECREMENT_ITEM,
+  EMPTY_CART
 } from "../../Reducers/Actions"
 import {
   incrementItem,
   addToCart,
-  decrementItem
+  decrementItem,
+  emptyCart
 } from "../../Reducers/Reducers"
 
 export const CartContext = createContext()
@@ -18,11 +20,13 @@ const reducer = (cart, action) => {
     case SET_CART:
       return action.data
     case ADD_TO_CART:
-      return addToCart(cart, action.props, action.id)
+      return addToCart(cart, action.props)
     case INCREMENT_ITEM:
       return incrementItem(cart, action.id)
     case DECREMENT_ITEM:
       return decrementItem(cart, action.id)
+    case EMPTY_CART:
+      return emptyCart(cart, action.id)
     default:
       return cart
   }
