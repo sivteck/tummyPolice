@@ -47,13 +47,14 @@ export const addToCart = (
   { id, restaurantId, name, price, quantity },
   urlId
 ) => {
+  console.log("urlid", urlId)
   if (id in cart.cartItems) {
     let updateQuantity = cart.cartItems[id].quantity
     let updatePrice = cart.cartItems[id].price
     updateQuantity += 1
     updatePrice = price * updateQuantity
     let cartValue = {
-      restaurantId,
+      restaurantId: urlId,
       cartItems: Object.assign(cart.cartItems, {
         [id]: {
           name,
@@ -66,7 +67,7 @@ export const addToCart = (
   }
 
   let cartValue = {
-    restaurantId,
+    restaurantId: urlId,
     cartItems: Object.assign(cart.cartItems, {
       [id]: {
         name,
