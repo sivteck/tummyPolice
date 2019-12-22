@@ -16,7 +16,7 @@ async function insertOrder (orderDeets) {
   const { userDetails, order, location } = orderDeets
   const { restaurantId, cartItems, bill } = order
   const { latitude, longitude } = location
-  const text = `INSERT INTO orders VALUES($1, $2, ST_MakePoint($3, $4), $5) returning id`
+  const text = `INSERT INTO orders VALUES($1, $2, $3, ST_MakePoint($4, $5), $6) returning id`
   const values = [uuid(), userDetails.id, restaurantId, latitude, longitude, JSON.stringify(orderDeets)]
   try {
     const result = await query(text, values)
