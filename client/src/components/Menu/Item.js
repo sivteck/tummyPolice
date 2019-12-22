@@ -12,7 +12,9 @@ const Item = props => {
     if (cart.restaurantId !== id && cart.restaurantId !== undefined) {
       alert("Empty Cart")
       emptyCartAction(id, dispatch)
+      return
     }
+    console.log("console from addtocart function")
     dispatch({ type: ADD_TO_CART, props: props, id: id })
   }
 
