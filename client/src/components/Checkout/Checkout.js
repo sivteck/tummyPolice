@@ -17,7 +17,6 @@ const Checkout = () => {
   const [isStatusOk, setStatusOk] = useState(false)
   const [response, setResponse] = useState({})
 
-
   const userDetails = JSON.parse(localStorage.getItem("userDetails"))
 
   async function fetchData() {
@@ -43,7 +42,7 @@ const Checkout = () => {
     console.log(orderStatus)
 
     let location = await promisifiedGetCurrentPosition()
-    console.log('location from promisified function', location)
+    console.log("location from promisified function", location)
     try {
       let res = await fetch(`${URL}/order`, {
         method: "POST",
@@ -55,10 +54,8 @@ const Checkout = () => {
           userDetails,
           order: checkout,
           location
-          }
         })
       })
-      console.log("res", res)
       let result = await res.json()
       setResponse(result)
       setStatusOk(res.ok)
