@@ -99,15 +99,15 @@ io.on("connection", socket => {
     Restaurants[id] = socket 
   })
   socket.on('active user', async function ({ userid, orderId }) {
-    socket.on('active order', function (orderId) {
+    socket.on('active order', async function (orderId) {
       const orderDeets = await getOrderDetails(orderId)
       notifyRestaurant(orderDeets)
     })
     Users[id]= socket 
   })
   socket.on('active delivery partner', async function (id) {
-    socket.on('update location', function(id, location) {
-      updateLocation(id, location)
+    socket.on('update location', async function(id, location) {
+      await updateLocation(id, location)
     })
     DeliverPartners[id] = socket
   })
