@@ -84,8 +84,10 @@ const io = require('socket.io')(httpsServer)
 // })
 
 async function notifyRestaurant (orderDeets) {
-  console.log(orderDeets)
-  const { order } = orderDeets
+  console.log(orderDeets, 'orderDeets from notifyRestaurant')
+  const { orderdetails } = orderDeets
+  const { order } = orderdetails
+  console.log(order, 'order from notifyRestaurant')
   const { restaurantId, cartItems } = order
   console.log(order, restaurantId, cartItems, "ORDER RESTAURANTID AND CARTITEMS")
   const socket = Restaurants[restaurantId]
