@@ -6,7 +6,8 @@ import "leaflet-routing-machine"
 const io = require("socket.io-client")
 const socket = io("https://tummypolice.iyangi.com")
 
-function Map() {
+function Map({ location }) {
+  console.log("from checkout to map", location.state.response.orderid.id)
   const [liveLocation, setLiveLocation] = useState({
     latitude: "",
     longitude: ""
@@ -14,6 +15,8 @@ function Map() {
 
   const userId = JSON.parse(localStorage.getItem("userDetails")).id
   console.log("userId from map", userId)
+
+  const orderId = location.state.response.orderid.id
 
   const position = [12.9606811, 77.6436253]
   const position2 = [liveLocation.latitude, liveLocation.longitude]
@@ -23,6 +26,8 @@ function Map() {
   })
 
   socket.emit("active user", userId)
+
+  socket.emit("order placed", orderId)
 
   const mapRef = useRef(null)
   const map = () => {
