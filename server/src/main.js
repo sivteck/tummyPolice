@@ -102,7 +102,7 @@ async function assignDeliveryPartner (orderDeets, orderId) {
   const nearestDeliveryPartner = nearestDeliveryPartners[0]
   console.log(nearestDeliveryPartner)
   const { id, phone } = nearestDeliveryPartner
-  DeliveryPartner[id].emit('new task', order)
+  DeliveryPartners[id].emit('new task', order)
 }
 
 io.on("connection", socket => {
