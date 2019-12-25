@@ -50,7 +50,7 @@ async function updateLocation (id, { latitude, longitude }) {
 
 async function getNearestDeliveryPartners (restaurantId, radius = 1000) {
   const { location } = getRestaurantInfoById(restaurantId)
-  const text = `SELECT * FROM deliverypartners where ST_Distance(ST_GeogFromWKB(location), ST_GeogFromWKB(select location from restaurants where id = $1)) < $2`
+  const text = `SELECT * FROM deliverypartners where ST_Distance(ST_GeogFromWKB(location), ST_GeogFromWKB((select location from restaurants where id = $1))) < $2`
   const values = [restaurantId, radius]
   try {
     const result = await query(text, values)
