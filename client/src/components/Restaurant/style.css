@@ -15,18 +15,25 @@ header {
     grid-column-start: 2;
     grid-column-end: 3;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .restaurant {
     padding: 10px;
     margin: 10px;
     text-align: center;
-    border: 1px solid black;
-    height: 300px;
+    /* border: 1px solid black; */
+    height: 200px;
+    width: 300px;
+    color: black;
+}
+
+.restaurant:hover {
+    border: 1px solid black
 }
 
 .restaurant img {
-    width: 200px;
-    height: 200px;
+    width: 254px;
+    height: 160px;
+    padding: 10px
 }

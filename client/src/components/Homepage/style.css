@@ -1,8 +1,3 @@
-*, html {
-    margin: 0;
-    padding: 0;
-}
-
 .outer {
     display: grid;
     grid-template-rows: 1fr 0.5fr;

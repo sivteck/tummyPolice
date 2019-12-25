@@ -7,16 +7,11 @@ const MenuItems = ({ menuItems, id }) => {
   const [cart, dispatch] = useContext(CartContext)
 
   const fetchData = async cart => {
-    console.log("fetchData")
-    console.log(
-      " 1st console items in cart",
-      Object.keys(cart.cartItems).length
-    )
+    if (!localStorage.getItem("userDetails")) {
+      localStorage.setItem("guestSession", JSON.stringify(cart))
+    }
+
     if (Object.keys(cart.cartItems).length !== 0) {
-      console.log(
-        "2nd consoleitems in cart",
-        Object.keys(cart.cartItems).length
-      )
       try {
         let res = await fetch(`${URL}/cart`, {
           method: "POST",
@@ -30,7 +25,6 @@ const MenuItems = ({ menuItems, id }) => {
           })
         })
         let result = await res.json()
-        console.log("cart from menuItems", result)
       } catch (error) {
         console.log(error)
       }
