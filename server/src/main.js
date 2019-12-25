@@ -103,7 +103,7 @@ io.on("connection", socket => {
       const orderDeets = await getOrderDetails(orderId)
       notifyRestaurant(orderDeets)
     })
-    Users[id]= socket 
+    Users[userid]= socket 
   })
   socket.on('active delivery partner', async function (id) {
     socket.on('update location', async function(id, location) {
