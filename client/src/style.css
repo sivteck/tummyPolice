@@ -1,9 +1,10 @@
-html {
-    font-family: Arial, Helvetica, sans-serif;
+*, html {
+    margin: 0;
+    padding: 0;
 }
 
-body {
-    margin: 0;
+html {
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .bg {
@@ -69,7 +70,7 @@ body {
     width: 500px;
 } */
 
-button.findfood {
+/* button.findfood {
     position: absolute;
 }
 
@@ -77,10 +78,11 @@ button.findfood, button.login, button.signup {
     background-color: #db741e;
     color: #fff;
     /* right: 0; */
-    width: 100px;
+
+/* width: 100px;
     height: 45px;
     border: none;
-}
+}  */
 
 /* .location input {
     border: none;

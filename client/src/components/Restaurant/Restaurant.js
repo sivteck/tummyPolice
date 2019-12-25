@@ -5,13 +5,11 @@ const Restaurant = ({ id, img, name }) => {
   let Id = `/restaurant/${id}`
 
   return (
-    <Link to={Id}>
-      <div className="restaurant">
-        <div className="rest">
-          <img src={img} alt="Restaurant" />
-          <div>{name}</div>
-        </div>
-      </div>
+    <Link to={Id} style={{ textDecoration: "none" }}>
+      <figure className="restaurant">
+        <img src={img} alt="Restaurant" />
+        <figcaption>{name}</figcaption>
+      </figure>
     </Link>
   )
 }

@@ -6,28 +6,30 @@ import Food from "../../images/4.png"
 
 function OrderSteps() {
   return (
-    <div className="orderSteps">
-      <h1> How To Order? </h1>
-      <h5> Follow the Steps </h5>
-      <div className="flex-1">
-        <div>
-          <img className="step" src={Locate} alt="" />
-          <h3>Choose your location</h3>
-        </div>
-        <div>
-          <img className="step" src={Restaurant} alt="" />
-          <h3>Choose Restaurant</h3>
-        </div>
-        <div>
-          <img className="step" src={Order} alt="" />
-          <h3>Place Order</h3>
-        </div>
-        <div>
-          <img className="step" src={Food} alt="" />
-          <h3>Food is on the way</h3>
-        </div>
-      </div>
-    </div>
+    <section className="orderSteps">
+      <hgroup className="subHeading">
+        <h1> How To Order? </h1>
+        <h5> Follow the Steps </h5>
+      </hgroup>
+      <article>
+        <figure>
+          <img src={Locate} alt="" />
+          <figcaption>Choose your location</figcaption>
+        </figure>
+        <figure>
+          <img src={Restaurant} alt="" />
+          <figcaption>Choose Restaurant</figcaption>
+        </figure>
+        <figure>
+          <img src={Order} alt="" />
+          <figcaption>Place Order</figcaption>
+        </figure>
+        <figure>
+          <img src={Food} alt="" />
+          <figcaption>Food is on the way</figcaption>
+        </figure>
+      </article>
+    </section>
   )
 }
 

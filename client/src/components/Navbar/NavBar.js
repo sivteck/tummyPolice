@@ -86,9 +86,9 @@ const NavBar = () => {
           </Typography>
         </IconButton>
 
-        <Link to="/checkout">
+        <Link to="/checkout" style={{ textDecoration: "none" }}>
           <IconButton style={{ backgroundColor: "transparent" }}>
-            <Badge badgeContent={cartLength} color="secondary">
+            <Badge badgeContent={cartLength}>
               <ShoppingCartIcon />
             </Badge>
             <Typography variant="h5" noWrap style={inlineStyle}>
@@ -108,7 +108,7 @@ const NavBar = () => {
             </Typography>
           </IconButton>
         ) : (
-          <Link to="/login">
+          <Link to="/login" style={{ textDecoration: "none" }}>
             <IconButton style={{ backgroundColor: "transparent" }}>
               <AccountCircleRoundedIcon />
               <Typography variant="h5" noWrap style={inlineStyle}>

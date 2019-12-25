@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, Fragment } from "react"
 import Restaurant from "./Restaurant"
 import Food from "../../images/food.webp"
 import NavBar from "../Navbar/NavBar"
 import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
+import "./style.css"
 
 const RestaurantList = ({ location }) => {
   const { userDetails, locationId } = location.state
@@ -36,14 +37,23 @@ const RestaurantList = ({ location }) => {
   }, [])
 
   return (
-    <div className="restaurantList">
+    <Fragment>
       <CheckStatus status={isStatusOk} />
       <NavBar />
-      <h1> Popular Brands </h1>
-      {restaurant.map(item => (
-        <Restaurant id={item.id} name={item.name} img={Food} key={item.id} />
-      ))}
-    </div>
+      <header> Popular Brands </header>
+      <section className="restaurantList">
+        <section>
+          {restaurant.map(item => (
+            <Restaurant
+              id={item.id}
+              name={item.name}
+              img={Food}
+              key={item.id}
+            />
+          ))}
+        </section>
+      </section>
+    </Fragment>
   )
 }
 export default RestaurantList
