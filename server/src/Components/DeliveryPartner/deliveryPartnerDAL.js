@@ -36,10 +36,10 @@ async function DPExists (phone) {
   }
 }
 
-async function updateLocation ({ latitude, longitude }) {
+async function updateLocation (id, { latitude, longitude }, id) {
   try {
-    const text = 'INSERT INTO deliverypartners(location) VALUES(ST_MakePoint($1, $2)) ON CONFLICT (location) DO UPDATE SET location = ST_MakePoint($1, $2)'
-    const result = await query(text, [latitude, longitude])
+    const text = 'UPDATE deliverypartners SET location = ST_MakePoint($1, $2) where id = $3'
+    const result = await query(text, [latitude, longitude, id])
     return result.rows[0].id
   }
   catch (error) {

@@ -9,6 +9,8 @@ const path = require('path')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 
+const { updateLocation } = require('./Components/DeliveryPartner/deliveryPartnerDAL.js')
+
 const port = 8080
 const client = new Redis()
 
@@ -88,9 +90,14 @@ io.on("connection", socket => {
     Restaurants[id] = socket 
   })
   socket.on('active user', function (id) {
+    socket.on('order placed', function (orderId) {
+    })
     Users[id]= socket 
   })
-  socket.on('active delivery partner', function (id) {
+  socket.on('active delivery partner', async function (id) {
+    socket.on('update location', function(id, location) {
+      updateLocation(id, location)
+    })
     DeliverPartners[id] = socket
   })
   console.log({ Restaurants, Users, DeliverPartners })
