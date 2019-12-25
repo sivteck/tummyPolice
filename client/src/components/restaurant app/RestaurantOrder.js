@@ -3,45 +3,40 @@ import React, { useState } from "react"
 const io = require("socket.io-client")
 const socket = io("https://tummypolice.iyangi.com")
 
-const RestaurantOrder = () => {
-  const [orderDetails, setOrderDetails] = useState([
-    {
-      itemName: "pani puri",
-      quantity: 2,
-      price: 30,
-      customerName: "heena",
-      deliveryAddress: "geekskool"
-    },
-    {
-      itemName: "pani puri",
-      quantity: 2,
-      price: 30,
-      customerName: "heena",
-      deliveryAddress: "geekskool"
+const RestaurantOrder = ({ location }) => {
+  const restaurantId = location.state.response.id
+  const [orderDetails, setOrderDetails] = useState([])
+  console.log("orderDetails", orderDetails)
+  const [orderConfirmation, setOrderConfirmation] = useState(false)
+
+  socket.emit("active restaurant", restaurantId)
+
+  socket.on("order details", function(orders) {
+    const { cartItems, orderId } = orders
+    let order = {
+      orderId,
+      items: {}
     }
-  ])
-
-  socket.on("active order", function(orders) {
-    setOrderDetails(...orderDetails, orders)
+    const items = Object.keys(cartItems)
+    items.map(item => {
+      const { name, quantity } = cartItems[item]
+      const itemObj = {}
+      itemObj.name = name
+      itemObj.quantity = quantity
+      order.items[item] = itemObj
+    })
+    setOrderDetails([...orderDetails, order])
   })
-  //   setOrders([
-  //     {
-  //       itemName: "pani puri",
-  //       quantity: 2,
-  //       price: 30,
-  //       customerName: "heena",
-  //       address: "geekskool"
-  //     }
-  //   ])
-
-  //   const confirmOrder = () => {
-  //       socket.emit('order confirm',)
-  //   }
-
+  const confirmOrder = order => {
+    setOrderConfirmation(true)
+    console.log("confirm", order.orderId)
+    socket.emit("order approved", order.orderId)
+  }
   return (
     <div>
-      {orderDetails.map(item => (
+      {orderDetails.map(order => (
         <div
+          key={order}
           style={{
             width: "50%",
             border: "2px solid orange",
@@ -49,12 +44,20 @@ const RestaurantOrder = () => {
             margin: "10px auto"
           }}
         >
-          <p>Item: {item.itemName}</p>
-          <p>Quantity: {item.quantity}</p>
-          <p>Price: {item.price}</p>
-          <p>Customer Name: {item.customerName}</p>
-          <p>Delivery Address: {item.deliveryAddress}</p>
-          {/* <button onClick={confirmOrder}>Confirm Order</button> */}
+          <p>Order Id: {order.orderId}</p>
+          <br />
+          {Object.keys(order.items).map(item => {
+            return (
+              <div key={item}>
+                <p>Item: {order.items[item].name}</p>
+                <p>Quantity: {order.items[item].quantity}</p>
+              </div>
+            )
+          })}
+
+          <button onClick={() => confirmOrder(order)}>
+            {orderConfirmation ? "Order Confirmed" : "Confirm Order"}
+          </button>
         </div>
       ))}
     </div>

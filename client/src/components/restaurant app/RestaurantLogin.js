@@ -4,9 +4,6 @@ import styled from "styled-components"
 import URL from "../../config"
 import { Redirect } from "react-router-dom"
 
-const io = require("socket.io-client")
-const socket = io("https://tummypolice.iyangi.com")
-
 const Label = styled.label`
   display: block;
   font-size: 20px;
@@ -95,10 +92,11 @@ function RestaurantLogin() {
     }
     if (isStatusOk) {
       console.log("from login", isStatusOk)
-      socket.emit("active restaurant", response.id)
       return (
         <div>
-          <Redirect to="/restaurantapp/orders" />
+          <Redirect
+            to={{ pathname: "/restaurantapp/order", state: { response } }}
+          />
         </div>
       )
     }

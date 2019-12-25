@@ -13,7 +13,6 @@ const Checkout = () => {
     bill: {}
   })
   const [fetchStatus, setFetchStatus] = useState(true)
-  const [orderStatus, setOrderStatus] = useState(false)
   const [isStatusOk, setStatusOk] = useState(false)
   const [response, setResponse] = useState({})
 
@@ -34,13 +33,7 @@ const Checkout = () => {
     fetchData()
   }, [])
 
-  if (orderStatus) {
-    order()
-  }
-
   async function order() {
-    console.log(orderStatus)
-
     let location = await promisifiedGetCurrentPosition()
     console.log("location from promisified function", location)
     try {
@@ -58,6 +51,7 @@ const Checkout = () => {
       })
       let result = await res.json()
       setResponse(result)
+      console.log("result from checkout ", result)
       setStatusOk(res.ok)
     } catch (error) {
       console.log("error", error)
@@ -78,7 +72,7 @@ const Checkout = () => {
       console.log("Order status", isStatusOk)
       return (
         <div>
-          <Redirect to="/order/track" />
+          <Redirect to={{ pathname: "/order/track", state: { response } }} />
         </div>
       )
     }
