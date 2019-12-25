@@ -31,7 +31,7 @@ async function getRestaurantInfoById (id) {
   let values = [id]
   try {
     let result = await query(text, values)
-    return result.rows
+    return result.rows[0]
   }
   catch (error) {
     console.error(error)

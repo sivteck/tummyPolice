@@ -1,5 +1,6 @@
 const uuid = require('uuid/v4')
 const { query } = require('../../db/relational/schema.js')
+const { getRestaurantInfoById } = require('../../db/relational/restaurants.js')
 
 async function createDP (phone) {
   const id = uuid()
@@ -47,11 +48,13 @@ async function updateLocation (id, { latitude, longitude }) {
   }
 }
 
-async function getNearestDeliveryPartners ({ latitude, longitude }, radius = 1000) {
-  const text = `SELECT * FROM deliverypartners where ST_Distance(ST_GeogFromWKB(location), ST_GeogFromWKB(ST_MakePoint($1, $2))) < $3`
-  const values = [latitude, longitude, radius]
+async function getNearestDeliveryPartners (restaurantId, radius = 1000) {
+  const { location } = getRestaurantInfoById(restaurantId)
+  const text = `SELECT * FROM deliverypartners where ST_Distance(ST_GeogFromWKB(location), ST_GeogFromWKB($1))) < $2`
+  const values = [location, radius]
   try {
     const result = await query(text, values)
+    console.log(result.rows, 'result from getNearestDeliveryPartners')
     return result.rows
   }
   catch (error) {
