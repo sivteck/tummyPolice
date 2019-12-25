@@ -10,6 +10,7 @@ const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 
 const { updateLocation } = require('./Components/DeliveryPartner/deliveryPartnerDAL.js')
+const { getOrderDetails } = require('./Components/Order/orderDAL.js')
 
 const port = 8080
 const client = new Redis()
@@ -82,6 +83,14 @@ const io = require('socket.io')(httpsServer)
 //   socket.on('new location', (msg) => console.log(msg))
 // })
 
+async function notifyRestaurant (orderDeets) {
+  const { order } = orderDeets
+  const { restaurantId, cartItems } = order
+  console.log(order, restaurantId, cartItems, "ORDER RESTAURANTID AND CARTITEMS")
+  const socket = Restaurants[restaurantId]
+  socket.emit('order details', cartItems)
+}
+
 io.on("connection", socket => {
   socket.on("send location", function(location) {
     io.emit("current location", location)
@@ -89,8 +98,10 @@ io.on("connection", socket => {
   socket.on('active restaurant', function (id) {
     Restaurants[id] = socket 
   })
-  socket.on('active user', function (id) {
-    socket.on('order placed', function (orderId) {
+  socket.on('active user', function ({ userid, orderId }) {
+    socket.on('active order', function (orderId) {
+      const orderDeets = await getOrderDetails(orderId)
+      notifyRestaurant(orderDeets)
     })
     Users[id]= socket 
   })

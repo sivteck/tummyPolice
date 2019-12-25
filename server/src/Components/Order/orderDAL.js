@@ -27,8 +27,20 @@ async function insertOrder (orderDeets) {
   }
 }
 
+async function getOrderDetails (orderId) {
+  const text = `SELECT orderdetails FROM orders where id = $1`
+  const values = [orderId]
+  try {
+    const result = await query(text, values)
+    return JSON.parse(result.rows[0])
+  }
+  catch (error) {
+    console.error(error)
+  }
+}
+
 // subscriber.on('message', function (channel, message) {
 //   console.log(message)
 // })
 
-module.exports = { insertOrder }
+module.exports = { insertOrder, getOrderDetails }
