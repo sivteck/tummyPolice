@@ -27,6 +27,7 @@ const RestaurantOrder = ({ location }) => {
     })
     setOrderDetails([...orderDetails, order])
   })
+
   const confirmOrder = order => {
     setOrderConfirmation(true)
     console.log("confirm", order.orderId)
@@ -34,6 +35,7 @@ const RestaurantOrder = ({ location }) => {
   }
   return (
     <div>
+      Orders to Prepare
       {orderDetails.map(order => (
         <div
           key={order}
