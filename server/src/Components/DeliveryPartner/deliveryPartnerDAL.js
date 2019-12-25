@@ -47,4 +47,16 @@ async function updateLocation (id, { latitude, longitude }) {
   }
 }
 
+async function getNearestDeliveryPartners ({ latitude, longitude }) {
+  const text = `SELECT * FROM deliverypartners where ST_Distance(ST_GeogFromWKB(location), ST_GeogFromWKB(ST_MakePoint($1, $2))) < $3`
+  const values = [latitude, longitude, radius]
+  try {
+    const result = await query(text, values)
+    return result.rows
+  }
+  catch (error) {
+    console.error(error)
+  }
+}
+
 module.exports = { createDP, verifyDP, DPExists, updateLocation }

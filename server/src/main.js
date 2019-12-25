@@ -11,6 +11,7 @@ const RedisStore = require('connect-redis')(session)
 
 const { updateLocation } = require('./Components/DeliveryPartner/deliveryPartnerDAL.js')
 const { getOrderDetails } = require('./Components/Order/orderDAL.js')
+const { getNearestDeliveryPartners } = require('./Components/DeliveryPartner/deliveryPartnerDAL.js')
 
 const port = 8080
 const client = new Redis()
@@ -25,7 +26,7 @@ const ca = fs.readFileSync('/etc/letsencrypt/live/tummypolice.iyangi.com/chain.p
 
 let Restaurants = {}
 let Users = {}
-let DeliverPartners = {}
+let DeliveryPartners = {}
 
 const credentials = {
   key: privateKey,
@@ -84,15 +85,21 @@ const io = require('socket.io')(httpsServer)
 // })
 
 async function notifyRestaurant (orderDeets, orderId) {
-  console.log(orderDeets, 'orderDeets from notifyRestaurant')
   const { orderdetails } = orderDeets
   const { userdetails, order } = orderdetails
-  console.log(order, 'order from notifyRestaurant')
   const { restaurantId, cartItems } = order
-  console.log(order, restaurantId, cartItems, "ORDER RESTAURANTID AND CARTITEMS")
   const socket = Restaurants[restaurantId]
   order.orderId = orderId
   socket.emit('order details', order)
+}
+
+async function assignDeliveryPartner (orderDeets, orderId) {
+  console.log(orderDeets, 'orderDeets from assignDeliveryPartner')
+  const { orderdetails, order } = orderdetails
+  const nearestDeliveryPartners = await getNearestDeliveryPartners
+  const nearestDeliveryPartner = nearestDeliveryPartners[0]
+  const { id, phone } = nearestDeliveryPartner
+  DeliveryPartner[id].emit('new task', order)
 }
 
 io.on("connection", socket => {
@@ -101,6 +108,10 @@ io.on("connection", socket => {
   })
   socket.on('active restaurant', function (id) {
     Restaurants[id] = socket 
+    socket.on('order approved', function (orderId) {
+      const orderDeets = await getOrderDetails(orderId)
+      await assignDeliveryPartner(orderDeets, orderId)
+    })
   })
   socket.on('active user', async function (id) {
     socket.on('active order', async function (orderId) {
@@ -111,12 +122,12 @@ io.on("connection", socket => {
     Users[id]= socket 
   })
   socket.on('active delivery partner', async function (id) {
-    socket.on('update location', async function(id, location) {
+    socket.on('update location', async function(location) {
       await updateLocation(id, location)
     })
-    DeliverPartners[id] = socket
+    DeliveryPartners[id] = socket
   })
-  console.log({ Restaurants, Users, DeliverPartners })
+  console.log({ Restaurants, Users, DeliveryPartners })
 })
 
 httpServer.listen(port, () => console.log("gonna kill your hunger starting from port", port))
