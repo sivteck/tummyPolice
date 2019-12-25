@@ -38,7 +38,7 @@ async function DPExists (phone) {
 
 async function updateLocation (id, { latitude, longitude }) {
   try {
-    const text = 'UPDATE deliverypartners SET location = ST_MakePoint($1, $2) where id = $3'
+    const text = 'UPDATE deliverypartners SET location = ST_MakePoint($1, $2) where id = $3 returning id'
     const result = await query(text, [latitude, longitude, id])
     return result.rows[0].id
   }
