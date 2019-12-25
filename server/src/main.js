@@ -98,7 +98,7 @@ io.on("connection", socket => {
   socket.on('active restaurant', function (id) {
     Restaurants[id] = socket 
   })
-  socket.on('active user', function ({ userid, orderId }) {
+  socket.on('active user', async function ({ userid, orderId }) {
     socket.on('active order', function (orderId) {
       const orderDeets = await getOrderDetails(orderId)
       notifyRestaurant(orderDeets)
