@@ -47,7 +47,7 @@ async function updateLocation (id, { latitude, longitude }) {
   }
 }
 
-async function getNearestDeliveryPartners ({ latitude, longitude }) {
+async function getNearestDeliveryPartners ({ latitude, longitude }, radius = 1000) {
   const text = `SELECT * FROM deliverypartners where ST_Distance(ST_GeogFromWKB(location), ST_GeogFromWKB(ST_MakePoint($1, $2))) < $3`
   const values = [latitude, longitude, radius]
   try {
