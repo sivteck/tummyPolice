@@ -84,6 +84,7 @@ const io = require('socket.io')(httpsServer)
 // })
 
 async function notifyRestaurant (orderDeets) {
+  console.log(orderDeets)
   const { order } = orderDeets
   const { restaurantId, cartItems } = order
   console.log(order, restaurantId, cartItems, "ORDER RESTAURANTID AND CARTITEMS")
@@ -101,6 +102,7 @@ io.on("connection", socket => {
   socket.on('active user', async function (id) {
     socket.on('active order', async function (orderId) {
       const orderDeets = await getOrderDetails(orderId)
+      console.log(orderDeets)
       notifyRestaurant(orderDeets)
     })
     Users[id]= socket 

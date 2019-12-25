@@ -32,6 +32,7 @@ async function getOrderDetails (orderId) {
   const values = [orderId]
   try {
     const result = await query(text, values)
+    console.log(result.rows[0])
     return JSON.parse(result.rows[0])
   }
   catch (error) {
