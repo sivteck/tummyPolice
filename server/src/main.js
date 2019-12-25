@@ -103,12 +103,9 @@ async function assignDeliveryPartner (orderDeets, orderId) {
 }
 
 io.on("connection", socket => {
-  socket.on("send location", function(location) {
-    io.emit("current location", location)
-  })
-  socket.on('active restaurant', function (id) {
+  socket.on('active restaurant', async function (id) {
     Restaurants[id] = socket 
-    socket.on('order approved', function (orderId) {
+    socket.on('order approved', async function (orderId) {
       const orderDeets = await getOrderDetails(orderId)
       await assignDeliveryPartner(orderDeets, orderId)
     })
