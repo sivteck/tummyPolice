@@ -61,12 +61,10 @@ function DeliveryPartnerLogin() {
   const [inputValue, setInputValue] = useState("")
 
   const handleChange = ({ target }) => {
-    console.log("input value", target.value)
     setInputValue(target.value)
   }
 
   const onSubmit = async inputValue => {
-    console.log("submit", inputValue)
     try {
       let res = await fetch(`${URL}/deliverypartner/login`, {
         method: "POST",
@@ -93,10 +91,12 @@ function DeliveryPartnerLogin() {
       )
     }
     if (isStatusOk) {
-      console.log("from login", isStatusOk)
+      console.log("response from login", response)
       return (
         <div>
-          <Redirect to="/deliverypartner/tracking" />
+          <Redirect
+            to={{ pathname: "/deliverypartner/tracking", state: { response } }}
+          />
         </div>
       )
     }

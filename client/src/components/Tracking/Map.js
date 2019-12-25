@@ -27,7 +27,7 @@ function Map({ location }) {
 
   socket.emit("active user", userId)
 
-  socket.emit("order placed", orderId)
+  socket.emit("active order", orderId)
 
   const mapRef = useRef(null)
   const map = () => {
