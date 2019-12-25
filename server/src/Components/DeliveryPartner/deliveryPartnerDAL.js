@@ -43,7 +43,7 @@ async function updateLocation (id, { latitude, longitude }) {
     return result.rows[0].id
   }
   catch (error) {
-    console.error('Unable to create Delivery Partner,', phone)
+    console.error('Unable to update Delivery Partner location,', id)
   }
 }
 
