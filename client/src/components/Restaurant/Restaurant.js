@@ -7,10 +7,8 @@ const Restaurant = ({ id, img, name }) => {
   return (
     <Link to={Id}>
       <div className="restaurant">
-        <div className="rest">
-          <img src={img} alt="Restaurant" />
-          <div>{name}</div>
-        </div>
+        <img src={img} alt="Restaurant" />
+        <div>{name}</div>
       </div>
     </Link>
   )
