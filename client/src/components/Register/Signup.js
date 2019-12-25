@@ -40,12 +40,11 @@ const Input = styled.input`
   box-sizing: border-box;
 `
 
-const Submit = styled.input.attrs({
-  type: "submit",
-  value: "Login"
-})`
+const Submit = styled.input`
   width: 30%;
   margin-top: 5%;
+  left: auto;
+  right: auto;
   cursor: pointer;
   border: none;
   font-size: 15px;
@@ -151,7 +150,7 @@ const Signup = () => {
           {errors.password && "Password should be min 6 chars"}
         </div>
 
-        <Input type="submit" value="Sign Up" />
+        <Submit type="submit" value="Sign Up" />
       </form>
     </Wrapper>
   )

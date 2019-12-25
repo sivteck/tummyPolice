@@ -1,0 +1,130 @@
+.outer {
+    display: grid;
+    grid-template-rows: 1fr 0.5fr;
+    min-height: 120vh;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    background-image: url('../../images/background.jpg');
+    background-position: center;
+    background-size: cover;
+    background-color: grey;
+}
+
+.center {
+    grid-column-start: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    width: 200px;
+}
+
+.heading h1, .heading h2 {
+    color: white;
+    padding: 5px;
+    text-align: center;
+}
+
+.heading h1 {
+    font-weight: 500;
+    font-size: 2em;
+}
+
+.heading h2 {
+    font-weight: 400;
+    font-size: 1.5em;
+}
+
+.link {
+    background-color: #db741e;
+    color: #fff;
+    border: none;
+    padding: 10% 20%;
+    text-decoration: none;
+    margin: 10%;
+    cursor: pointer;
+}
+
+.inline {
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width:800px) {
+    main {
+        background-image: url('../../images/background450.jpg');
+    }
+    .inline {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+@media (max-width:450px) {
+    main {
+        background-image: url('../../images/background360.jpg');
+    }
+    .center {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+    .heading h1 {
+        font-weight: 500;
+        font-size: 1.5em;
+    }
+    .heading h2 {
+        font-weight: 400;
+        font-size: 1em;
+    }
+    .link {
+        padding: 10px 10px;
+    }
+}
+
+.orderSteps h1 {
+    margin: 30px;
+    text-align: center;
+    font-size: 50px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.orderSteps h5 {
+    text-align: center;
+    margin-top: 0;
+    font-weight: 100;
+    color: rgb(121, 112, 112);
+    font-size: 25px;
+}
+
+article {
+    display: flex;
+    flex-direction: row;
+}
+
+figure {
+    flex-basis: 25%;
+    padding: 10px;
+    text-align: center;
+}
+
+figure img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    height: 80%;
+    margin-bottom: 10px;
+}

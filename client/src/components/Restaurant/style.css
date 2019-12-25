@@ -1,0 +1,39 @@
+header {
+    margin: 15px;
+    padding: 15px;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.restaurantList {
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+}
+
+.restaurantList section {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.restaurant {
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    /* border: 1px solid black; */
+    height: 200px;
+    width: 300px;
+    color: black;
+}
+
+.restaurant:hover {
+    border: 1px solid black
+}
+
+.restaurant img {
+    width: 254px;
+    height: 160px;
+    padding: 10px
+}

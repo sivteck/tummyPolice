@@ -1,13 +1,13 @@
 import styled from "styled-components"
 
 const Wrapper = styled.div`
-  display: table;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
   position: relative;
-  /* border: 1px solid #bebfc5; */
   height: 50px;
-  width: 500px;
+  width: 70%;
 `
 
 const Input = styled.input`
@@ -19,26 +19,16 @@ const Input = styled.input`
   overflow: hidden;
 `
 
-// const Span = styled.span`
-//   position: absolute;
-//   right: 100px;
-//   padding: 15px;
-//   color: #535665;
-//   cursor: pointer;
-//   font-size: 13px;
-// `
-
 const Submit = styled.input.attrs({
   type: "submit",
   value: "Find Food"
 })`
-  color: white;
   padding: 15px;
   text-decoration: none;
   position: absolute;
   background-color: #db741e;
   color: #fff;
-  width: 100px;
+  width: 20%;
   border: none;
 `
 export { Wrapper, Input, Submit }
