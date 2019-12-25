@@ -62,4 +62,4 @@ async function getNearestDeliveryPartners (restaurantId, radius = 1000) {
   }
 }
 
-module.exports = { createDP, verifyDP, DPExists, updateLocation }
+module.exports = { createDP, verifyDP, getNearestDeliveryPartners, DPExists, updateLocation }
