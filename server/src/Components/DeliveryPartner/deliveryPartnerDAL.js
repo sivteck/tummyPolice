@@ -54,7 +54,6 @@ async function getNearestDeliveryPartners (restaurantId, radius = 1000) {
   const values = [restaurantId, radius]
   try {
     const result = await query(text, values)
-    console.log(result.rows, 'result from getNearestDeliveryPartners')
     return result.rows
   }
   catch (error) {

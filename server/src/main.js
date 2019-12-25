@@ -94,13 +94,11 @@ async function notifyRestaurant (orderDeets, orderId) {
 }
 
 async function assignDeliveryPartner (orderDeets, orderId) {
-  console.log(orderDeets, 'orderDeets from assignDeliveryPartner')
   const { orderdetails } = orderDeets
   const { order } = orderdetails
   const { restaurantId } = order
   const nearestDeliveryPartners = await getNearestDeliveryPartners(restaurantId)
   const nearestDeliveryPartner = nearestDeliveryPartners[0]
-  console.log(nearestDeliveryPartner)
   const { id, phone } = nearestDeliveryPartner
   DeliveryPartners[id].emit('new task', order)
 }
@@ -116,7 +114,6 @@ io.on("connection", socket => {
   socket.on('active user', async function (id) {
     socket.on('active order', async function (orderId) {
       const orderDeets = await getOrderDetails(orderId)
-      console.log(orderDeets)
       notifyRestaurant(orderDeets, orderId)
     })
     Users[id]= socket 
@@ -127,7 +124,6 @@ io.on("connection", socket => {
     })
     DeliveryPartners[id] = socket
   })
-  console.log({ Restaurants, Users, DeliveryPartners })
 })
 
 httpServer.listen(port, () => console.log("gonna kill your hunger starting from port", port))
