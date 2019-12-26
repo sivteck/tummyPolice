@@ -95,17 +95,14 @@ async function notifyRestaurant (orderDeets, orderId) {
 }
 
 async function assignDeliveryPartner (orderDeets, orderId) {
-  console.log(orderDeets, 'from assign deliverypartner')
   const { orderdetails } = orderDeets
   const { userDetails, order } = orderdetails
-  console.log(userDetails, order, 'from assign deliverypartner 2')
   const { id } =  userDetails
   const { restaurantId } = order
   const nearestDeliveryPartners = await getNearestDeliveryPartners(restaurantId)
   const nearestDeliveryPartner = nearestDeliveryPartners[0]
   const { phone } = nearestDeliveryPartner
   const dpId = nearestDeliveryPartner.id
-  console.log(dpId, 'deliverypartner id from assign')
   if (DeliveryPartners[dpId]) DeliveryPartners[dpId].emit('new task', order)
   DPUserMapping[dpId] = id
 }
