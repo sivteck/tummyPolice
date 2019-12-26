@@ -95,7 +95,9 @@ async function notifyRestaurant (orderDeets, orderId) {
 }
 
 async function assignDeliveryPartner (orderDeets, orderId) {
-  const { orderdetails: order, ordetails: userDetails } = orderDeets
+  console.log(orderDeets, 'from assign deliverypartner')
+  const { orderdetails } = orderDeets
+  const { userDetails, order } = orderdetails
   const { id } =  userDetails
   const { restaurantId } = order
   const nearestDeliveryPartners = await getNearestDeliveryPartners(restaurantId)
