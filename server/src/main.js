@@ -96,6 +96,7 @@ async function notifyRestaurant (orderDeets, orderId) {
 
 async function assignDeliveryPartner (orderDeets, orderId) {
   const { orderdetails } = orderDeets
+  console.log(orderdetails)
   const { userDetails, order } = orderdetails
   const { id } =  userDetails
   const { restaurantId } = order
