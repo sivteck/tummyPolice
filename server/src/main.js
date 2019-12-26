@@ -103,8 +103,12 @@ async function assignDeliveryPartner (orderDeets, orderId) {
   const nearestDeliveryPartner = nearestDeliveryPartners[0]
   const { phone } = nearestDeliveryPartner
   const dpId = nearestDeliveryPartner.id
-  if (DeliveryPartners[dpId]) DeliveryPartners[dpId].emit('new task', order)
-  DPUserMapping[dpId] = id
+  if (DeliveryPartners[dpId]) {
+    DeliveryPartners[dpId].emit('new task', order)
+    DeliveryPartners[dpId].on('task accepted', function (orderid) {
+      DPUserMapping[dpId] = id
+    })
+  }
 }
 
 io.on("connection", socket => {
