@@ -87,16 +87,17 @@ const io = require('socket.io')(httpsServer)
 
 async function notifyRestaurant (orderDeets, orderId) {
   const { orderdetails } = orderDeets
-  const { userdetails, order } = orderdetails
+  const { userdetails, order, location } = orderdetails
   const { restaurantId, cartItems } = order
   const socket = Restaurants[restaurantId]
   order.orderId = orderId
+  order.location = location
   socket.emit('order details', order)
 }
 
 async function assignDeliveryPartner (orderDeets, orderId) {
   const { orderdetails } = orderDeets
-  const { userDetails, order } = orderdetails
+  const { userDetails, order, location } = orderdetails
   const { id } =  userDetails
   const { restaurantId } = order
   const nearestDeliveryPartners = await getNearestDeliveryPartners(restaurantId)
@@ -104,6 +105,8 @@ async function assignDeliveryPartner (orderDeets, orderId) {
   const { phone } = nearestDeliveryPartner
   const dpId = nearestDeliveryPartner.id
   if (DeliveryPartners[dpId]) {
+    order.location = location
+    order.orderId = orderId
     DeliveryPartners[dpId].emit('new task', order)
     DeliveryPartners[dpId].on('task accepted', function (orderid) {
       DPUserMapping[dpId] = id
