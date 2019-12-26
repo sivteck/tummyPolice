@@ -24,9 +24,10 @@ const privateKey = fs.readFileSync('/etc/letsencrypt/live/tummypolice.iyangi.com
 const certificate = fs.readFileSync('/etc/letsencrypt/live/tummypolice.iyangi.com/cert.pem', 'utf8');
 const ca = fs.readFileSync('/etc/letsencrypt/live/tummypolice.iyangi.com/chain.pem', 'utf8');
 
-let Restaurants = {}
-let Users = {}
-let DeliveryPartners = {}
+const Restaurants = {}
+const Users = {}
+const DeliveryPartners = {}
+let DPUserMapping = {}
 
 const credentials = {
   key: privateKey,
@@ -95,12 +96,15 @@ async function notifyRestaurant (orderDeets, orderId) {
 
 async function assignDeliveryPartner (orderDeets, orderId) {
   const { orderdetails } = orderDeets
-  const { order } = orderdetails
+  const { userdetails, order } = orderdetails
+  const { id } =  userdetails
   const { restaurantId } = order
   const nearestDeliveryPartners = await getNearestDeliveryPartners(restaurantId)
   const nearestDeliveryPartner = nearestDeliveryPartners[0]
-  const { id, phone } = nearestDeliveryPartner
-  DeliveryPartners[id].emit('new task', order)
+  const { phone } = nearestDeliveryPartner
+  const dpId = nearestDeliveryPartner.id
+  DeliveryPartners[dpId].emit('new task', order)
+  DPUserMapping[dpId] = id
 }
 
 io.on("connection", socket => {
@@ -116,11 +120,14 @@ io.on("connection", socket => {
       const orderDeets = await getOrderDetails(orderId)
       notifyRestaurant(orderDeets, orderId)
     })
-    Users[id]= socket 
+    Users[id]= socket
   })
   socket.on('active delivery partner', async function (id) {
     socket.on('update location', async function(location) {
       await updateLocation(id, location)
+      if (DPUserMapping[id]) {
+        Users[DPUserMapping[id]].emit('order location', location)
+      }
     })
     DeliveryPartners[id] = socket
   })
