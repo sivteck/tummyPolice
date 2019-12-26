@@ -21,6 +21,7 @@ function Tracking({ location }) {
   socket.emit("active delivery partner", deliveryPartnerId)
 
   socket.on("new task", function(orders) {
+    console.log("orders at delivery page", orders)
     const { cartItems, orderId } = orders
     let order = {
       orderId,
@@ -36,6 +37,11 @@ function Tracking({ location }) {
     })
     setOrderDetails([...orderDetails, order])
   })
+
+  const confirmOrder = order => {
+    console.log("confirm", order.orderId)
+    socket.emit("task accepted", order.orderId)
+  }
 
   return (
     <div>
@@ -61,9 +67,7 @@ function Tracking({ location }) {
             )
           })}
 
-          {/* <button onClick={() => confirmOrder(order)}>
-            {orderConfirmation ? "Order Confirmed" : "Confirm Order"}
-          </button> */}
+          <button onClick={() => confirmOrder(order)}>Accept Order</button>
         </div>
       ))}
     </div>
