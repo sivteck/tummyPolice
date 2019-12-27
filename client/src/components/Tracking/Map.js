@@ -21,13 +21,18 @@ function Map({ location }) {
   const position = [12.9606811, 77.6436253]
   const position2 = [liveLocation.latitude, liveLocation.longitude]
 
-  socket.on("current location", function(location) {
-    setLiveLocation(location)
-  })
-
   socket.emit("active user", userId)
 
   socket.emit("active order", orderId)
+
+  let timeout
+  socket.on("order location", location => {
+    clearInterval(timeout)
+    timeout = setInterval(() => {
+      console.log("location from map", location)
+      setLiveLocation(location)
+    }, 10000)
+  })
 
   const mapRef = useRef(null)
   const map = () => {
@@ -45,12 +50,29 @@ function Map({ location }) {
   }, [])
 
   const markerRef = useRef(null)
+  let routingControl = useRef(null)
+
+  const removeRoutingControl = function() {
+    if (routingControl.current != null) {
+      mapRef.current.removeControl(routingControl.current)
+      routingControl.current = null
+    }
+  }
+
   useEffect(() => {
     if (markerRef.current) {
       console.log("markerRef", markerRef.current)
       markerRef.current.setLatLng(position2)
+      if (routingControl.current != null) removeRoutingControl()
+      routingControl.current = Leaflet.Routing.control({
+        waypoints: [Leaflet.latLng(position), Leaflet.latLng(position2)]
+      }).addTo(mapRef.current)
     } else {
       markerRef.current = Leaflet.marker(position2).addTo(mapRef.current)
+      if (routingControl.current != null) removeRoutingControl()
+      routingControl.current = Leaflet.Routing.control({
+        waypoints: [Leaflet.latLng(position), Leaflet.latLng(position2)]
+      }).addTo(mapRef.current)
     }
   }, [liveLocation])
 

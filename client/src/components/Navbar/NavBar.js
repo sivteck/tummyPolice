@@ -32,7 +32,7 @@ const NavBar = () => {
   const [fetchStatus, setFetchStatus] = useState(true)
 
   let cartLength
-  if (cart.cartItems === undefined) cartLength = 0
+  if (cart.cartItems == undefined) cartLength = 0
   else cartLength = Object.keys(cart.cartItems).length
   let userName
   if (userDetails === null) userName = "User"
@@ -88,7 +88,7 @@ const NavBar = () => {
 
         <Link to="/checkout" style={{ textDecoration: "none" }}>
           <IconButton style={{ backgroundColor: "transparent" }}>
-            <Badge badgeContent={cartLength}>
+            <Badge badgeContent={cartLength} color="secondary">
               <ShoppingCartIcon />
             </Badge>
             <Typography variant="h5" noWrap style={inlineStyle}>
