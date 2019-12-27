@@ -29,6 +29,10 @@ function Map({ location }) {
 
   socket.emit("active order", orderId)
 
+  socket.on("order location", function(location) {
+    console.log("location", location)
+  })
+
   const mapRef = useRef(null)
   const map = () => {
     mapRef.current = Leaflet.map("mapid").setView(position, 40)
