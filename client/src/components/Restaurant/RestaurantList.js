@@ -42,16 +42,9 @@ const RestaurantList = ({ location }) => {
       <NavBar />
       <header> Popular Brands </header>
       <section className="restaurantList">
-        <section>
-          {restaurant.map(item => (
-            <Restaurant
-              id={item.id}
-              name={item.name}
-              img={Food}
-              key={item.id}
-            />
-          ))}
-        </section>
+        {restaurant.map(item => (
+          <Restaurant id={item.id} name={item.name} img={Food} key={item.id} />
+        ))}
       </section>
     </Fragment>
   )

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react"
 import "./mapStyle.css"
 import Leaflet from "leaflet"
 import "leaflet-routing-machine"
+import bike from "../../images/bike.png"
 
 const io = require("socket.io-client")
 const socket = io("https://tummypolice.iyangi.com")
@@ -51,6 +52,11 @@ function Map({ location }) {
 
   const markerRef = useRef(null)
   let routingControl = useRef(null)
+  const bikeIcon = Leaflet.icon({
+    iconUrl: bike,
+    iconSize: [50, 45],
+    iconAnchor: [0, 0]
+  })
 
   const removeRoutingControl = function() {
     if (routingControl.current != null) {
@@ -61,14 +67,15 @@ function Map({ location }) {
 
   useEffect(() => {
     if (markerRef.current) {
-      console.log("markerRef", markerRef.current)
       markerRef.current.setLatLng(position2)
       if (routingControl.current != null) removeRoutingControl()
       routingControl.current = Leaflet.Routing.control({
         waypoints: [Leaflet.latLng(position), Leaflet.latLng(position2)]
       }).addTo(mapRef.current)
     } else {
-      markerRef.current = Leaflet.marker(position2).addTo(mapRef.current)
+      markerRef.current = Leaflet.marker(position2, { icon: bikeIcon }).addTo(
+        mapRef.current
+      )
       if (routingControl.current != null) removeRoutingControl()
       routingControl.current = Leaflet.Routing.control({
         waypoints: [Leaflet.latLng(position), Leaflet.latLng(position2)]
