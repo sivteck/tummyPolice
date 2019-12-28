@@ -101,8 +101,9 @@ async function assignDeliveryPartner (orderDeets, orderId) {
   const { id } =  userDetails
   const { restaurantId } = order
   const nearestDeliveryPartners = await getNearestDeliveryPartners(restaurantId)
+  console.log(nearestDeliveryPartners, 'nearestDeliveryParners')
   const nearestDeliveryPartner = nearestDeliveryPartners[0]
-  const { phone } = nearestDeliveryPartner
+  console.log(nearestDeliveryPartner, 'nearestDeliveryPartner')
   const dpId = nearestDeliveryPartner.id
   if (DeliveryPartners[dpId]) {
     order.location = location
