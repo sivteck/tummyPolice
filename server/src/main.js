@@ -101,14 +101,14 @@ async function assignDeliveryPartner (orderDeets, orderId) {
   const { id } =  userDetails
   const { restaurantId } = order
   const nearestDeliveryPartners = await getNearestDeliveryPartners(restaurantId)
-  console.log(nearestDeliveryPartners, 'nearestDeliveryParners')
+
   const nearestDeliveryPartner = nearestDeliveryPartners[0]
-  console.log(nearestDeliveryPartner, 'nearestDeliveryPartner')
   const dpId = nearestDeliveryPartner.id
   if (DeliveryPartners[dpId]) {
     order.location = location
     order.orderId = orderId
     DeliveryPartners[dpId].emit('new task', order)
+    DeliveryPartners[dpId].removeAllListeners('task accepted')
     DeliveryPartners[dpId].on('task accepted', function (orderid) {
       DPUserMapping[dpId] = id
     })
@@ -116,22 +116,31 @@ async function assignDeliveryPartner (orderDeets, orderId) {
 }
 
 io.on("connection", socket => {
+  socket.removeAllListeners('active restaurant')
   socket.on('active restaurant', async function (id) {
-    Restaurants[id] = socket 
+    if (!id) return
+    Restaurants[id] = socket
+    socket.removeAllListeners('order approved')
     socket.on('order approved', async function (orderId) {
       const orderDeets = await getOrderDetails(orderId)
-      await assignDeliveryPartner(orderDeets, orderId)
+      if (!(socket.dpAssigned === orderId)) await assignDeliveryPartner(orderDeets, orderId)
+      socket.dpAssigned = orderId
     })
   })
+  socket.removeAllListeners('active user')
   socket.on('active user', async function (id) {
+    socket.removeAllListeners('active order', () => {})
     socket.on('active order', async function (orderId) {
       const orderDeets = await getOrderDetails(orderId)
-      notifyRestaurant(orderDeets, orderId)
+      if (!(socket.orderSent === orderId)) notifyRestaurant(orderDeets, orderId)
+      socket.orderSent = orderId
     })
     Users[id]= socket
   })
+  socket.removeAllListeners('active delivery partner')
   socket.on('active delivery partner', async function (id) {
     DeliveryPartners[id] = socket
+    socket.removeAllListeners('update location')
     socket.on('update location', async function(location) {
       await updateLocation(id, location)
       if (DPUserMapping[id]) {

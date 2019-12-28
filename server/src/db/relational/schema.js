@@ -23,7 +23,9 @@ let createUserTable = `CREATE TABLE IF NOT EXISTS users (
 let createDeliveryPartnerTable = `CREATE TABLE IF NOT EXISTS deliverypartners (
                        id VARCHAR(10) PRIMARY KEY,
                        phone VARCHAR UNIQUE,
-                       location geometry
+                       location geometry,
+                       assignedtask boolean,
+                       active boolean
                        )`
 
 let createOrderTable = `CREATE TABLE IF NOT EXISTS orders (
