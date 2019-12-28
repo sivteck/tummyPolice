@@ -1,0 +1,29 @@
+.newOrder {
+    padding: 10px;
+    margin: 10px
+}
+
+h1 {
+    text-align: center;
+}
+
+.confirmBtn {
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 600;
+    height: 50px;
+    color: #fff;
+    background-color: #fc8019;
+    text-transform: uppercase;
+}
+
+.order {
+    width: fit-content;
+    border: 2px solid #fc8019;
+    padding: 10px;
+    margin: 10px auto
+}

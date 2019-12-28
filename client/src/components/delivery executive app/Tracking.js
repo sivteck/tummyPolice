@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { promisifiedGetCurrentPosition } from "../../Utils/promisifiedGetCurrentPosition"
+import { reverseGeocode } from "../../Utils/reverseGeocode"
+import "./style.css"
 
 const io = require("socket.io-client")
 const socket = io("https://tummypolice.iyangi.com")
@@ -8,6 +10,8 @@ function Tracking({ location }) {
   console.log("response", location.state.response.id)
   const deliveryPartnerId = location.state.response.id
   const [orderDetails, setOrderDetails] = useState([])
+  const [address, setAddress] = useState("")
+  const [orderConfirmation, setOrderConfirmation] = useState(false)
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
@@ -21,6 +25,7 @@ function Tracking({ location }) {
   socket.emit("active delivery partner", deliveryPartnerId)
 
   socket.on("new task", function(orders) {
+    console.log("orders at delivery page", orders)
     const { cartItems, orderId } = orders
     let order = {
       orderId,
@@ -34,23 +39,31 @@ function Tracking({ location }) {
       itemObj.quantity = quantity
       order.items[item] = itemObj
     })
-    setOrderDetails([...orderDetails, order])
+    setOrderDetails([order])
+    const fetchAddress = async () => {
+      setAddress(await reverseGeocode(location))
+    }
+    fetchAddress()
+    console.log("addr", address)
   })
 
+  const confirmOrder = order => {
+    setOrderConfirmation(true)
+    console.log("confirm", order.orderId)
+    socket.emit("task accepted", order.orderId)
+  }
+
   return (
-    <div>
-      Orders to deliver
+    <div className="newOrder">
+      {console.log(address)}
+      {orderDetails.length === 0 ? (
+        <h1>No Orders</h1>
+      ) : (
+        <h1>{orderDetails.length} new order</h1>
+      )}
       {orderDetails.map(order => (
-        <div
-          key={order}
-          style={{
-            width: "50%",
-            border: "2px solid orange",
-            padding: "10px",
-            margin: "10px auto"
-          }}
-        >
-          <p>Order Id: {order.orderId}</p>
+        <div key={order} className="order">
+          <pre>Order Id: {order.orderId}</pre>
           <br />
           {Object.keys(order.items).map(item => {
             return (
@@ -60,10 +73,15 @@ function Tracking({ location }) {
               </div>
             )
           })}
+          <p>Customer Address: {address}</p>
 
-          {/* <button onClick={() => confirmOrder(order)}>
-            {orderConfirmation ? "Order Confirmed" : "Confirm Order"}
-          </button> */}
+          {orderConfirmation ? (
+            <h2>Order Accepted</h2>
+          ) : (
+            <button className="confirmBtn" onClick={() => confirmOrder(order)}>
+              Accept Order
+            </button>
+          )}
         </div>
       ))}
     </div>
