@@ -147,6 +147,12 @@ io.on("connection", socket => {
         Users[DPUserMapping[id]].emit('order location', location)
       }
     })
+    socket.on('order delivered', async function ({ orderId, deliveryPartnerId }) {
+      Users[DPUserMapping[deliveryPartnerId]].emit('order delivered', orderId)
+    })
+    socket.on('order pickedup', async function ({ orderId, deliveryPartnerId }) {
+      Users[DPUserMapping[deliveryPartnerId]].emit('order pickedup', orderId)
+    })
   })
 })
 
