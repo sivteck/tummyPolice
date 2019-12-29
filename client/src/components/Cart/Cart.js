@@ -1,23 +1,29 @@
 import React, { useContext, useEffect, useState } from "react"
 import { CartContext } from "./CartContext"
-import { Link } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 import styled from "styled-components"
 import CartItem from "./CartItem"
 import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
 import { SET_CART } from "../../Reducers/Actions"
+import { useParams } from "react-router-dom"
 
-const StyledLink = styled(Link)`
+const Button = styled.button`
   background-color: #db741e;
   color: #fff;
   border: none;
   padding: 15px;
-  text-decoration: none;
 `
 
 const Cart = props => {
   const [cart, dispatch] = useContext(CartContext)
   const [isStatusOk, setStatusOk] = useState(true)
+  const [checkoutStatus, setCheckoutStatus] = useState(false)
+
+  const { id } = useParams()
+  console.log(id)
+
+  console.log(checkoutStatus)
 
   async function fetchData() {
     try {
@@ -50,6 +56,19 @@ const Cart = props => {
     })
   }
 
+  const checkout = () => {
+    console.log("checkout")
+    if (checkoutStatus) {
+      console.log("checkout")
+      console.log("id", id)
+      return (
+        <div>
+          <Redirect to="/checkout" />
+        </div>
+      )
+    }
+  }
+
   return (
     <div>
       <CheckStatus status={isStatusOk} />
@@ -73,9 +92,10 @@ const Cart = props => {
           <h4>Subtotal :&#8377;{totalPrice}</h4>
           <br />
           <br />
-          <StyledLink to="/checkout">Checkout</StyledLink>
+          <Button onClick={() => setCheckoutStatus(true)}>Checkout</Button>
         </div>
       )}
+      {checkout()}
     </div>
   )
 }

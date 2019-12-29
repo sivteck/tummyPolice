@@ -1,6 +1,20 @@
-#mapid {
-    height: 500px;
+#order{
+    display: flex;
+    padding: 10px;
+    margin: 10px;
 }
+
+#mapid {
+   flex:2;
+    height: 500px;
+
+}
+
+#orderStatus{
+    flex:1
+}
+
+
 
 .leaflet-routing-alternatives-container {
     display: none;
