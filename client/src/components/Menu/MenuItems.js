@@ -24,7 +24,7 @@ const MenuItems = ({ menuItems, id }) => {
             cartItems: cart.cartItems
           })
         })
-        let result = await res.json()
+        // let result = await res.json()
       } catch (error) {
         console.log(error)
       }

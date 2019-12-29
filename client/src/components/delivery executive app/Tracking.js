@@ -1,57 +1,82 @@
-import React, { useState, useEffect } from "react"
-import { promisifiedGetCurrentPosition } from "../../Utils/promisifiedGetCurrentPosition"
-import { reverseGeocode } from "../../Utils/reverseGeocode"
-import "./style.css"
+import React, { useState, useEffect } from "react";
+import { promisifiedGetCurrentPosition } from "../../Utils/promisifiedGetCurrentPosition";
+import { reverseGeocode } from "../../Utils/reverseGeocode";
+import "./style.css";
 
-const io = require("socket.io-client")
-const socket = io("https://tummypolice.iyangi.com")
+const io = require("socket.io-client");
+const socket = io("https://tummypolice.iyangi.com");
+console.log("socket created for restaurant");
 
 function Tracking({ location }) {
-  console.log("response", location.state.response.id)
-  const deliveryPartnerId = location.state.response.id
-  const [orderDetails, setOrderDetails] = useState([])
-  const [address, setAddress] = useState("")
-  const [orderConfirmation, setOrderConfirmation] = useState(false)
+  const deliveryPartnerId = location.state.response.id;
+  const [orderDetails, setOrderDetails] = useState([]);
+  const [address, setAddress] = useState("");
+  const [orderConfirmation, setOrderConfirmation] = useState(false);
+  const [orderPikedUp, setOrderPikedUp] = useState(false);
+  const [orderDelivered, setOrderDelivered] = useState(false);
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
-      const location = await promisifiedGetCurrentPosition()
-      console.log("location", location)
-      socket.emit("update location", location)
-    }, 10000)
-    return () => clearInterval(intervalId)
-  }, [])
+      const location = await promisifiedGetCurrentPosition();
+      console.log("location", location);
+      socket.emit("update location", location);
+    }, 10000);
+    return () => clearInterval(intervalId);
+  }, []);
 
-  socket.emit("active delivery partner", deliveryPartnerId)
+  socket.emit("active delivery partner", deliveryPartnerId);
 
-  socket.on("new task", function(orders) {
-    console.log("orders at delivery page", orders)
-    const { cartItems, orderId } = orders
-    let order = {
-      orderId,
-      items: {}
-    }
-    const items = Object.keys(cartItems)
-    items.map(item => {
-      const { name, quantity } = cartItems[item]
-      const itemObj = {}
-      itemObj.name = name
-      itemObj.quantity = quantity
-      order.items[item] = itemObj
-    })
-    setOrderDetails([order])
-    const fetchAddress = async () => {
-      setAddress(await reverseGeocode(location))
-    }
-    fetchAddress()
-    console.log("addr", address)
-  })
+  let exist = socket.hasListeners("new task");
+  if (!exist) {
+    console.log("emitted");
+    socket.on("new task", function(orders) {
+      console.log("orders at delivery page", orders);
+      const { cartItems, orderId, location } = orders;
+      let order = {
+        orderId,
+        items: {}
+      };
+      const items = Object.keys(cartItems);
+      items.map(item => {
+        const { name, quantity } = cartItems[item];
+        const itemObj = {};
+        itemObj.name = name;
+        itemObj.quantity = quantity;
+        order.items[item] = itemObj;
+      });
+      setOrderDetails([order]);
+      console.log("location from del", location);
+      const fetchAddress = async () => {
+        setAddress(await reverseGeocode(location));
+      };
+      fetchAddress();
+      console.log("addr", address);
+    });
+  }
 
   const confirmOrder = order => {
-    setOrderConfirmation(true)
-    console.log("confirm", order.orderId)
-    socket.emit("task accepted", order.orderId)
-  }
+    setOrderConfirmation(true);
+    console.log("confirm", order.orderId);
+    socket.emit("task accepted", order.orderId);
+  };
+
+  const pickupOrder = order => {
+    setOrderPikedUp(true);
+    console.log("pickup", order.orderId);
+    socket.emit("order pickedup", {
+      orderId: order.orderId,
+      deliveryPartnerId
+    });
+  };
+
+  const deliverOrder = order => {
+    setOrderDelivered(true);
+    console.log("deliver", order.orderId);
+    socket.emit("order delivered", {
+      orderId: order.orderId,
+      deliveryPartnerId
+    });
+  };
 
   return (
     <div className="newOrder">
@@ -71,9 +96,9 @@ function Tracking({ location }) {
                 <p>Item: {order.items[item].name}</p>
                 <p>Quantity: {order.items[item].quantity}</p>
               </div>
-            )
+            );
           })}
-          <p>Customer Address: {address}</p>
+          <p>Customer Address: {address.LongLabel}</p>
 
           {orderConfirmation ? (
             <h2>Order Accepted</h2>
@@ -82,10 +107,24 @@ function Tracking({ location }) {
               Accept Order
             </button>
           )}
+          {orderPikedUp ? (
+            <h2>Order Pickedup</h2>
+          ) : (
+            <button className="confirmBtn" onClick={() => pickupOrder(order)}>
+              Pick up Order
+            </button>
+          )}
+          {orderDelivered ? (
+            <h2> Order Delivered </h2>
+          ) : (
+            <button className="confirmBtn" onClick={() => deliverOrder(order)}>
+              Deliver Order
+            </button>
+          )}
         </div>
       ))}
     </div>
-  )
+  );
 }
 
-export default Tracking
+export default Tracking;

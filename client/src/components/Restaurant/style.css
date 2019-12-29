@@ -6,12 +6,12 @@ header {
     text-align: center;
 }
 
-.restaurantList {
+/* .restaurantList {
     display: grid;
     grid-template-columns: 10% 80% 10%;
-}
+} */
 
-.restaurantList section {
+.restaurantList {
     grid-column-start: 2;
     grid-column-end: 3;
     display: grid;

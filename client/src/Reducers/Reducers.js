@@ -49,9 +49,9 @@ export const addToCart = (
 ) => {
   console.log("urlid", urlId)
   if (id in cart.cartItems) {
-    let updateQuantity = cart.cartItems[id].quantity
+    let updateQuantity = cart.cartItems[id].quantity + 1
     let updatePrice = cart.cartItems[id].price
-    updateQuantity += 1
+    // updateQuantity += 1
     updatePrice = price * updateQuantity
     let cartValue = {
       restaurantId: urlId,
@@ -72,7 +72,7 @@ export const addToCart = (
       [id]: {
         name,
         price,
-        quantity
+        quantity: 1
       }
     })
   }
