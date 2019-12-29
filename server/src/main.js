@@ -99,9 +99,9 @@ async function assignDeliveryPartner (orderDeets, orderId) {
   const { orderdetails } = orderDeets
   const { userDetails, order, location } = orderdetails
   const { id } =  userDetails
+  Users[id].emit('order approved', orderId)
   const { restaurantId } = order
   const nearestDeliveryPartners = await getNearestDeliveryPartners(restaurantId)
-
   const nearestDeliveryPartner = nearestDeliveryPartners[0]
   const dpId = nearestDeliveryPartner.id
   if (DeliveryPartners[dpId]) {
@@ -111,6 +111,7 @@ async function assignDeliveryPartner (orderDeets, orderId) {
     DeliveryPartners[dpId].removeAllListeners('task accepted')
     DeliveryPartners[dpId].on('task accepted', function (orderid) {
       DPUserMapping[dpId] = id
+      Users[id].emit('task accepted', dpId)
     })
   }
 }
