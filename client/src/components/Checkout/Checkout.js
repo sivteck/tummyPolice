@@ -11,7 +11,6 @@ const Aside = styled.section`
   grid-template-column: 20% 40% 30% 10%;
   padding: 20px;
   margin: 10px;
-  min-height: 100%;
   background: #e9ecee;
 `
 const Section = styled.section`

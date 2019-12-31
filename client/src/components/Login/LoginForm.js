@@ -11,13 +11,13 @@ const Title = styled.h1`
 `
 
 const Wrapper = styled.div`
+  width: 50%;
+  padding: 20px;
+  margin: 10px;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
-
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
+  min-height: 100%;
+  background: #e9ecee;
 `
 
 const StyledLink = styled(Link)`

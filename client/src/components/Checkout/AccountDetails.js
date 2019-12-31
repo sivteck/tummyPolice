@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from "react"
 import styled from "styled-components"
 import LoginDetails from "./LoginDetails"
+import UserLogin from "./UserLogin"
 
 const Section = styled.section`
   padding: 10px;
@@ -32,7 +33,7 @@ const H1 = styled.h1`
 
 const AccountDetails = () => {
   const [accountAction, setAccountSection] = useState("account")
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"))
+
   console.log(accountAction === "account")
   return (
     <Fragment>

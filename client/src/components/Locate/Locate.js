@@ -17,12 +17,12 @@ const Locate = () => {
 
   const redirectPage = () => {
     if (isSubmit) {
-      const inp = document.getElementById("input").value.split(":")[1]
-      console.log("inp value", inp)
-      console.log("location", location)
+      const placeName = document.getElementById("input").value.split(":")[0]
+      const placeId = document.getElementById("input").value.split(":")[1]
+      const place = localStorage.setItem("Delivery Address", placeName)
       return (
         <Redirect
-          to={{ pathname: "/restaurant", state: { locationId: inp } }}
+          to={{ pathname: "/restaurant", state: { locationId: placeId } }}
         />
       )
     }
