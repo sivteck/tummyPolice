@@ -13,6 +13,7 @@ import ErrrorPage from "./components/Checkstatus/ErrrorPage"
 import DeliveryPartnerLogin from "./components/delivery executive app/DeliveryPartnerLogin"
 import RestaurantLogin from "./components/restaurant app/RestaurantLogin"
 import RestaurantOrder from "./components/restaurant app/RestaurantOrder"
+import CheckoutPage from "./components/Checkout/CheckoutPage"
 
 function Routes() {
   return (
@@ -21,7 +22,7 @@ function Routes() {
         <Route exact path="/" component={Homepage} />
         <Route exact path="/restaurant" component={RestaurantList} />
         <Route path="/restaurant/:id" component={Menu} />
-        <Route path="/checkout" component={Checkout} />
+        <Route path="/checkout" component={CheckoutPage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />

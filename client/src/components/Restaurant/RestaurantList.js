@@ -5,6 +5,7 @@ import NavBar from "../Navbar/NavBar"
 import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
 import "./style.css"
+import { RestaurantImages } from "../../Utils/restaurantImages"
 
 const RestaurantList = ({ location }) => {
   const { userDetails, locationId } = location.state
@@ -42,9 +43,20 @@ const RestaurantList = ({ location }) => {
       <NavBar />
       <header> Popular Brands </header>
       <section className="restaurantList">
-        {restaurant.map(item => (
-          <Restaurant id={item.id} name={item.name} img={Food} key={item.id} />
-        ))}
+        <section>
+          {console.log(RestaurantImages)}
+          {restaurant.map((item, index) => {
+            console.log(index)
+            return (
+              <Restaurant
+                id={item.id}
+                name={item.name}
+                img={RestaurantImages[index]}
+                key={item.id}
+              />
+            )
+          })}
+        </section>
       </section>
     </Fragment>
   )
