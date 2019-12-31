@@ -10,11 +10,12 @@ import Badge from "@material-ui/core/Badge"
 import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded"
-import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded"
 
 const StyledAppBar = styled(AppBar)`
   && {
-    background-color: #fff;
+    margin:0;
+    padding:0
+    background: #e9ecee;
     box-shadow: none;
   }
 `
@@ -27,7 +28,6 @@ const inlineStyle = {
 
 const NavBar = () => {
   let userDetails = JSON.parse(localStorage.getItem("userDetails"))
-  console.log("userDetails from nav bar", userDetails)
   const [cart, setCart] = useState({ cartItems: {} })
   const [fetchStatus, setFetchStatus] = useState(true)
 
@@ -56,10 +56,8 @@ const NavBar = () => {
   const logout = async () => {
     try {
       let res = await fetch(`${URL}/logout`)
-      console.log(res)
       if (res.ok) {
         localStorage.clear()
-        console.log("empty cart in navbar")
         setCart({ cartItems: {} })
       }
     } catch (error) {}
@@ -97,7 +95,7 @@ const NavBar = () => {
           </IconButton>
         </Link>
 
-        {userDetails ? (
+        {userDetails && (
           <IconButton
             style={{ backgroundColor: "transparent" }}
             onClick={logout}
@@ -107,15 +105,6 @@ const NavBar = () => {
               Logout
             </Typography>
           </IconButton>
-        ) : (
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <IconButton style={{ backgroundColor: "transparent" }}>
-              <AccountCircleRoundedIcon />
-              <Typography variant="h5" noWrap style={inlineStyle}>
-                Login
-              </Typography>
-            </IconButton>
-          </Link>
         )}
       </Toolbar>
     </StyledAppBar>

@@ -5,18 +5,18 @@ import NavBar from "../Navbar/NavBar"
 import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
 import "./style.css"
+import { RestaurantImages } from "../../Utils/restaurantImages"
+import { promisifiedGetCurrentPosition } from "../../Utils/promisifiedGetCurrentPosition"
 
 const RestaurantList = ({ location }) => {
   const { userDetails, locationId } = location.state
   const [restaurant, setRestaurant] = useState([])
   const [isStatusOk, setStatusOk] = useState(true)
-  let url = `${URL}/restaurants`
 
   async function fetchData(url) {
     try {
       let res = await fetch(url)
       let data = await res.json()
-
       setStatusOk(res.ok)
       setRestaurant(data)
     } catch (error) {
@@ -26,13 +26,16 @@ const RestaurantList = ({ location }) => {
   }
   useEffect(() => {
     if (locationId) {
-      url = `${url}?placeid=${locationId}`
+      let url = `${URL}/restaurants?placeid=${locationId}`
       fetchData(url)
     } else {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        url = `${url}?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
+      const getLocation = async () => {
+        let location = await promisifiedGetCurrentPosition()
+        let url = `${URL}/restaurants?latitude=${location.latitude}&longitude=${location.longitude}`
+        localStorage.setItem("location", JSON.stringify(location))
         fetchData(url)
-      })
+      }
+      getLocation()
     }
   }, [])
 
@@ -42,9 +45,18 @@ const RestaurantList = ({ location }) => {
       <NavBar />
       <header> Popular Brands </header>
       <section className="restaurantList">
-        {restaurant.map(item => (
-          <Restaurant id={item.id} name={item.name} img={Food} key={item.id} />
-        ))}
+        <section>
+          {restaurant.map((item, index) => {
+            return (
+              <Restaurant
+                id={item.id}
+                name={item.name}
+                img={RestaurantImages[index]}
+                key={item.id}
+              />
+            )
+          })}
+        </section>
       </section>
     </Fragment>
   )

@@ -1,62 +1,64 @@
-*, html {
-    margin: 0;
-    padding: 0;
+*,
+html {
+  margin: 0;
+  padding: 0;
 }
 
 html {
-    font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .bg {
-    background-image: url('images/background.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 480px;
+  background-image: url("images/background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 480px;
 }
 
 /* css design, implement route protection, implement css seperatly,lazy loading,  */
 
 .logo {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 35%;
-    /* align-self: center; */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+  /* align-self: center; */
 }
 
 .rest {
-    width: 254px;
-    height: 160px;
-    padding: 10px;
+  width: 254px;
+  height: 160px;
+  padding: 10px;
 }
 
 .restaurant {
-    margin: 10px;
+  margin: 10px;
 }
 
 .restaurant div {
-    /* margin: 10px; */
-    font-size: 20px;
-    font-weight: 500;
-    text-transform: capitalize;
-    /* width: 254px;
+  /* margin: 10px; */
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: capitalize;
+  /* width: 254px;
     height: 160px;
     padding: 10px; */
 }
 
-.bg h1, .bg h2 {
-    color: white;
-    text-align: center;
-    /* font-weight: 500; */
+.bg h1,
+.bg h2 {
+  color: white;
+  text-align: center;
+  /* font-weight: 500; */
 }
 
 .bg h1 {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 .bg h2 {
-    font-weight: 300;
+  font-weight: 300;
 }
 
 /* .location {
@@ -100,206 +102,206 @@ button.findfood, button.login, button.signup {
 } */
 
 .flex-1 {
-    /* margin-left: 10%; */
-    /* margin-right: 20%;  */
-    display: flex;
-    flex-direction: row;
+  /* margin-left: 10%; */
+  /* margin-right: 20%;  */
+  display: flex;
+  flex-direction: row;
 }
 
 .flex-1 div {
-    flex-basis: 25%
+  flex-basis: 25%;
 }
 
 .step {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
 }
 
 h3 {
-    font-weight: 400;
-    text-align: center;
-    padding: 0;
-    margin: 0;
+  font-weight: 400;
+  text-align: center;
+  padding: 0;
+  margin: 0;
 }
 
 .itemList {
-    display: flex;
-    flex-flow: row wrap;
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .item {
-    padding: 10px;
-    margin: 10px;
-    /* flex: 200px; */
-    text-align: center;
-    border: 1px solid black;
-    width: 250px;
-    height: 300px;
+  padding: 10px;
+  margin: 10px;
+  /* flex: 200px; */
+  text-align: center;
+  border: 1px solid black;
+  width: 250px;
+  height: 300px;
 }
 
 h5 {
-    color: rgb(121, 112, 112);
-    font-weight: 400;
-    padding: 0;
-    margin: 5px;
+  color: rgb(121, 112, 112);
+  font-weight: 400;
+  padding: 0;
+  margin: 5px;
 }
 
 h4 {
-    margin: 5px;
+  margin: 5px;
 }
 
 .menu {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .menuComponents1 {
-    flex-basis: 70%;
+  flex-basis: 70%;
 }
 
 .menuComponents2 {
-    flex-basis: 30%;
+  flex-basis: 30%;
 }
 
 button.seeRestaurant {
-    background-color: #db741e;
-    color: #fff;
-    width: 100px;
-    height: 47px;
-    border: none;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 25px;
-    border-radius: 25px;
-    text-decoration: none;
+  background-color: #db741e;
+  color: #fff;
+  width: 100px;
+  height: 47px;
+  border: none;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  border-radius: 25px;
+  text-decoration: none;
 }
 
 .orderSteps h1 {
-    text-align: center;
-    font-size: 50px;
-    font-weight: 400;
-    text-transform: uppercase;
-    margin-bottom: 0;
+  text-align: center;
+  font-size: 50px;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin-bottom: 0;
 }
 
 .orderSteps h5 {
-    text-align: center;
-    margin-top: 0;
-    font-weight: 500px;
-    color: rgb(121, 112, 112);
-    font-size: 15px;
+  text-align: center;
+  margin-top: 0;
+  font-weight: 500px;
+  color: rgb(121, 112, 112);
+  font-size: 15px;
 }
 
 .item img {
-    width: 250px;
-    height: 200px;
+  width: 250px;
+  height: 200px;
 }
 
 .rest img {
-    width: 254px;
-    height: 160px;
+  width: 254px;
+  height: 160px;
 }
 
 .cartItem {
-    display: flex;
-    flex-direction: row;
+  display: flex;
 }
 
 .cartItem div {
-    flex-basis: 25%;
-    padding: 5px;
+  flex-basis: 25%;
+  padding: 5px;
 }
 
 .flex1 {
-    display: grid;
+  display: grid;
 }
 
 .billDetails {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .billDetails div {
-    flex-basis: 25%;
+  flex-basis: 25%;
 }
 
 .signUpForm {
-    /* display: block; */
-    /* box-sizing: border-box; */
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
+  /* display: block; */
+  /* box-sizing: border-box; */
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
 }
 
 .signUpForm input {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 label {
-    /* line-height: 2;
+  /* line-height: 2;
     text-align: left; */
-    display: block;
-    /* margin-left: auto; */
-    /* margin-right: auto; */
-    margin-bottom: 13px;
-    margin-top: 20px;
-    /* color: #000;  */
-    font-size: 14px;
-    font-weight: 200;
+  display: block;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  margin-bottom: 13px;
+  margin-top: 20px;
+  /* color: #000;  */
+  font-size: 14px;
+  font-weight: 200;
 }
 
 [list]::-webkit-calendar-picker-indicator {
-    display: none;
+  display: none;
 }
 
-input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .flex2 {
-    display: flex;
-    flex-direction: row;
-    margin-left: auto;
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
 }
 
 .flex2 div {
-    margin: 20px;
+  margin: 20px;
 }
 
 .flex2 .logoDiv {
-    margin-left: auto;
-    margin-right: 10%;
-    /* display: block; */
-    text-align: center;
+  margin-left: auto;
+  margin-right: 10%;
+  /* display: block; */
+  text-align: center;
 }
 
 .changeQuantity {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .changeQuantity div {
-    border: 0.5px solid grey;
+  border: 0.5px solid grey;
 }
 
 .checkoutFlex {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .flexContainer {
-    width: 50%;
+  width: 50%;
 }
