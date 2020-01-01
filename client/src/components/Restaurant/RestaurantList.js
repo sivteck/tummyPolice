@@ -31,6 +31,7 @@ const RestaurantList = ({ location }) => {
     } else {
       const getLocation = async () => {
         let location = await promisifiedGetCurrentPosition()
+        console.log("location from promisified geoapi", location)
         let url = `${URL}/restaurants?latitude=${location.latitude}&longitude=${location.longitude}`
         localStorage.setItem("location", JSON.stringify(location))
         fetchData(url)
