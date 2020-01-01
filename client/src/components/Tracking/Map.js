@@ -3,6 +3,7 @@ import "./mapStyle.css"
 import Leaflet from "leaflet"
 import "leaflet-routing-machine"
 import bike from "../../images/bike1.png"
+import deliveryIcon from "../../images/deliveryicon.png"
 
 const io = require("socket.io-client")
 const socket = io("https://tummypolice.iyangi.com")
@@ -57,9 +58,16 @@ function Map({ location }) {
 
   const markerRef = useRef(null)
   let routingControl = useRef(null)
+
   const bikeIcon = Leaflet.icon({
     iconUrl: bike,
-    iconSize: [50, 45],
+    iconSize: [35, 35],
+    iconAnchor: [10, 15]
+  })
+
+  const userLocationIcon = Leaflet.icon({
+    iconUrl: deliveryIcon,
+    iconSize: [35, 30],
     iconAnchor: [10, 15]
   })
 
@@ -100,10 +108,18 @@ function Map({ location }) {
         [Leaflet.latLng(position), Leaflet.latLng(position2)],
         {
           createMarker: function(i, wp) {
-            return Leaflet.marker(wp.latLng, {
-              draggable: false,
-              icon: bikeIcon
-            })
+            if (i === 0) {
+              return Leaflet.marker(wp.latLng, {
+                draggable: false,
+                icon: userLocationIcon
+              })
+            }
+            if (i === 1) {
+              return Leaflet.marker(wp.latLng, {
+                draggable: false,
+                icon: bikeIcon
+              })
+            }
           },
           routeWhileDragging: true
         }
