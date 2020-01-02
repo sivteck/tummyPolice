@@ -9,10 +9,33 @@ import { SET_CART } from "../../Reducers/Actions"
 import { useParams } from "react-router-dom"
 
 const Button = styled.button`
-  background-color: #db741e;
-  color: #fff;
+  width: 150px;
+  cursor: pointer;
   border: none;
-  padding: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  height: 50px;
+  color: #fff;
+  background-color: #fc8019;
+  text-transform: uppercase;
+`
+
+const Section = styled.section`
+  display: grid;
+  grid-template-column: 10% 10% 60% 10% 10%;
+`
+const H1 = styled.h1`
+  font-size: 32px;
+  font-weight: 600;
+  padding: 10px;
+  text-align: left;
+`
+const H2 = styled.h2`
+  font-size: 17px;
+  padding: 10px;
+`
+const InnerSection = styled.section`
+  padding: 10px;
 `
 
 const Cart = props => {
@@ -77,23 +100,21 @@ const Cart = props => {
           <h1>Cart Empty</h1>
         </div>
       ) : (
-        <div>
-          <h1>Cart</h1>
-          <div>
+        <Section>
+          <H1>Cart</H1>
+          <InnerSection>
             {totalItems.length === 1 ? (
               <p>{totalItems} ITEM</p>
             ) : (
-              <p>{totalItems}ITEMS</p>
+              <p>{totalItems} ITEMS</p>
             )}
-          </div>
-          {renderCartItems(cart.cartItems)}
-          <br />
-          <br />
-          <h4>Subtotal :&#8377;{totalPrice}</h4>
-          <br />
-          <br />
-          <Button onClick={() => setCheckoutStatus(true)}>Checkout</Button>
-        </div>
+          </InnerSection>
+          <InnerSection>{renderCartItems(cart.cartItems)}</InnerSection>
+          <H2>Subtotal :&#8377;{totalPrice}</H2>
+          <InnerSection>
+            <Button onClick={() => setCheckoutStatus(true)}>Checkout</Button>
+          </InnerSection>
+        </Section>
       )}
       {checkout()}
     </div>

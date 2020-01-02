@@ -64,7 +64,7 @@ const NavBar = () => {
   }
 
   return (
-    <StyledAppBar position="static">
+    <StyledAppBar position="sticky">
       <CheckStatus status={fetchStatus} />
       <Toolbar>
         <img src={Logo} alt="logo" />

@@ -16,14 +16,11 @@ html {
   height: 480px;
 }
 
-/* css design, implement route protection, implement css seperatly,lazy loading,  */
-
 .logo {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 35%;
-  /* align-self: center; */
 }
 
 .rest {
@@ -37,20 +34,15 @@ html {
 }
 
 .restaurant div {
-  /* margin: 10px; */
   font-size: 20px;
   font-weight: 500;
   text-transform: capitalize;
-  /* width: 254px;
-    height: 160px;
-    padding: 10px; */
 }
 
 .bg h1,
 .bg h2 {
   color: white;
   text-align: center;
-  /* font-weight: 500; */
 }
 
 .bg h1 {
@@ -61,49 +53,7 @@ html {
   font-weight: 300;
 }
 
-/* .location {
-    display: table;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    /* border: 1px solid #bebfc5; */
-
-/* height: 50px;
-    width: 500px;
-} */
-
-/* button.findfood {
-    position: absolute;
-}
-
-button.findfood, button.login, button.signup {
-    background-color: #db741e;
-    color: #fff;
-    /* right: 0; */
-
-/* width: 100px;
-    height: 45px;
-    border: none;
-}  */
-
-/* .location input {
-    border: none;
-    padding: 15px;
-    width: 80%;
-} */
-
-/* .location span {
-    position: absolute;
-    right: 60px;
-    padding: 18px;
-    color: #535665;
-    font-size: 13px;
-    cursor: pointer;
-} */
-
 .flex-1 {
-  /* margin-left: 10%; */
-  /* margin-right: 20%;  */
   display: flex;
   flex-direction: row;
 }
@@ -134,11 +84,22 @@ h3 {
 .item {
   padding: 10px;
   margin: 10px;
-  /* flex: 200px; */
   text-align: center;
   border: 1px solid black;
   width: 250px;
-  height: 300px;
+  height: fit-content;
+  text-transform: capitalize;
+}
+
+.item button {
+  cursor: pointer;
+  border: 0.5px solid #fc8019;
+  font-size: 15px;
+  font-weight: 600;
+  background-color: transparent;
+  padding: 10px;
+  color: #fc8019;
+  text-transform: uppercase;
 }
 
 h5 {
@@ -155,6 +116,8 @@ h4 {
 .menu {
   display: flex;
   flex-direction: row;
+  margin: 20px;
+  padding: 20px;
 }
 
 .menuComponents1 {
@@ -163,6 +126,11 @@ h4 {
 
 .menuComponents2 {
   flex-basis: 30%;
+  margin: 10px;
+  padding: 20px;
+  text-transform: capitalize;
+  height: fit-content;
+  background: #e9ecee;
 }
 
 button.seeRestaurant {
@@ -212,6 +180,7 @@ button.seeRestaurant {
 .cartItem div {
   flex-basis: 25%;
   padding: 5px;
+  text-align: center;
 }
 
 .flex1 {
@@ -291,10 +260,17 @@ input[type="number"]::-webkit-outer-spin-button {
 .changeQuantity {
   display: flex;
   flex-direction: row;
+  margin: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  border: 1px solid grey;
+  justify-content: center;
 }
 
-.changeQuantity div {
-  border: 0.5px solid grey;
+.changeQuantity button {
+  border: none;
+  background-color: #e9ecee;
+  font-size: large;
 }
 
 .checkoutFlex {
@@ -304,4 +280,13 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .flexContainer {
   width: 50%;
+}
+
+.sticky {
+  position: fixed;
+
+  width: 100%;
+
+  top: 50px;
+  left: 0;
 }
