@@ -5,7 +5,6 @@ import bike from "../../images/bike1.png"
 import deliveryIcon from "../../images/deliveryicon.png"
 
 const DeliveryMap = ({ usersLocation, deliveryPartnerLocation }) => {
-  console.log(usersLocation, deliveryPartnerLocation)
   const position = [usersLocation.latitude, usersLocation.longitude]
   const position2 = [
     deliveryPartnerLocation.latitude,

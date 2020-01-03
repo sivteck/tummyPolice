@@ -9,7 +9,6 @@ import ravadosa from "../images/Menu images/rava dosa.jpeg"
 import tea from "../images/Menu images/tea.jpeg"
 import vada from "../images/Menu images/vada.jpeg"
 
-
 export const images = {
   bajji,
   dosa,

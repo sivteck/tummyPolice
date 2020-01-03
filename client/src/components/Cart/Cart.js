@@ -7,12 +7,36 @@ import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
 import { SET_CART } from "../../Reducers/Actions"
 import { useParams } from "react-router-dom"
+import { getRequest } from "../../Utils/getRequest"
 
 const Button = styled.button`
-  background-color: #db741e;
-  color: #fff;
+  width: 150px;
+  cursor: pointer;
   border: none;
-  padding: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  height: 50px;
+  color: #fff;
+  background-color: #fc8019;
+  text-transform: uppercase;
+`
+
+const Section = styled.section`
+  display: grid;
+  grid-template-column: 10% 10% 60% 10% 10%;
+`
+const H1 = styled.h1`
+  font-size: 32px;
+  font-weight: 600;
+  padding: 10px;
+  text-align: left;
+`
+const H2 = styled.h2`
+  font-size: 17px;
+  padding: 10px;
+`
+const InnerSection = styled.section`
+  padding: 10px;
 `
 
 const Cart = props => {
@@ -20,21 +44,19 @@ const Cart = props => {
   const [isStatusOk, setStatusOk] = useState(true)
   const [checkoutStatus, setCheckoutStatus] = useState(false)
 
-  const { id } = useParams()
-  console.log(id)
-
-  console.log(checkoutStatus)
-
   async function fetchData() {
-    try {
-      let response = await fetch(`${URL}/cart`)
-      let data = await response.json()
+    const { response, result, error } = await getRequest(`${URL}/cart`)
+    console.log("response", response)
+    if (response) {
+      console.log("response", response)
       setStatusOk(response.ok)
-      if (data.restaurantId === undefined)
-        data.restaurantId = props.restaurantId
-      if (data.cartItems === undefined) data.cartItems = {}
-      dispatch({ type: SET_CART, data: data })
-    } catch (error) {
+      if (result.restaurantId === undefined)
+        result.restaurantId = props.restaurantId
+      if (result.cartItems === undefined) result.cartItems = {}
+      dispatch({ type: SET_CART, data: result })
+    }
+    if (error) {
+      console.log("error", error)
       setStatusOk(false)
     }
   }
@@ -57,10 +79,7 @@ const Cart = props => {
   }
 
   const checkout = () => {
-    console.log("checkout")
     if (checkoutStatus) {
-      console.log("checkout")
-      console.log("id", id)
       return (
         <div>
           <Redirect to="/checkout" />
@@ -77,23 +96,21 @@ const Cart = props => {
           <h1>Cart Empty</h1>
         </div>
       ) : (
-        <div>
-          <h1>Cart</h1>
-          <div>
+        <Section>
+          <H1>Cart</H1>
+          <InnerSection>
             {totalItems.length === 1 ? (
               <p>{totalItems} ITEM</p>
             ) : (
-              <p>{totalItems}ITEMS</p>
+              <p>{totalItems} ITEMS</p>
             )}
-          </div>
-          {renderCartItems(cart.cartItems)}
-          <br />
-          <br />
-          <h4>Subtotal :&#8377;{totalPrice}</h4>
-          <br />
-          <br />
-          <Button onClick={() => setCheckoutStatus(true)}>Checkout</Button>
-        </div>
+          </InnerSection>
+          <InnerSection>{renderCartItems(cart.cartItems)}</InnerSection>
+          <H2>Subtotal :&#8377;{totalPrice}</H2>
+          <InnerSection>
+            <Button onClick={() => setCheckoutStatus(true)}>Checkout</Button>
+          </InnerSection>
+        </Section>
       )}
       {checkout()}
     </div>

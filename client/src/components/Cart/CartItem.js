@@ -1,15 +1,24 @@
 import React, { useContext } from "react"
 import { CartContext } from "./CartContext"
 import { INCREMENT_ITEM, decrementItemAction } from "../../Reducers/Actions"
+import styled from "styled-components"
+
+const Section = styled.section`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+`
+
+const InnerSection = styled.section``
 
 function CartItem({ item }) {
   const [cart, dispatch] = useContext(CartContext)
   console.log("post req", cart)
 
   return (
-    <div className="cartItem">
-      <div> {item.name}</div>
-      <div className="changeQuantity" id={item.itemId}>
+    <Section className="cartItem">
+      <InnerSection> {item.name}</InnerSection>
+      <InnerSection className="changeQuantity" id={item.itemId}>
         <button
           onClick={async event => {
             await decrementItemAction(
@@ -32,9 +41,9 @@ function CartItem({ item }) {
         >
           +
         </button>
-      </div>
-      <div> &#8377; {item.price}</div>
-    </div>
+      </InnerSection>
+      <InnerSection> &#8377; {item.price}</InnerSection>
+    </Section>
   )
 }
 

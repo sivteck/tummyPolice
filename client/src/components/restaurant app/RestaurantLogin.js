@@ -3,6 +3,7 @@ import Logo from "../../images/logo.png"
 import styled from "styled-components"
 import URL from "../../config"
 import { Redirect } from "react-router-dom"
+import { postRequest } from "../../Utils/postRequest"
 
 const Label = styled.label`
   display: block;
@@ -64,20 +65,18 @@ function RestaurantLogin() {
   }
 
   const onSubmit = async inputValue => {
-    console.log("submit", inputValue)
-    try {
-      let res = await fetch(`${URL}/restaurant/login`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name: inputValue })
-      })
-      let result = await res.json()
+    const { response, result, error } = await postRequest(
+      `${URL}/restaurant/login`,
+      {
+        name: inputValue
+      }
+    )
+
+    if (response) {
       setResponse(result)
-      setStatusOk(res.ok)
-    } catch (error) {
+      setStatusOk(response.ok)
+    }
+    if (error) {
       setStatusOk(false)
     }
   }

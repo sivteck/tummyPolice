@@ -6,7 +6,6 @@ import "./style.css"
 
 const io = require("socket.io-client")
 const socket = io("https://tummypolice.iyangi.com")
-console.log("socket created for restaurant")
 
 function Tracking({ location }) {
   const deliveryPartnerId = location.state.response.id
@@ -21,7 +20,6 @@ function Tracking({ location }) {
   useEffect(() => {
     const intervalId = setInterval(async () => {
       const location = await promisifiedGetCurrentPosition()
-      console.log("location", location)
       setDeliveryPartnerLocation(location)
       socket.emit("update location", location)
     }, 10000)
@@ -32,9 +30,7 @@ function Tracking({ location }) {
 
   let exist = socket.hasListeners("new task")
   if (!exist) {
-    console.log("emitted")
     socket.on("new task", function(orders) {
-      console.log("orders at delivery page", orders)
       const { cartItems, orderId, location } = orders
       let order = {
         orderId,
@@ -50,24 +46,20 @@ function Tracking({ location }) {
       })
       setOrderDetails([order])
       setUsersLocation(location)
-      console.log("location from del", location)
       const fetchAddress = async () => {
         setAddress(await reverseGeocode(location))
       }
       fetchAddress()
-      console.log("addr", address)
     })
   }
 
   const confirmOrder = order => {
     setOrderConfirmation(true)
-    console.log("confirm", order.orderId)
     socket.emit("task accepted", order.orderId)
   }
 
   const pickupOrder = order => {
     setOrderPikedUp(true)
-    console.log("pickup", order.orderId)
     socket.emit("order pickedup", {
       orderId: order.orderId,
       deliveryPartnerId
@@ -76,7 +68,6 @@ function Tracking({ location }) {
 
   const deliverOrder = order => {
     setOrderDelivered(true)
-    console.log("deliver", order.orderId)
     socket.emit("order delivered", {
       orderId: order.orderId,
       deliveryPartnerId
@@ -85,7 +76,6 @@ function Tracking({ location }) {
 
   return (
     <div className="newOrder">
-      {console.log(address)}
       {orderDetails.length === 0 ? (
         <h1>No Orders</h1>
       ) : (
