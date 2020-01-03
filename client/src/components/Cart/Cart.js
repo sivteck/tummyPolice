@@ -7,6 +7,7 @@ import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
 import { SET_CART } from "../../Reducers/Actions"
 import { useParams } from "react-router-dom"
+import { getRequest } from "../../Utils/getRequest"
 
 const Button = styled.button`
   width: 150px;
@@ -43,21 +44,19 @@ const Cart = props => {
   const [isStatusOk, setStatusOk] = useState(true)
   const [checkoutStatus, setCheckoutStatus] = useState(false)
 
-  const { id } = useParams()
-  console.log(id)
-
-  console.log(checkoutStatus)
-
   async function fetchData() {
-    try {
-      let response = await fetch(`${URL}/cart`)
-      let data = await response.json()
+    const { response, result, error } = await getRequest(`${URL}/cart`)
+    console.log("response", response)
+    if (response) {
+      console.log("response", response)
       setStatusOk(response.ok)
-      if (data.restaurantId === undefined)
-        data.restaurantId = props.restaurantId
-      if (data.cartItems === undefined) data.cartItems = {}
-      dispatch({ type: SET_CART, data: data })
-    } catch (error) {
+      if (result.restaurantId === undefined)
+        result.restaurantId = props.restaurantId
+      if (result.cartItems === undefined) result.cartItems = {}
+      dispatch({ type: SET_CART, data: result })
+    }
+    if (error) {
+      console.log("error", error)
       setStatusOk(false)
     }
   }
@@ -80,10 +79,7 @@ const Cart = props => {
   }
 
   const checkout = () => {
-    console.log("checkout")
     if (checkoutStatus) {
-      console.log("checkout")
-      console.log("id", id)
       return (
         <div>
           <Redirect to="/checkout" />

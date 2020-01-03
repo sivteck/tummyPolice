@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { CartContext } from "../Cart/CartContext"
-import { images } from "../../Utils/menuImages"
+import { images } from "../../assets/menuImages"
 import { useParams } from "react-router-dom"
 import { ADD_TO_CART, emptyCartAction } from "../../Reducers/Actions"
 

@@ -33,8 +33,7 @@ const H1 = styled.h1`
 
 const AccountDetails = () => {
   const [accountAction, setAccountSection] = useState("account")
-
-  console.log(accountAction === "account")
+  
   return (
     <Fragment>
       {accountAction === "account" && (

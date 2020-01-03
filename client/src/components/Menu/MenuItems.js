@@ -1,10 +1,13 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { CartContext } from "../Cart/CartContext"
 import Item from "./Item"
 import URL from "../../config"
+import { postRequest } from "../../Utils/postRequest"
+import CheckStatus from "../Checkstatus/CheckStatus"
 
 const MenuItems = ({ menuItems, id }) => {
   const [cart, dispatch] = useContext(CartContext)
+  const [isStatusOk, setStatusOk] = useState(true)
 
   const fetchData = async cart => {
     if (!localStorage.getItem("userDetails")) {
@@ -12,21 +15,16 @@ const MenuItems = ({ menuItems, id }) => {
     }
 
     if (Object.keys(cart.cartItems).length !== 0) {
-      try {
-        let res = await fetch(`${URL}/cart`, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            restaurantId: cart.restaurantId,
-            cartItems: cart.cartItems
-          })
-        })
-        // let result = await res.json()
-      } catch (error) {
-        console.log(error)
+      const data = {
+        restaurantId: cart.restaurantId,
+        cartItems: cart.cartItems
+      }
+      const { response, error } = await postRequest(`${URL}/cart`, data)
+      if (response) {
+        setStatusOk(response.ok)
+      }
+      if (error) {
+        setStatusOk(false)
       }
     }
   }
@@ -36,6 +34,7 @@ const MenuItems = ({ menuItems, id }) => {
 
   return (
     <div className="itemList">
+      <CheckStatus status={isStatusOk} />
       {menuItems.map(item => (
         <Item {...item} restaurantId={id} key={item.id} quantity={1} />
       ))}

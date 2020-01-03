@@ -3,46 +3,35 @@ import { Redirect } from "react-router-dom"
 import URL from "../../config"
 import LoginForm from "../Login/LoginForm"
 import UserLogin from "./UserLogin"
+import { postRequest } from "../../Utils/postRequest"
 
 const LoginDetails = () => {
   const [isStatusOk, setStatusOk] = useState(false)
   const [userDetails, setUserDetails] = useState(null)
 
   const onSubmit = async data => {
-    try {
-      let res = await fetch(`${URL}/login`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      })
-
-      let result = await res.json()
+    const { response, result, error } = await postRequest(`${URL}/login`, data)
+    if (response) {
       localStorage.setItem("userDetails", JSON.stringify(result))
       setUserDetails(result)
-      setStatusOk(res.ok)
-    } catch (error) {
+      setStatusOk(response.ok)
+    }
+    if (error) {
       setStatusOk(false)
     }
     if (isStatusOk && !userDetails.hasOwnProperty("error")) {
-      let cartDetails = localStorage.getItem("guestSession")
-      console.log("cart", cartDetails)
-      try {
-        let res = await fetch(`${URL}/cart`, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: cartDetails
-        })
-        let result = await res.json()
-        console.log("res", result)
-      } catch (error) {
-        console.log(error)
-      }
+      updateCart()
+    }
+  }
+
+  const updateCart = async () => {
+    let cartDetails = localStorage.getItem("guestSession")
+    const { response, error } = await postRequest(`${URL}/cart`, cartDetails)
+    if (response) {
+      setStatusOk(response.ok)
+    }
+    if (error) {
+      setStatusOk(false)
     }
   }
 

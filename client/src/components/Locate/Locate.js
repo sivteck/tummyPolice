@@ -4,6 +4,7 @@ import { Wrapper, Input, Submit } from "./styles"
 import CheckStatus from "../Checkstatus/CheckStatus"
 import PopulateDataList from "./PopulateDataList"
 import URL from "../../config"
+import { getRequest } from "../../Utils/getRequest"
 
 const Locate = () => {
   const [location, setLocation] = useState({ predictions: [] })
@@ -17,9 +18,10 @@ const Locate = () => {
 
   const redirectPage = () => {
     if (isSubmit) {
-      const placeName = document.getElementById("input").value.split(":")[0]
-      const placeId = document.getElementById("input").value.split(":")[1]
-      const place = localStorage.setItem("Delivery Address", placeName)
+      const [placeName, placeId] = document
+        .getElementById("input")
+        .value.split(":")
+      localStorage.setItem("Delivery Address", placeName)
       return (
         <Redirect
           to={{ pathname: "/restaurant", state: { locationId: placeId } }}
@@ -30,12 +32,14 @@ const Locate = () => {
 
   const fetchData = async input => {
     if (input.length > 0) {
-      try {
-        let res = await fetch(`${URL}/place/autocomplete/json?input=${input}`)
-        let data = await res.json()
-        setLocation(data)
-        setStatusOk(res.ok)
-      } catch (error) {
+      const { response, result, error } = await getRequest(
+        `${URL}/place/autocomplete/json?input=${input}`
+      )
+      if (response) {
+        setLocation(result)
+        setStatusOk(response.ok)
+      }
+      if (error) {
         setStatusOk(false)
       }
     }
@@ -47,7 +51,7 @@ const Locate = () => {
 
   return (
     <Wrapper>
-      {/* <CheckStatus status={isStatusOk} /> */}
+      <CheckStatus status={isStatusOk} />
       <form
         onSubmit={event => {
           event.preventDefault()

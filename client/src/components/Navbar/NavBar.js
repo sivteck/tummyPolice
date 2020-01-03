@@ -10,6 +10,7 @@ import Badge from "@material-ui/core/Badge"
 import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded"
+import { getRequest } from "../../Utils/getRequest"
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -54,13 +55,17 @@ const NavBar = () => {
   }, [])
 
   const logout = async () => {
-    try {
-      let res = await fetch(`${URL}/logout`)
-      if (res.ok) {
+    const { response, error } = await getRequest(`${URL}/logout`)
+    if (response) {
+      if (response.ok) {
         localStorage.clear()
         setCart({ cartItems: {} })
       }
-    } catch (error) {}
+      setFetchStatus(response.ok)
+    }
+    if (error) {
+      setFetchStatus(false)
+    }
   }
 
   return (

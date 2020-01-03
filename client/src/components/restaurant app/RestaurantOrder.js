@@ -8,39 +8,40 @@ const socket = io("https://tummypolice.iyangi.com")
 const RestaurantOrder = ({ location }) => {
   const restaurantId = location.state.response.id
   const [orderDetails, setOrderDetails] = useState([])
-  console.log("orderDetails", orderDetails)
   const [orderConfirmation, setOrderConfirmation] = useState(false)
   const [address, setAddress] = useState("")
 
   socket.emit("active restaurant", restaurantId)
 
-  socket.on("order details", function(orders) {
-    console.log("order", orders)
-    const { cartItems, orderId, location } = orders
-    let order = {
-      orderId,
-      items: {}
-    }
-    const items = Object.keys(cartItems)
-    items.map(item => {
-      const { name, quantity } = cartItems[item]
-      const itemObj = {}
-      itemObj.name = name
-      itemObj.quantity = quantity
-      order.items[item] = itemObj
-    })
-    setOrderDetails([order])
+  let exist = socket.hasListeners("order details")
 
-    const fetchAddress = async () => {
-      setAddress(await reverseGeocode(location))
-    }
-    fetchAddress()
-    console.log("addr", address)
-  })
+  if (!exist) {
+    socket.on("order details", function(orders) {
+      const { cartItems, orderId, location } = orders
+      let order = {
+        orderId,
+        items: {}
+      }
+      const items = Object.keys(cartItems)
+      items.map(item => {
+        const { name, quantity } = cartItems[item]
+        const itemObj = {}
+        itemObj.name = name
+        itemObj.quantity = quantity
+        order.items[item] = itemObj
+      })
+      setOrderDetails([order])
+
+      const fetchAddress = async () => {
+        setAddress(await reverseGeocode(location))
+      }
+      fetchAddress()
+      console.log("addr", address)
+    })
+  }
 
   const confirmOrder = order => {
     setOrderConfirmation(true)
-    console.log("confirm", order.orderId)
     socket.emit("order approved", order.orderId)
   }
   return (

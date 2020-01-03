@@ -4,6 +4,7 @@ import styled from "styled-components"
 import URL from "../../config"
 
 import { Redirect } from "react-router-dom"
+import { postRequest } from "../../Utils/postRequest"
 
 const Label = styled.label`
   display: block;
@@ -65,19 +66,16 @@ function DeliveryPartnerLogin() {
   }
 
   const onSubmit = async inputValue => {
-    try {
-      let res = await fetch(`${URL}/deliverypartner/login`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ id: inputValue })
-      })
-      let result = await res.json()
+    const {
+      response,
+      result,
+      error
+    } = await postRequest(`${URL}/deliverypartner/login`, { id: inputValue })
+    if (response) {
       setResponse(result)
-      setStatusOk(res.ok)
-    } catch (error) {
+      setStatusOk(response.ok)
+    }
+    if (error) {
       setStatusOk(false)
     }
   }

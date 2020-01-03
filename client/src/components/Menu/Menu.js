@@ -7,6 +7,7 @@ import CheckStatus from "../Checkstatus/CheckStatus"
 import MenuItems from "./MenuItems"
 import NavBar from "../Navbar/NavBar"
 import styled from "styled-components"
+import { getRequest } from "../../Utils/getRequest"
 
 const Article = styled.article`
   display: grid;
@@ -59,24 +60,32 @@ const Menu = ({ location }) => {
   const [isStatusOk, setStatusOk] = useState(true)
   const [restaurantDetails, setRestaurantDetails] = useState("")
 
-  console.log(restaurantDetails)
-
   const { id } = useParams()
 
-  console.log("props from restaurant", location)
-
   const fetchData = async () => {
-    try {
-      let menuResponse = await fetch(`${URL}/menu?restaurantid=${id}`)
-      let menuResult = await menuResponse.json()
-      let restaurantResponse = await fetch(`${URL}/restaurant/info?id=${id}`)
-      let restaurantResult = await restaurantResponse.json()
-      setStatusOk(menuResponse.ok)
-      setMenuItems(menuResult)
-      setRestaurantDetails(restaurantResult)
-    } catch (error) {
+    const { response, result, error } = await getRequest(
+      `${URL}/menu?restaurantid=${id}`
+    )
+    if (response) {
+      setStatusOk(response.ok)
+      setMenuItems(result)
+      getRestaurantDetails()
+    }
+    if (error) {
       setStatusOk(false)
-      console.log(error)
+    }
+  }
+
+  const getRestaurantDetails = async () => {
+    const { response, result, error } = await getRequest(
+      `${URL}/restaurant/info?id=${id}`
+    )
+    if (response) {
+      setRestaurantDetails(result)
+      setStatusOk(response.ok)
+    }
+    if (error) {
+      setStatusOk(false)
     }
   }
 

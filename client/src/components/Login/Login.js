@@ -1,29 +1,21 @@
 import React, { useState, Fragment } from "react"
-import {  Redirect } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 import URL from "../../config"
 import LoginForm from "./LoginForm"
+import { postRequest } from "../../Utils/postRequest"
 
 const Login = () => {
   const [isStatusOk, setStatusOk] = useState(false)
   const [userDetails, setUserDetails] = useState({})
 
   const onSubmit = async data => {
-    try {
-      let res = await fetch(`${URL}/login`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      })
-
-      let result = await res.json()
-      console.log("result from login", result)
+    const { response, result, error } = await postRequest(`${URL}/login`, data)
+    if (response) {
       localStorage.setItem("userDetails", JSON.stringify(result))
       setUserDetails(result)
-      setStatusOk(res.ok)
-    } catch (error) {
+      setStatusOk(response.ok)
+    }
+    if (error) {
       setStatusOk(false)
     }
   }

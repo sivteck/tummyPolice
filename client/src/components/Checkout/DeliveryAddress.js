@@ -24,7 +24,6 @@ const DeliveryAddress = () => {
     const deliveryAddress = localStorage.getItem("Delivery Address")
     if (!deliveryAddress || deliveryAddress.length === 0) {
       let location = JSON.parse(localStorage.getItem("location"))
-      console.log("locl", location)
       const fetchAddress = async () => {
         setAddress((await reverseGeocode(location)).LongLabel)
       }
@@ -33,7 +32,7 @@ const DeliveryAddress = () => {
       setAddress(deliveryAddress)
     }
   }, [])
-  console.log("addressfghfg", address)
+
   return (
     <Fragment>
       <H1>Delivery Address</H1>

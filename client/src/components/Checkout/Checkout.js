@@ -1,10 +1,11 @@
 import React, { useEffect, useState, Fragment } from "react"
 import URL from "../../config"
 import CheckStatus from "../Checkstatus/CheckStatus"
-import NavBar from "../Navbar/NavBar"
 import { Redirect } from "react-router-dom"
 import styled from "styled-components"
 import { promisifiedGetCurrentPosition } from "../../Utils/promisifiedGetCurrentPosition"
+import { getRequest } from "../../Utils/getRequest"
+import { postRequest } from "../../Utils/postRequest"
 
 const Aside = styled.section`
   display: grid;
@@ -61,69 +62,37 @@ const Checkout = () => {
   const [cartStatus, setCartStatus] = useState(true)
   const [restaurantDetails, setRestaurantDetails] = useState({})
   const userDetails = JSON.parse(localStorage.getItem("userDetails"))
-  const restaurantId = checkout.restaurantId
+  const [didMount, setDidMount] = useState(false)
 
-  async function fetchData() {
-    try {
-      let checkoutResponse = await fetch(`${URL}/checkout`)
-      let checkoutData = await checkoutResponse.json()
-      setCheckout(checkoutData)
-      setFetchStatus(checkoutResponse.ok)
-      let restaurantDetailsResponse = await fetch(
-        `${URL}/restaurant/info?id=${checkoutData.restaurantId}`
-      )
-      let restaurantDetailsdata = await restaurantDetailsResponse.json()
-      setRestaurantDetails(restaurantDetailsdata)
-    } catch (error) {
-      console.log(error)
+  const emptyCart = async () => {
+    const data = {
+      restaurantId: "",
+      cartItems: {}
     }
+    const { response, error } = await postRequest(`${URL}/cart`, data)
+    if (response) setCartStatus(response.ok)
+    if (error) setCartStatus(false)
   }
 
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  async function order() {
-    let location = await promisifiedGetCurrentPosition()
-    try {
-      let res = await fetch(`${URL}/order`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          userDetails,
-          order: checkout,
-          location
-        })
-      })
-      let result = await res.json()
+  const order = async () => {
+    const location = await promisifiedGetCurrentPosition()
+    const data = {
+      userDetails,
+      order: checkout,
+      location
+    }
+    const { response, result, error } = await postRequest(`${URL}/order`, data)
+    if (response) {
       setResponse(result)
-      setStatusOk(res.ok)
-    } catch (error) {
-      console.log("error", error)
+      setStatusOk(response.ok)
+    }
+    if (error) {
       setStatusOk(false)
     }
-    try {
-      let res = await fetch(`${URL}/cart`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          restaurantId: "",
-          cartItems: {}
-        })
-      })
-      setCartStatus(res.ok)
-    } catch (error) {
-      setCartStatus(false)
-    }
+    emptyCart()
   }
 
-  function placeOrder() {
+  const placeOrder = () => {
     if (isStatusOk && cartStatus && response.hasOwnProperty("error")) {
       return (
         <div>
@@ -139,6 +108,35 @@ const Checkout = () => {
       )
     }
   }
+
+  const fetchRestaurantDetails = async dataUrl => {
+    const { response, result, error } = await getRequest(
+      `${URL}/restaurant/info?id=${dataUrl.restaurantId}`
+    )
+    if (response) {
+      setRestaurantDetails(result)
+      setFetchStatus(response.ok)
+    }
+    if (error) {
+      setFetchStatus(false)
+    }
+  }
+
+  const fetchData = async () => {
+    const { response, result, error } = await getRequest(`${URL}/checkout`)
+    if (response) {
+      setCheckout(result)
+      setFetchStatus(response.ok)
+    }
+    if (error) {
+      setFetchStatus(false)
+    }
+    fetchRestaurantDetails(result)
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
     <Fragment>
